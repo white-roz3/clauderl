@@ -133,7 +133,7 @@ export default function DocsPage() {
                 Documentation In Progress
               </h3>
               <p className="text-gray-500 mb-6 leading-relaxed">
-                We're working on comprehensive documentation to help you get the most out of ClaudeRL.
+                We&apos;re working on comprehensive documentation to help you get the most out of ClaudeRL.
                 Check back soon for guides, API references, and tutorials.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">

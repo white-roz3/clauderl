@@ -21,7 +21,7 @@ const LeaderboardPreview: React.FC = () => {
   ];
 
   return (
-    <section className="py-16 md:py-32 bg-white relative overflow-hidden">
+    <section className="py-16 md:py-32 relative overflow-hidden" style={{ backgroundColor: 'var(--claude-bg)' }}>
       <div className="container mx-auto px-4">
         {/* Header */}
         <motion.div
@@ -30,23 +30,23 @@ const LeaderboardPreview: React.FC = () => {
           viewport={{ once: true }}
           className="text-center mb-12 md:mb-20"
         >
-          <p className="text-gray-400 text-xs md:text-sm font-medium tracking-widest uppercase mb-3 md:mb-4">
+          <p className="text-xs md:text-sm font-medium tracking-widest uppercase mb-3 md:mb-4" style={{ color: 'var(--claude-text-muted)' }}>
             Performance Metrics
           </p>
           <h2 
-            className="text-3xl md:text-5xl lg:text-7xl font-black text-black mb-4 md:mb-6"
+            className="text-3xl md:text-5xl lg:text-7xl font-normal mb-4 md:mb-6"
             style={{ 
-              fontFamily: 'Inter, sans-serif',
-              textShadow: '2px 2px 0 #e5e5e5, 3px 3px 8px rgba(0,0,0,0.06)'
+              fontFamily: "'Georgia', 'Times New Roman', serif",
+              color: 'var(--claude-text-greeting)'
             }}
           >
             Leaderboard
           </h2>
-          <p className="text-base md:text-xl text-gray-500 max-w-xs md:max-w-2xl mx-auto">
+          <p className="text-base md:text-xl max-w-xs md:max-w-2xl mx-auto" style={{ color: 'var(--claude-text-secondary)' }}>
             See how different AI models perform across challenges
           </p>
-        </motion.div>
-
+          </motion.div>
+          
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-10 md:mb-16">
           {stats.map((stat, index) => {
@@ -59,27 +59,35 @@ const LeaderboardPreview: React.FC = () => {
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
               >
-                <motion.div 
-                  className="bg-white rounded-2xl md:rounded-3xl p-6 md:p-8 text-center border border-gray-100"
-                  whileHover={{ y: -8, boxShadow: '0 25px 50px rgba(0,0,0,0.1)' }}
-                  style={{ boxShadow: '0 10px 30px rgba(0,0,0,0.05)' }}
+        <motion.div
+                  className="rounded-2xl md:rounded-3xl p-6 md:p-8 text-center border"
+                  style={{ 
+                    backgroundColor: 'var(--claude-bg-secondary)',
+                    borderColor: 'var(--claude-border)',
+                    boxShadow: '0 1px 3px rgba(0, 0, 0, 0.3)'
+                  }}
+                  whileHover={{ y: -8, boxShadow: '0 4px 12px rgba(0, 0, 0, 0.5)' }}
                 >
                   <div 
-                    className="w-12 h-12 md:w-14 md:h-14 rounded-xl md:rounded-2xl bg-black flex items-center justify-center mx-auto mb-4"
-                    style={{ boxShadow: '0 6px 20px rgba(0,0,0,0.2)' }}
+                    className="w-12 h-12 md:w-14 md:h-14 rounded-xl md:rounded-2xl flex items-center justify-center mx-auto mb-4"
+                    style={{ 
+                      backgroundColor: 'var(--claude-accent)',
+                      color: 'var(--claude-text)',
+                      boxShadow: '0 2px 6px rgba(0, 0, 0, 0.4)'
+                    }}
                   >
-                    <Icon className="w-5 h-5 md:w-6 md:h-6 text-white" strokeWidth={2} />
-                  </div>
-                  <p className="text-gray-400 text-xs md:text-sm mb-2">{stat.label}</p>
+                    <Icon className="w-5 h-5 md:w-6 md:h-6" strokeWidth={2} style={{ color: 'var(--claude-text)' }} />
+            </div>
+                  <p className="text-xs md:text-sm mb-2" style={{ color: 'var(--claude-text-muted)' }}>{stat.label}</p>
                   <p 
-                    className="text-2xl md:text-4xl font-black text-black mb-1"
-                    style={{ fontFamily: 'Space Grotesk, sans-serif' }}
+                    className="text-2xl md:text-4xl font-semibold mb-1"
+                    style={{ color: 'var(--claude-text)' }}
                   >
                     {stat.value}
                   </p>
-                  <p className="text-gray-400 text-xs">{stat.subtitle}</p>
-                </motion.div>
-              </motion.div>
+                  <p className="text-xs" style={{ color: 'var(--claude-text-muted)' }}>{stat.subtitle}</p>
+          </motion.div>
+        </motion.div>
             );
           })}
         </div>
@@ -89,23 +97,30 @@ const LeaderboardPreview: React.FC = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="bg-white rounded-2xl md:rounded-3xl overflow-hidden border border-gray-100 mb-10 md:mb-16"
-          style={{ boxShadow: '0 15px 40px rgba(0,0,0,0.06)' }}
+          className="rounded-2xl md:rounded-3xl overflow-hidden border mb-10 md:mb-16"
+          style={{ 
+            backgroundColor: 'var(--claude-bg-secondary)',
+            borderColor: 'var(--claude-border)',
+            boxShadow: '0 1px 3px rgba(0, 0, 0, 0.3)'
+          }}
         >
           {/* Table Header */}
-          <div className="p-6 md:p-8 border-b border-gray-100">
+          <div className="p-6 md:p-8 border-b" style={{ borderColor: 'var(--claude-border)' }}>
             <div className="flex items-center gap-3 mb-2">
               <div 
-                className="w-10 h-10 rounded-xl bg-black flex items-center justify-center"
-                style={{ boxShadow: '0 4px 12px rgba(0,0,0,0.15)' }}
+                className="w-10 h-10 rounded-xl flex items-center justify-center"
+                style={{ 
+                  backgroundColor: 'var(--claude-accent)',
+                  boxShadow: '0 2px 6px rgba(0, 0, 0, 0.4)'
+                }}
               >
-                <Trophy className="w-5 h-5 text-white" />
-              </div>
+                <Trophy className="w-5 h-5" style={{ color: 'var(--claude-text)' }} />
+            </div>
               <div>
-                <h3 className="text-lg md:text-xl font-bold text-black" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
+                <h3 className="text-lg md:text-xl font-semibold" style={{ color: 'var(--claude-text)' }}>
                   Top Performances
-                </h3>
-                <p className="text-gray-400 text-sm">Best times across all courses</p>
+            </h3>
+                <p className="text-sm" style={{ color: 'var(--claude-text-muted)' }}>Best times across all courses</p>
               </div>
             </div>
           </div>
@@ -114,12 +129,12 @@ const LeaderboardPreview: React.FC = () => {
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
-                <tr className="border-b border-gray-100">
-                  <th className="px-6 py-4 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">Rank</th>
-                  <th className="px-6 py-4 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">Model</th>
-                  <th className="px-6 py-4 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">Course</th>
-                  <th className="px-6 py-4 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">Time</th>
-                  <th className="px-6 py-4 text-left text-xs font-bold text-gray-400 uppercase tracking-wider">Skills</th>
+                <tr className="border-b" style={{ borderColor: 'var(--claude-border)' }}>
+                  <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--claude-text-muted)' }}>Rank</th>
+                  <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--claude-text-muted)' }}>Model</th>
+                  <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--claude-text-muted)' }}>Course</th>
+                  <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--claude-text-muted)' }}>Time</th>
+                  <th className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider" style={{ color: 'var(--claude-text-muted)' }}>Skills</th>
                 </tr>
               </thead>
               <tbody>
@@ -130,34 +145,49 @@ const LeaderboardPreview: React.FC = () => {
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: index * 0.05 }}
-                    className="border-b border-gray-50 hover:bg-gray-50 transition-colors"
+                    className="border-b transition-colors"
+                    style={{ 
+                      borderColor: 'var(--claude-border)'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.backgroundColor = 'var(--claude-bg-hover)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.backgroundColor = 'transparent';
+                    }}
                   >
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-2">
                         {entry.rank <= 3 ? (
                           <div 
-                            className={`w-8 h-8 rounded-lg flex items-center justify-center font-bold text-sm
-                              ${entry.rank === 1 ? 'bg-black text-white' : 'bg-gray-100 text-gray-600'}
-                            `}
-                            style={entry.rank === 1 ? { boxShadow: '0 4px 12px rgba(0,0,0,0.2)' } : {}}
+                            className="w-8 h-8 rounded-lg flex items-center justify-center font-semibold text-sm"
+                            style={entry.rank === 1 ? { 
+                              backgroundColor: 'var(--claude-accent)',
+                              color: 'var(--claude-text)',
+                              boxShadow: '0 2px 6px rgba(0, 0, 0, 0.4)'
+                            } : {
+                              backgroundColor: 'var(--claude-bg)',
+                              color: 'var(--claude-text-secondary)',
+                              border: '1px solid var(--claude-border)'
+                            }}
                           >
                             {entry.rank}
                           </div>
                         ) : (
-                          <span className="text-gray-400 font-medium w-8 text-center">{entry.rank}</span>
+                          <span className="font-medium w-8 text-center" style={{ color: 'var(--claude-text-muted)' }}>{entry.rank}</span>
                         )}
                       </div>
                     </td>
                     <td className="px-6 py-4">
-                      <span className="font-bold text-black" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
+                      <span className="font-semibold" style={{ color: 'var(--claude-text)' }}>
                         {entry.model}
                       </span>
                     </td>
                     <td className="px-6 py-4">
-                      <span className="text-gray-500">{entry.course}</span>
+                      <span style={{ color: 'var(--claude-text-secondary)' }}>{entry.course}</span>
                     </td>
                     <td className="px-6 py-4">
-                      <span className="font-bold text-black" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
+                      <span className="font-semibold" style={{ color: 'var(--claude-text)' }}>
                         {entry.bestTime}
                       </span>
                     </td>
@@ -166,13 +196,24 @@ const LeaderboardPreview: React.FC = () => {
                         {entry.abilities.slice(0, 2).map((ability) => (
                           <span
                             key={ability}
-                            className="px-2 py-1 bg-gray-100 text-gray-600 text-xs font-medium rounded-lg"
+                            className="px-2 py-1 text-xs font-medium rounded-lg border"
+                            style={{
+                              backgroundColor: 'var(--claude-bg)',
+                              color: 'var(--claude-text-secondary)',
+                              borderColor: 'var(--claude-border)'
+                            }}
                           >
                             {ability}
                           </span>
                         ))}
                         {entry.abilities.length > 2 && (
-                          <span className="px-2 py-1 bg-black text-white text-xs font-medium rounded-lg">
+                          <span 
+                            className="px-2 py-1 text-xs font-medium rounded-lg"
+                            style={{
+                              backgroundColor: 'var(--claude-accent)',
+                              color: 'var(--claude-text)'
+                            }}
+                          >
                             +{entry.abilities.length - 2}
                           </span>
                         )}
@@ -185,13 +226,16 @@ const LeaderboardPreview: React.FC = () => {
           </div>
 
           {/* CTA */}
-          <div className="p-6 md:p-8 border-t border-gray-100 text-center">
+          <div className="p-6 md:p-8 border-t text-center" style={{ borderColor: 'var(--claude-border)' }}>
             <Link href="/leaderboard">
               <motion.button 
-                className="px-8 py-4 bg-black text-white font-bold text-base md:text-lg rounded-2xl inline-flex items-center gap-2"
-                whileHover={{ y: -4, boxShadow: '0 20px 40px rgba(0,0,0,0.2)' }}
+                className="px-8 py-4 text-white font-medium text-base md:text-lg rounded-lg inline-flex items-center gap-2"
+                style={{ 
+                  backgroundColor: 'var(--claude-accent)',
+                  boxShadow: '0 1px 3px rgba(0, 0, 0, 0.3)'
+                }}
+                whileHover={{ backgroundColor: 'var(--claude-accent-hover)' }}
                 whileTap={{ scale: 0.98 }}
-                style={{ boxShadow: '0 10px 30px rgba(0,0,0,0.15)' }}
               >
                 View Full Leaderboard
                 <ArrowRight className="w-5 h-5" />
@@ -208,21 +252,29 @@ const LeaderboardPreview: React.FC = () => {
           className="flex justify-center"
         >
           <div 
-            className="bg-gray-50 rounded-2xl md:rounded-3xl p-6 md:p-8 max-w-2xl text-center border border-gray-100"
-            style={{ boxShadow: '0 10px 30px rgba(0,0,0,0.03)' }}
+            className="rounded-2xl md:rounded-3xl p-6 md:p-8 max-w-2xl text-center border"
+            style={{ 
+              backgroundColor: 'var(--claude-bg-secondary)',
+              borderColor: 'var(--claude-border)',
+              boxShadow: '0 1px 3px rgba(0, 0, 0, 0.3)'
+            }}
           >
             <div 
-              className="w-12 h-12 rounded-xl bg-white flex items-center justify-center mx-auto mb-4 border border-gray-100"
-              style={{ boxShadow: '0 4px 12px rgba(0,0,0,0.05)' }}
+              className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4 border"
+              style={{ 
+                backgroundColor: 'var(--claude-bg)',
+                borderColor: 'var(--claude-border)',
+                boxShadow: '0 2px 6px rgba(0, 0, 0, 0.4)'
+              }}
             >
-              <svg className="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ color: 'var(--claude-text)' }}>
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
               </svg>
             </div>
-            <h4 className="text-lg md:text-xl font-bold text-black mb-3" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
+            <h4 className="text-lg md:text-xl font-semibold mb-3" style={{ color: 'var(--claude-text)' }}>
               Fair Competition
             </h4>
-            <p className="text-gray-500 text-sm md:text-base leading-relaxed">
+            <p className="text-sm md:text-base leading-relaxed" style={{ color: 'var(--claude-text-secondary)' }}>
               All AI models face identical challenges with standardized metrics. 
               Performance differences reflect genuine capabilities in reasoning, 
               adaptation, and problem-solving.

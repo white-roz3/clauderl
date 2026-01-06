@@ -45,7 +45,7 @@ const Courses: React.FC = () => {
   };
 
   return (
-    <section className="py-16 md:py-32 bg-white relative overflow-hidden">
+    <section className="py-16 md:py-32 relative overflow-hidden" style={{ backgroundColor: 'var(--claude-bg)' }}>
       <div className="container mx-auto px-4 relative z-10">
         <motion.div
           variants={staggerContainer}
@@ -54,22 +54,23 @@ const Courses: React.FC = () => {
           viewport={{ once: true, margin: "-50px" }}
           className="text-center mb-10 md:mb-20"
         >
-          <motion.p variants={staggerItem} className="text-gray-400 text-xs md:text-sm font-medium tracking-widest uppercase mb-3 md:mb-4">
+          <motion.p variants={staggerItem} className="text-xs md:text-sm font-medium tracking-widest uppercase mb-3 md:mb-4" style={{ color: 'var(--claude-text-muted)' }}>
             Training Environments
           </motion.p>
           <motion.h2 
             variants={staggerItem}
-            className="text-3xl md:text-5xl lg:text-7xl font-black text-black mb-4 md:mb-6"
+            className="text-3xl md:text-5xl lg:text-7xl font-normal mb-4 md:mb-6"
             style={{ 
-              fontFamily: 'Inter, sans-serif',
-              textShadow: '2px 2px 0 #e5e5e5, 3px 3px 8px rgba(0,0,0,0.08)'
+              fontFamily: "'Georgia', 'Times New Roman', serif",
+              color: 'var(--claude-text-greeting)'
             }}
           >
             Courses
           </motion.h2>
           <motion.p 
             variants={staggerItem}
-            className="text-base md:text-xl text-gray-500 max-w-xs md:max-w-2xl mx-auto"
+            className="text-base md:text-xl max-w-xs md:max-w-2xl mx-auto"
+            style={{ color: 'var(--claude-text-secondary)' }}
           >
             Each course tests different aspects of AI intelligence
           </motion.p>
@@ -90,15 +91,17 @@ const Courses: React.FC = () => {
             >
               <Link href={`/livesim?course=${course.id}`}>
                 <motion.div 
-                  className="bg-white rounded-2xl md:rounded-3xl overflow-hidden border border-gray-100 h-full"
+                  className="rounded-2xl md:rounded-3xl overflow-hidden border h-full"
+                  style={{ 
+                    backgroundColor: 'var(--claude-bg-secondary)',
+                    borderColor: 'var(--claude-border)',
+                    boxShadow: '0 1px 3px rgba(0, 0, 0, 0.3)'
+                  }}
                   whileHover={{ 
                     y: -12,
-                    boxShadow: '0 30px 60px rgba(0,0,0,0.12)'
+                    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.5)'
                   }}
                   whileTap={{ scale: 0.98 }}
-                  style={{ 
-                    boxShadow: '0 15px 40px rgba(0,0,0,0.06)'
-                  }}
                 >
                   {/* Image */}
                   <div className="relative h-28 md:h-48 overflow-hidden">
@@ -114,8 +117,12 @@ const Courses: React.FC = () => {
                     {/* Difficulty badge */}
                     <div className="absolute top-2 right-2 md:top-4 md:right-4 z-10">
                       <span 
-                        className="px-2 py-0.5 md:px-4 md:py-1.5 rounded-full text-[10px] md:text-xs font-bold bg-white text-black"
-                        style={{ boxShadow: '0 4px 12px rgba(0,0,0,0.12)' }}
+                        className="px-2 py-0.5 md:px-4 md:py-1.5 rounded-full text-[10px] md:text-xs font-bold"
+                        style={{ 
+                          backgroundColor: 'var(--claude-accent)',
+                          color: 'var(--claude-text)',
+                          boxShadow: '0 2px 6px rgba(0, 0, 0, 0.4)'
+                        }}
                       >
                         {course.difficulty}
                       </span>
@@ -124,15 +131,15 @@ const Courses: React.FC = () => {
 
                   {/* Content */}
                   <div className="p-3 md:p-7">
-                    <h3 className="text-sm md:text-xl font-bold text-black mb-1 md:mb-3" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
+                    <h3 className="text-sm md:text-xl font-semibold mb-1 md:mb-3" style={{ color: 'var(--claude-text)' }}>
                       {course.name}
                     </h3>
-                    <p className="text-gray-500 leading-relaxed text-xs md:text-base mb-2 md:mb-5 line-clamp-2">
+                    <p className="leading-relaxed text-xs md:text-base mb-2 md:mb-5 line-clamp-2" style={{ color: 'var(--claude-text-secondary)' }}>
                       {course.description}
                     </p>
 
                     {/* Arrow */}
-                    <div className="flex items-center gap-1 text-black font-bold text-xs md:text-base group-hover:translate-x-2 transition-transform">
+                    <div className="flex items-center gap-1 font-semibold text-xs md:text-base group-hover:translate-x-2 transition-transform" style={{ color: 'var(--claude-text)' }}>
                       <span>Launch</span>
                       <span>→</span>
                     </div>
@@ -153,10 +160,13 @@ const Courses: React.FC = () => {
         >
           <Link href="/sims">
             <motion.button 
-              className="px-8 md:px-12 py-3.5 md:py-5 bg-black text-white font-bold text-base md:text-lg rounded-2xl"
-              whileHover={{ y: -6, boxShadow: '0 25px 50px rgba(0,0,0,0.2)' }}
+              className="px-8 md:px-12 py-3.5 md:py-5 text-white font-medium text-base md:text-lg rounded-lg"
+              style={{ 
+                backgroundColor: 'var(--claude-accent)',
+                boxShadow: '0 1px 3px rgba(0, 0, 0, 0.3)'
+              }}
+              whileHover={{ backgroundColor: 'var(--claude-accent-hover)' }}
               whileTap={{ scale: 0.98 }}
-              style={{ boxShadow: '0 12px 30px rgba(0,0,0,0.15)' }}
             >
               Explore All Courses
             </motion.button>

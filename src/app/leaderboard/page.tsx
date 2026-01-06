@@ -116,7 +116,7 @@ export default function LeaderboardPage() {
                 Coming Soon
               </h3>
               <p className="text-gray-500 max-w-md mx-auto mb-8">
-                We're building an advanced leaderboard system with filtering, sorting, 
+                We&apos;re building an advanced leaderboard system with filtering, sorting, 
                 and detailed analytics for all AI model performances.
               </p>
               <div 

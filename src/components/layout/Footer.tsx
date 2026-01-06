@@ -8,28 +8,28 @@ import { motion } from 'framer-motion';
 
 const Footer: React.FC = () => {
   return (
-    <footer style={{ backgroundColor: 'var(--claude-cream)', borderTop: '1px solid #E5E1DB' }}>
+    <footer className="border-t" style={{ backgroundColor: 'var(--claude-bg)', borderColor: 'var(--claude-border)' }}>
       <div className="container mx-auto px-4 py-10 md:py-16">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
           {/* Brand - full width on mobile */}
           <div className="col-span-2">
             <Link href="/">
               <motion.div
-                className="text-xl md:text-2xl font-bold inline-block"
+                className="text-xl md:text-2xl font-normal inline-block"
                 style={{ 
-                  fontFamily: "'Source Serif 4', Georgia, serif",
-                  color: 'var(--claude-charcoal)'
+                  fontFamily: "'Georgia', 'Times New Roman', serif",
+                  color: 'var(--claude-text-greeting)'
                 }}
                 whileHover={{ scale: 1.02 }}
               >
-                Claude<span style={{ color: 'var(--claude-orange)' }}>RL</span>
+                Claude<span style={{ color: 'var(--claude-accent)' }}>RL</span>
               </motion.div>
             </Link>
             <p 
-              className="mt-3 md:mt-4 max-w-md leading-relaxed text-sm md:text-base"
+              className="mt-3 md:mt-4 max-w-md text-sm md:text-base"
               style={{ 
-                color: 'var(--claude-warm-gray)',
-                fontFamily: "'Plus Jakarta Sans', sans-serif"
+                color: 'var(--claude-text-secondary)',
+                lineHeight: 1.625
               }}
             >
               A 3D reinforcement learning sandbox where AI models learn to navigate challenges and evolve.
@@ -42,16 +42,15 @@ const Footer: React.FC = () => {
                 aria-label="Twitter"
               >
                 <motion.div 
-                  className="w-10 h-10 md:w-11 md:h-11 rounded-lg flex items-center justify-center"
+                  className="w-10 h-10 md:w-11 md:h-11 rounded-lg flex items-center justify-center border"
                   style={{
-                    backgroundColor: 'var(--claude-warm-white)',
-                    border: '1px solid #E5E1DB',
-                    color: 'var(--claude-warm-gray)'
+                    backgroundColor: 'var(--claude-bg-secondary)',
+                    borderColor: 'var(--claude-border)',
+                    color: 'var(--claude-text-secondary)'
                   }}
                   whileHover={{ 
-                    y: -3, 
-                    color: 'var(--claude-orange)',
-                    boxShadow: '0 8px 20px rgba(217, 119, 6, 0.1)' 
+                    color: 'var(--claude-accent)',
+                    backgroundColor: 'var(--claude-bg-hover)'
                   }}
                   whileTap={{ scale: 0.95 }}
                 >
@@ -66,8 +65,7 @@ const Footer: React.FC = () => {
             <h3 
               className="font-semibold mb-3 md:mb-4 text-sm md:text-base"
               style={{ 
-                fontFamily: "'Plus Jakarta Sans', sans-serif",
-                color: 'var(--claude-charcoal)'
+                color: 'var(--claude-text)'
               }}
             >
               Quick Links
@@ -85,8 +83,7 @@ const Footer: React.FC = () => {
                     href={link.href}
                     className="transition-colors text-xs md:text-sm hover:underline"
                     style={{ 
-                      color: 'var(--claude-warm-gray)',
-                      fontFamily: "'Plus Jakarta Sans', sans-serif"
+                      color: 'var(--claude-text-secondary)'
                     }}
                   >
                     {link.label}
@@ -101,8 +98,7 @@ const Footer: React.FC = () => {
             <h3 
               className="font-semibold mb-3 md:mb-4 text-sm md:text-base"
               style={{ 
-                fontFamily: "'Plus Jakarta Sans', sans-serif",
-                color: 'var(--claude-charcoal)'
+                color: 'var(--claude-text)'
               }}
             >
               Legal
@@ -114,8 +110,7 @@ const Footer: React.FC = () => {
                     href={link.href}
                     className="transition-colors text-xs md:text-sm hover:underline"
                     style={{ 
-                      color: 'var(--claude-warm-gray)',
-                      fontFamily: "'Plus Jakarta Sans', sans-serif"
+                      color: 'var(--claude-text-secondary)'
                     }}
                   >
                     {link.label}
@@ -127,12 +122,11 @@ const Footer: React.FC = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-8 md:mt-12 pt-6 md:pt-8" style={{ borderTop: '1px solid #E5E1DB' }}>
+        <div className="mt-8 md:mt-12 pt-6 md:pt-8 border-t" style={{ borderColor: 'var(--claude-border)' }}>
           <p 
             className="text-xs md:text-sm text-center md:text-left"
             style={{ 
-              color: 'var(--claude-warm-gray)',
-              fontFamily: "'Plus Jakarta Sans', sans-serif"
+              color: 'var(--claude-text-muted)'
             }}
           >
             © 2025 ClaudeRL. All rights reserved.

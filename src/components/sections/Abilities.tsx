@@ -78,12 +78,7 @@ const Abilities: React.FC = () => {
   const progressPercent = Math.round((unlockedCount / abilities.length) * 100);
 
   return (
-    <section className="py-16 md:py-32 bg-gray-50 relative overflow-hidden">
-      {/* Background decoration */}
-      <div className="absolute top-20 left-20 w-40 h-40 rounded-full bg-white border border-gray-100 hidden md:block" 
-        style={{ boxShadow: '20px 20px 60px rgba(0,0,0,0.04)' }} 
-      />
-      
+    <section className="py-16 md:py-32 relative overflow-hidden" style={{ backgroundColor: 'var(--claude-bg)' }}>
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -91,19 +86,19 @@ const Abilities: React.FC = () => {
           viewport={{ once: true }}
           className="text-center mb-12 md:mb-20"
         >
-          <p className="text-gray-400 text-xs md:text-sm font-medium tracking-widest uppercase mb-3 md:mb-4">
+          <p className="text-xs md:text-sm font-medium tracking-widest uppercase mb-3 md:mb-4" style={{ color: 'var(--claude-text-muted)' }}>
             Agent Capabilities
           </p>
           <h2 
-            className="text-3xl md:text-5xl lg:text-7xl font-black text-black mb-4 md:mb-6"
+            className="text-3xl md:text-5xl lg:text-7xl font-normal mb-4 md:mb-6"
             style={{ 
-              fontFamily: 'Inter, sans-serif',
-              textShadow: '2px 2px 0 #e5e5e5, 3px 3px 8px rgba(0,0,0,0.06)'
+              fontFamily: "'Georgia', 'Times New Roman', serif",
+              color: 'var(--claude-text-greeting)'
             }}
           >
             Abilities
           </h2>
-          <p className="text-base md:text-xl text-gray-500 max-w-xs md:max-w-2xl mx-auto">
+          <p className="text-base md:text-xl max-w-xs md:max-w-2xl mx-auto" style={{ color: 'var(--claude-text-secondary)' }}>
             AI agents unlock new capabilities as they overcome challenges
           </p>
         </motion.div>
@@ -126,68 +121,78 @@ const Abilities: React.FC = () => {
               >
                 <motion.div 
                   className={`
-                    relative bg-white rounded-2xl md:rounded-3xl p-4 md:p-6 h-full
+                    relative rounded-2xl md:rounded-3xl p-4 md:p-6 h-full
                     border-2 transition-colors duration-300
-                    ${isSelected ? 'border-black' : 'border-transparent'}
                     ${!ability.unlocked ? 'opacity-70' : ''}
                   `}
-                  whileHover={{ y: -8, boxShadow: '0 25px 50px rgba(0,0,0,0.1)' }}
-                  whileTap={{ scale: 0.98 }}
                   style={{ 
+                    backgroundColor: 'var(--claude-bg-secondary)',
+                    borderColor: isSelected ? 'var(--claude-accent)' : 'var(--claude-border)',
                     boxShadow: isSelected 
-                      ? '0 25px 50px rgba(0,0,0,0.12)' 
-                      : '0 10px 30px rgba(0,0,0,0.05)'
+                      ? '0 4px 12px rgba(0, 0, 0, 0.5)' 
+                      : '0 1px 3px rgba(0, 0, 0, 0.3)'
                   }}
+                  whileHover={{ y: -8, boxShadow: '0 4px 12px rgba(0, 0, 0, 0.5)' }}
+                  whileTap={{ scale: 0.98 }}
                 >
                   {/* Status badge */}
                   <div className="absolute -top-2 -right-2 md:-top-3 md:-right-3">
                     {ability.unlocked ? (
                       <div 
-                        className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-black flex items-center justify-center"
-                        style={{ boxShadow: '0 4px 12px rgba(0,0,0,0.2)' }}
+                        className="w-6 h-6 md:w-8 md:h-8 rounded-full flex items-center justify-center"
+                        style={{ 
+                          backgroundColor: 'var(--claude-accent)',
+                          boxShadow: '0 2px 6px rgba(0, 0, 0, 0.4)'
+                        }}
                       >
-                        <Check className="w-3 h-3 md:w-4 md:h-4 text-white" strokeWidth={3} />
+                        <Check className="w-3 h-3 md:w-4 md:h-4" strokeWidth={3} style={{ color: 'var(--claude-text)' }} />
                       </div>
                     ) : (
                       <div 
-                        className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-gray-200 flex items-center justify-center"
-                        style={{ boxShadow: '0 4px 12px rgba(0,0,0,0.08)' }}
+                        className="w-6 h-6 md:w-8 md:h-8 rounded-full flex items-center justify-center border"
+                        style={{ 
+                          backgroundColor: 'var(--claude-bg)',
+                          borderColor: 'var(--claude-border)',
+                          boxShadow: '0 2px 6px rgba(0, 0, 0, 0.4)'
+                        }}
                       >
-                        <Lock className="w-3 h-3 md:w-4 md:h-4 text-gray-400" strokeWidth={2.5} />
+                        <Lock className="w-3 h-3 md:w-4 md:h-4" strokeWidth={2.5} style={{ color: 'var(--claude-text-muted)' }} />
                       </div>
                     )}
                   </div>
 
                   {/* Icon */}
                   <div 
-                    className={`
-                      w-10 h-10 md:w-14 md:h-14 rounded-xl md:rounded-2xl flex items-center justify-center mb-3 md:mb-4
-                      ${ability.unlocked 
-                        ? 'bg-black text-white' 
-                        : 'bg-gray-100 text-gray-400 border border-gray-200'
-                      }
-                    `}
-                    style={ability.unlocked ? { boxShadow: '0 6px 20px rgba(0,0,0,0.2)' } : {}}
+                    className="w-10 h-10 md:w-14 md:h-14 rounded-xl md:rounded-2xl flex items-center justify-center mb-3 md:mb-4 border"
+                    style={ability.unlocked ? { 
+                      backgroundColor: 'var(--claude-accent)',
+                      borderColor: 'var(--claude-accent)',
+                      boxShadow: '0 2px 6px rgba(0, 0, 0, 0.4)'
+                    } : {
+                      backgroundColor: 'var(--claude-bg)',
+                      borderColor: 'var(--claude-border)'
+                    }}
                   >
-                    <Icon className="w-5 h-5 md:w-6 md:h-6" strokeWidth={2} />
+                    <Icon className="w-5 h-5 md:w-6 md:h-6" strokeWidth={2} style={{ color: ability.unlocked ? 'var(--claude-text)' : 'var(--claude-text-muted)' }} />
                   </div>
 
                   {/* Content */}
                   <h3 
-                    className={`font-bold text-sm md:text-base mb-1 ${ability.unlocked ? 'text-black' : 'text-gray-400'}`}
-                    style={{ fontFamily: 'Space Grotesk, sans-serif' }}
+                    className="font-semibold text-sm md:text-base mb-1"
+                    style={{ color: ability.unlocked ? 'var(--claude-text)' : 'var(--claude-text-muted)' }}
                   >
                     {ability.name}
                   </h3>
-                  <p className="text-gray-400 text-xs md:text-sm leading-relaxed line-clamp-2">
+                  <p className="text-xs md:text-sm leading-relaxed line-clamp-2" style={{ color: 'var(--claude-text-muted)' }}>
                     {ability.description}
                   </p>
 
                   {/* Progress indicator */}
                   <div className="mt-3 md:mt-4">
-                    <div className="h-1 md:h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                    <div className="h-1 md:h-1.5 rounded-full overflow-hidden" style={{ backgroundColor: 'var(--claude-bg)' }}>
                       <motion.div 
-                        className={`h-full rounded-full ${ability.unlocked ? 'bg-black' : 'bg-gray-200'}`}
+                        className="h-full rounded-full"
+                        style={{ backgroundColor: ability.unlocked ? 'var(--claude-accent)' : 'var(--claude-border)' }}
                         initial={{ width: 0 }}
                         whileInView={{ width: ability.unlocked ? '100%' : '0%' }}
                         viewport={{ once: true }}
@@ -218,50 +223,61 @@ const Abilities: React.FC = () => {
 
                 return (
                   <div 
-                    className="bg-white rounded-2xl md:rounded-3xl p-6 md:p-10 border border-gray-100"
-                    style={{ boxShadow: '0 20px 50px rgba(0,0,0,0.08)' }}
+                    className="rounded-2xl md:rounded-3xl p-6 md:p-10 border"
+                    style={{ 
+                      backgroundColor: 'var(--claude-bg-secondary)',
+                      borderColor: 'var(--claude-border)',
+                      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.5)'
+                    }}
                   >
                     <div className="flex flex-col md:flex-row gap-6 md:gap-10">
                       {/* Icon */}
                       <div 
-                        className={`
-                          w-16 h-16 md:w-20 md:h-20 rounded-2xl md:rounded-3xl flex items-center justify-center shrink-0
-                          ${ability.unlocked ? 'bg-black text-white' : 'bg-gray-100 text-gray-400'}
-                        `}
-                        style={ability.unlocked ? { boxShadow: '0 10px 30px rgba(0,0,0,0.2)' } : {}}
+                        className="w-16 h-16 md:w-20 md:h-20 rounded-2xl md:rounded-3xl flex items-center justify-center shrink-0 border"
+                        style={ability.unlocked ? { 
+                          backgroundColor: 'var(--claude-accent)',
+                          borderColor: 'var(--claude-accent)',
+                          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.4)'
+                        } : {
+                          backgroundColor: 'var(--claude-bg)',
+                          borderColor: 'var(--claude-border)'
+                        }}
                       >
-                        <Icon className="w-8 h-8 md:w-10 md:h-10" strokeWidth={1.5} />
+                        <Icon className="w-8 h-8 md:w-10 md:h-10" strokeWidth={1.5} style={{ color: ability.unlocked ? 'var(--claude-text)' : 'var(--claude-text-muted)' }} />
                       </div>
 
                       {/* Content */}
                       <div className="flex-1">
                         <div className="flex items-center gap-3 mb-3">
                           <h3 
-                            className="text-xl md:text-2xl font-bold text-black"
-                            style={{ fontFamily: 'Space Grotesk, sans-serif' }}
+                            className="text-xl md:text-2xl font-semibold"
+                            style={{ color: 'var(--claude-text)' }}
                           >
                             {ability.name}
                           </h3>
                           <span 
-                            className={`
-                              px-3 py-1 rounded-full text-xs font-bold
-                              ${ability.unlocked 
-                                ? 'bg-black text-white' 
-                                : 'bg-gray-100 text-gray-500 border border-gray-200'
-                              }
-                            `}
+                            className="px-3 py-1 rounded-full text-xs font-semibold border"
+                            style={ability.unlocked ? {
+                              backgroundColor: 'var(--claude-accent)',
+                              color: 'var(--claude-text)',
+                              borderColor: 'var(--claude-accent)'
+                            } : {
+                              backgroundColor: 'var(--claude-bg)',
+                              color: 'var(--claude-text-muted)',
+                              borderColor: 'var(--claude-border)'
+                            }}
                           >
                             {ability.unlocked ? 'Unlocked' : 'Locked'}
                           </span>
                         </div>
                         
-                        <p className="text-gray-500 leading-relaxed mb-4 text-sm md:text-base">
+                        <p className="leading-relaxed mb-4 text-sm md:text-base" style={{ color: 'var(--claude-text-secondary)' }}>
                           {ability.details}
                         </p>
 
                         <div className="flex items-center gap-2 text-sm">
-                          <span className="text-gray-400">Unlocked by:</span>
-                          <span className="font-medium text-black">{ability.unlockedBy}</span>
+                          <span style={{ color: 'var(--claude-text-muted)' }}>Unlocked by:</span>
+                          <span className="font-medium" style={{ color: 'var(--claude-text)' }}>{ability.unlockedBy}</span>
                         </div>
                       </div>
                     </div>
@@ -281,8 +297,12 @@ const Abilities: React.FC = () => {
           className="flex justify-center"
         >
           <div 
-            className="bg-white rounded-2xl md:rounded-3xl p-6 md:p-8 inline-block border border-gray-100"
-            style={{ boxShadow: '0 15px 40px rgba(0,0,0,0.06)' }}
+            className="rounded-2xl md:rounded-3xl p-6 md:p-8 inline-block border"
+            style={{ 
+              backgroundColor: 'var(--claude-bg-secondary)',
+              borderColor: 'var(--claude-border)',
+              boxShadow: '0 1px 3px rgba(0, 0, 0, 0.3)'
+            }}
           >
             <div className="flex items-center gap-6 md:gap-10">
               {/* Progress circle */}
@@ -293,7 +313,7 @@ const Abilities: React.FC = () => {
                     cy="50%"
                     r="45%"
                     fill="none"
-                    stroke="#f3f4f6"
+                    stroke="var(--claude-bg)"
                     strokeWidth="8"
                   />
                   <motion.circle
@@ -301,7 +321,7 @@ const Abilities: React.FC = () => {
                     cy="50%"
                     r="45%"
                     fill="none"
-                    stroke="#000"
+                    stroke="var(--claude-accent)"
                     strokeWidth="8"
                     strokeLinecap="round"
                     initial={{ pathLength: 0 }}
@@ -315,20 +335,20 @@ const Abilities: React.FC = () => {
                   />
                 </svg>
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-2xl md:text-3xl font-black text-black">{progressPercent}%</span>
+                  <span className="text-2xl md:text-3xl font-semibold" style={{ color: 'var(--claude-text)' }}>{progressPercent}%</span>
                 </div>
               </div>
 
               {/* Stats */}
               <div>
-                <div className="text-3xl md:text-4xl font-black text-black mb-1">
-                  {unlockedCount}<span className="text-gray-300">/{abilities.length}</span>
+                <div className="text-3xl md:text-4xl font-semibold mb-1" style={{ color: 'var(--claude-text)' }}>
+                  {unlockedCount}<span style={{ color: 'var(--claude-text-muted)' }}>/{abilities.length}</span>
                 </div>
-                <p className="text-gray-500 text-sm md:text-base mb-3">Abilities Unlocked</p>
+                <p className="text-sm md:text-base mb-3" style={{ color: 'var(--claude-text-secondary)' }}>Abilities Unlocked</p>
                 
                 <div className="flex items-center gap-2 text-sm">
-                  <span className="text-gray-400">Next:</span>
-                  <span className="font-bold text-black flex items-center gap-1">
+                  <span style={{ color: 'var(--claude-text-muted)' }}>Next:</span>
+                  <span className="font-semibold flex items-center gap-1" style={{ color: 'var(--claude-text)' }}>
                     {abilities.find(a => !a.unlocked)?.name || 'All Complete'}
                     <ChevronRight className="w-4 h-4" />
                   </span>

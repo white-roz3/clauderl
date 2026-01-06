@@ -1,38 +1,60 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Source+Serif+4:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 @import "tailwindcss";
 
 :root {
-  --background: #FAF9F7;
-  --foreground: #1a1a1a;
+  /* Claude.ai Dark Theme Color Palette */
+  --claude-bg: #2F2F2C;
+  --claude-bg-secondary: #3D3D3A;
+  --claude-bg-hover: #454542;
+  --claude-text: #ECECEA;
+  --claude-text-secondary: #A3A39E;
+  --claude-text-muted: #7A7A75;
+  --claude-text-greeting: #C4A982;
+  --claude-accent: #C27551;
+  --claude-accent-hover: #D4856A;
+  --claude-border: #4A4A46;
   
-  /* Claude/Anthropic brand colors */
-  --claude-orange: #D97706;
-  --claude-cream: #FAF9F7;
-  --claude-warm-white: #FEFCF9;
-  --claude-charcoal: #1a1a1a;
-  --claude-warm-gray: #6B6B6B;
+  /* Legacy support */
+  --background: var(--claude-bg);
+  --foreground: var(--claude-text);
+  --claude-orange: var(--claude-accent);
+  --claude-cream: var(--claude-bg);
+  --claude-warm-white: var(--claude-bg-secondary);
+  --claude-charcoal: var(--claude-text);
+  --claude-warm-gray: var(--claude-text-secondary);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-background: var(--claude-bg);
+  --color-foreground: var(--claude-text);
   
-  /* Warm grayscale inspired by Claude's aesthetic */
-  --color-gray-50: #FEFCF9;
-  --color-gray-100: #FAF9F7;
-  --color-gray-200: #F0EDE8;
-  --color-gray-300: #E5E1DB;
-  --color-gray-400: #B8B4AD;
-  --color-gray-500: #8A8680;
-  --color-gray-600: #6B6B6B;
-  --color-gray-700: #4A4A4A;
-  --color-gray-800: #2D2D2D;
-  --color-gray-900: #1a1a1a;
-  --color-gray-950: #0D0D0D;
+  /* Claude.ai dark theme color system */
+  --color-claude-bg: var(--claude-bg);
+  --color-claude-bg-secondary: var(--claude-bg-secondary);
+  --color-claude-bg-hover: var(--claude-bg-hover);
+  --color-claude-text: var(--claude-text);
+  --color-claude-text-secondary: var(--claude-text-secondary);
+  --color-claude-text-muted: var(--claude-text-muted);
+  --color-claude-text-greeting: var(--claude-text-greeting);
+  --color-claude-accent: var(--claude-accent);
+  --color-claude-accent-hover: var(--claude-accent-hover);
+  --color-claude-border: var(--claude-border);
   
-  /* Anthropic-style typography */
-  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-  --font-display: 'Source Serif 4', Georgia, serif;
+  /* Warm dark grayscale matching Claude.ai */
+  --color-gray-50: #7A7A75;
+  --color-gray-100: #A3A39E;
+  --color-gray-200: #ECECEA;
+  --color-gray-300: #4A4A46;
+  --color-gray-400: #454542;
+  --color-gray-500: #3D3D3A;
+  --color-gray-600: #2F2F2C;
+  --color-gray-700: #2A2A27;
+  --color-gray-800: #252522;
+  --color-gray-900: #1F1F1C;
+  --color-gray-950: #1A1A17;
+  
+  /* Typography - Claude.ai style */
+  --font-sans: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+  --font-serif: 'Georgia', 'Times New Roman', serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
 }
 
@@ -68,22 +90,26 @@
   transform: translateY(-8px) rotateX(5deg) rotateY(-5deg);
 }
 
+/* Claude.ai subtle shadows for dark theme */
+.shadow-claude {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.shadow-claude-md {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+.shadow-claude-lg {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+/* Legacy 3D shadows - updated for dark theme */
 .shadow-3d {
-  box-shadow: 
-    0 1px 2px rgba(0,0,0,0.07),
-    0 2px 4px rgba(0,0,0,0.07),
-    0 4px 8px rgba(0,0,0,0.07),
-    0 8px 16px rgba(0,0,0,0.07),
-    0 16px 32px rgba(0,0,0,0.07);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 .shadow-3d-lg {
-  box-shadow: 
-    0 2px 4px rgba(0,0,0,0.05),
-    0 4px 8px rgba(0,0,0,0.05),
-    0 8px 16px rgba(0,0,0,0.05),
-    0 16px 32px rgba(0,0,0,0.05),
-    0 32px 64px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
 }
 
 .shadow-3d-hover {
@@ -104,44 +130,65 @@
   perspective: 1000px;
 }
 
+/* Removed heavy 3D text shadow - Claude.ai uses clean typography */
 .text-3d {
-  text-shadow: 
-    1px 1px 0 #e5e5e5,
-    2px 2px 0 #d4d4d4,
-    3px 3px 0 #c4c4c4,
-    4px 4px 0 #b4b4b4,
-    5px 5px 10px rgba(0,0,0,0.1);
+  /* No text shadow for Claude.ai aesthetic */
 }
 
 body {
-  background: var(--claude-cream);
-  color: var(--claude-charcoal);
+  background: var(--claude-bg);
+  color: var(--claude-text);
   font-family: var(--font-sans);
-  line-height: 1.6;
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 ::selection {
-  background: var(--claude-orange);
-  color: #ffffff;
+  background: var(--claude-accent);
+  color: var(--claude-text);
 }
 
-/* Claude brand accent utilities */
+/* Claude.ai utility classes */
+.text-claude-accent {
+  color: var(--claude-accent);
+}
+
+.bg-claude-primary {
+  background-color: var(--claude-bg);
+}
+
+.bg-claude-secondary {
+  background-color: var(--claude-bg-secondary);
+}
+
+.bg-claude-tertiary {
+  background-color: var(--claude-bg-tertiary);
+}
+
+.border-claude {
+  border-color: var(--claude-border);
+}
+
+.border-claude-subtle {
+  border-color: var(--claude-border-subtle);
+}
+
+/* Legacy support */
 .text-claude-orange {
-  color: var(--claude-orange);
+  color: var(--claude-accent);
 }
 
 .bg-claude-cream {
-  background-color: var(--claude-cream);
+  background-color: var(--claude-bg);
 }
 
 .bg-claude-warm-white {
-  background-color: var(--claude-warm-white);
+  background-color: var(--claude-bg-secondary);
 }
 
 .border-claude-orange {
-  border-color: var(--claude-orange);
+  border-color: var(--claude-accent);
 }
 
 /* Isometric helpers */
@@ -153,19 +200,17 @@ body {
   transform-style: preserve-3d;
 }
 
-/* Neumorphic style */
+/* Neumorphic style - updated for dark theme */
 .neumorphic {
-  background: #f0f0f0;
+  background: var(--claude-bg-secondary);
   box-shadow: 
-    8px 8px 16px rgba(0,0,0,0.1),
-    -8px -8px 16px rgba(255,255,255,0.9);
+    0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 .neumorphic-inset {
-  background: #f0f0f0;
+  background: var(--claude-bg-secondary);
   box-shadow: 
-    inset 4px 4px 8px rgba(0,0,0,0.1),
-    inset -4px -4px 8px rgba(255,255,255,0.9);
+    inset 0 1px 2px rgba(0, 0, 0, 0.4);
 }
 
 /* Layered paper effect */
@@ -185,10 +230,10 @@ body {
 
 .paper-stack::before {
   transform: rotate(-2deg) translateY(4px);
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 .paper-stack::after {
   transform: rotate(1deg) translateY(8px);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
 }
