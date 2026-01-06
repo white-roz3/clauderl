@@ -14,3 +14,9 @@ node_modules
 # Git
 .git
 
+# Large Unity builds - exclude from direct upload
+public/Scenes
+public/**/*.unityweb
+public/**/*.wasm
+public/**/*.data
+
