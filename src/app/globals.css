@@ -1,0 +1,194 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Source+Serif+4:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import "tailwindcss";
+
+:root {
+  --background: #FAF9F7;
+  --foreground: #1a1a1a;
+  
+  /* Claude/Anthropic brand colors */
+  --claude-orange: #D97706;
+  --claude-cream: #FAF9F7;
+  --claude-warm-white: #FEFCF9;
+  --claude-charcoal: #1a1a1a;
+  --claude-warm-gray: #6B6B6B;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  
+  /* Warm grayscale inspired by Claude's aesthetic */
+  --color-gray-50: #FEFCF9;
+  --color-gray-100: #FAF9F7;
+  --color-gray-200: #F0EDE8;
+  --color-gray-300: #E5E1DB;
+  --color-gray-400: #B8B4AD;
+  --color-gray-500: #8A8680;
+  --color-gray-600: #6B6B6B;
+  --color-gray-700: #4A4A4A;
+  --color-gray-800: #2D2D2D;
+  --color-gray-900: #1a1a1a;
+  --color-gray-950: #0D0D0D;
+  
+  /* Anthropic-style typography */
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-display: 'Source Serif 4', Georgia, serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotateX(0deg) rotateY(0deg); }
+  50% { transform: translateY(-10px) rotateX(5deg) rotateY(5deg); }
+}
+
+@keyframes rotate3d {
+  from { transform: rotateY(0deg); }
+  to { transform: rotateY(360deg); }
+}
+
+@keyframes subtle-float {
+  0%, 100% { transform: translateY(0) translateZ(0); }
+  50% { transform: translateY(-8px) translateZ(20px); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-rotate3d {
+  animation: rotate3d 20s linear infinite;
+}
+
+.card-3d {
+  transform-style: preserve-3d;
+  transition: transform 0.3s ease;
+}
+
+.card-3d:hover {
+  transform: translateY(-8px) rotateX(5deg) rotateY(-5deg);
+}
+
+.shadow-3d {
+  box-shadow: 
+    0 1px 2px rgba(0,0,0,0.07),
+    0 2px 4px rgba(0,0,0,0.07),
+    0 4px 8px rgba(0,0,0,0.07),
+    0 8px 16px rgba(0,0,0,0.07),
+    0 16px 32px rgba(0,0,0,0.07);
+}
+
+.shadow-3d-lg {
+  box-shadow: 
+    0 2px 4px rgba(0,0,0,0.05),
+    0 4px 8px rgba(0,0,0,0.05),
+    0 8px 16px rgba(0,0,0,0.05),
+    0 16px 32px rgba(0,0,0,0.05),
+    0 32px 64px rgba(0,0,0,0.1);
+}
+
+.shadow-3d-hover {
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.shadow-3d-hover:hover {
+  transform: translateY(-12px) scale(1.02);
+  box-shadow: 
+    0 4px 8px rgba(0,0,0,0.04),
+    0 8px 16px rgba(0,0,0,0.04),
+    0 16px 32px rgba(0,0,0,0.06),
+    0 32px 64px rgba(0,0,0,0.08),
+    0 64px 128px rgba(0,0,0,0.1);
+}
+
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.text-3d {
+  text-shadow: 
+    1px 1px 0 #e5e5e5,
+    2px 2px 0 #d4d4d4,
+    3px 3px 0 #c4c4c4,
+    4px 4px 0 #b4b4b4,
+    5px 5px 10px rgba(0,0,0,0.1);
+}
+
+body {
+  background: var(--claude-cream);
+  color: var(--claude-charcoal);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: var(--claude-orange);
+  color: #ffffff;
+}
+
+/* Claude brand accent utilities */
+.text-claude-orange {
+  color: var(--claude-orange);
+}
+
+.bg-claude-cream {
+  background-color: var(--claude-cream);
+}
+
+.bg-claude-warm-white {
+  background-color: var(--claude-warm-white);
+}
+
+.border-claude-orange {
+  border-color: var(--claude-orange);
+}
+
+/* Isometric helpers */
+.isometric {
+  transform: rotateX(60deg) rotateZ(-45deg);
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+/* Neumorphic style */
+.neumorphic {
+  background: #f0f0f0;
+  box-shadow: 
+    8px 8px 16px rgba(0,0,0,0.1),
+    -8px -8px 16px rgba(255,255,255,0.9);
+}
+
+.neumorphic-inset {
+  background: #f0f0f0;
+  box-shadow: 
+    inset 4px 4px 8px rgba(0,0,0,0.1),
+    inset -4px -4px 8px rgba(255,255,255,0.9);
+}
+
+/* Layered paper effect */
+.paper-stack {
+  position: relative;
+}
+
+.paper-stack::before,
+.paper-stack::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: white;
+  border-radius: inherit;
+  z-index: -1;
+}
+
+.paper-stack::before {
+  transform: rotate(-2deg) translateY(4px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.paper-stack::after {
+  transform: rotate(1deg) translateY(8px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+}

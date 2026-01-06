@@ -1,0 +1,16 @@
+# Dependencies - Railway will install these
+node_modules
+
+# Development files
+.next
+.turbo
+*.log
+.DS_Store
+
+# Editor
+.vscode
+.idea
+
+# Git
+.git
+
