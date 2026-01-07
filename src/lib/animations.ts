@@ -4,28 +4,28 @@ export const fadeInUp = {
   initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0 },
   exit: { opacity: 0, y: -20 },
-  transition: { duration: 0.5, ease: 'easeOut' }
+  transition: { duration: 0.5, ease: 'easeOut' as const }
 };
 
 export const fadeIn = {
   initial: { opacity: 0 },
   animate: { opacity: 1 },
   exit: { opacity: 0 },
-  transition: { duration: 0.3, ease: 'easeOut' }
+  transition: { duration: 0.3, ease: 'easeOut' as const }
 };
 
 export const slideInFromLeft = {
   initial: { opacity: 0, x: -20 },
   animate: { opacity: 1, x: 0 },
   exit: { opacity: 0, x: -20 },
-  transition: { duration: 0.4, ease: 'easeOut' }
+  transition: { duration: 0.4, ease: 'easeOut' as const }
 };
 
 export const slideInFromRight = {
   initial: { opacity: 0, x: 20 },
   animate: { opacity: 1, x: 0 },
   exit: { opacity: 0, x: 20 },
-  transition: { duration: 0.4, ease: 'easeOut' }
+  transition: { duration: 0.4, ease: 'easeOut' as const }
 };
 
 export const scaleOnHover = {
@@ -63,7 +63,7 @@ export const staggerItem = {
   animate: { 
     opacity: 1, 
     y: 0,
-    transition: { duration: 0.5, ease: 'easeOut' }
+    transition: { duration: 0.5, ease: 'easeOut' as const }
   }
 };
 
@@ -78,7 +78,7 @@ export const pulseAnimation = {
     transition: {
       duration: 2,
       repeat: Infinity,
-      ease: 'easeInOut'
+      ease: 'easeInOut' as const
     }
   }
 };
@@ -89,7 +89,7 @@ export const floatingAnimation = {
     transition: {
       duration: 3,
       repeat: Infinity,
-      ease: 'easeInOut'
+      ease: 'easeInOut' as const
     }
   }
 };
@@ -98,21 +98,21 @@ export const pageTransition = {
   initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0 },
   exit: { opacity: 0, y: -20 },
-  transition: { duration: 0.4, ease: 'easeInOut' }
+  transition: { duration: 0.4, ease: 'easeInOut' as const }
 };
 
 export const modalAnimation = {
   initial: { opacity: 0, scale: 0.9 },
   animate: { opacity: 1, scale: 1 },
   exit: { opacity: 0, scale: 0.9 },
-  transition: { duration: 0.2, ease: 'easeOut' }
+  transition: { duration: 0.2, ease: 'easeOut' as const }
 };
 
 export const accordionAnimation = {
   initial: { height: 0, opacity: 0 },
   animate: { height: 'auto', opacity: 1 },
   exit: { height: 0, opacity: 0 },
-  transition: { duration: 0.3, ease: 'easeInOut' }
+  transition: { duration: 0.3, ease: 'easeInOut' as const }
 };
 
 // 3D specific animations
@@ -122,7 +122,7 @@ export const rotate3D = {
     transition: {
       duration: 20,
       repeat: Infinity,
-      ease: 'linear'
+      ease: 'linear' as const
     }
   }
 };
@@ -133,7 +133,7 @@ export const float3D = {
     transition: {
       duration: 4,
       repeat: Infinity,
-      ease: 'easeInOut'
+      ease: 'easeInOut' as const
     }
   }
 };
