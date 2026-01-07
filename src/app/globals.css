@@ -1,43 +1,82 @@
 @import "tailwindcss";
 
 :root {
-  /* Claude.ai Dark Theme Color Palette */
-  --claude-bg: #2F2F2C;
-  --claude-bg-secondary: #3D3D3A;
-  --claude-bg-hover: #454542;
-  --claude-text: #ECECEA;
-  --claude-text-secondary: #A3A39E;
-  --claude-text-muted: #7A7A75;
-  --claude-text-greeting: #C4A982;
-  --claude-accent: #C27551;
-  --claude-accent-hover: #D4856A;
-  --claude-border: #4A4A46;
+  /* Claude.ai Dark Theme - Primary Palette */
+  --bg-primary: #2F2F2C;
+  --bg-secondary: #3D3D3A;
+  --bg-tertiary: #454542;
+  --bg-hover: #4A4A46;
+  
+  /* Text Colors */
+  --text-primary: #ECECEA;
+  --text-secondary: #A3A39E;
+  --text-muted: #7A7A75;
+  --text-accent: #C4A982;
+  
+  /* Accent */
+  --accent: #C27551;
+  --accent-hover: #D4856A;
+  
+  /* Borders */
+  --border: #4A4A46;
+  --border-subtle: #3D3D3A;
+  
+  /* Model Colors */
+  --color-opus: #C27551;
+  --color-gpt: #10A37F;
+  --color-grok: #A0A0A0;
+  --color-gemini: #4285F4;
+  
+  /* Legacy CSS variable names (for compatibility) */
+  --claude-bg: var(--bg-primary);
+  --claude-bg-secondary: var(--bg-secondary);
+  --claude-bg-tertiary: var(--bg-tertiary);
+  --claude-bg-hover: var(--bg-hover);
+  --claude-text: var(--text-primary);
+  --claude-text-secondary: var(--text-secondary);
+  --claude-text-muted: var(--text-muted);
+  --claude-text-greeting: var(--text-accent);
+  --claude-accent: var(--accent);
+  --claude-accent-hover: var(--accent-hover);
+  --claude-border: var(--border);
   
   /* Legacy support */
-  --background: var(--claude-bg);
-  --foreground: var(--claude-text);
-  --claude-orange: var(--claude-accent);
-  --claude-cream: var(--claude-bg);
-  --claude-warm-white: var(--claude-bg-secondary);
-  --claude-charcoal: var(--claude-text);
-  --claude-warm-gray: var(--claude-text-secondary);
+  --background: var(--bg-primary);
+  --foreground: var(--text-primary);
+  --claude-orange: var(--accent);
+  --claude-cream: var(--bg-primary);
+  --claude-warm-white: var(--bg-secondary);
+  --claude-charcoal: var(--text-primary);
+  --claude-warm-gray: var(--text-secondary);
+
+  /* Typography */
+  --font-sans: 'Söhne', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-serif: 'Tiempos Headline', Georgia, 'Times New Roman', serif;
+  --font-mono: 'Söhne Mono', Monaco, Consolas, 'JetBrains Mono', monospace;
 }
 
 @theme inline {
-  --color-background: var(--claude-bg);
-  --color-foreground: var(--claude-text);
+  --color-background: var(--bg-primary);
+  --color-foreground: var(--text-primary);
   
   /* Claude.ai dark theme color system */
-  --color-claude-bg: var(--claude-bg);
-  --color-claude-bg-secondary: var(--claude-bg-secondary);
-  --color-claude-bg-hover: var(--claude-bg-hover);
-  --color-claude-text: var(--claude-text);
-  --color-claude-text-secondary: var(--claude-text-secondary);
-  --color-claude-text-muted: var(--claude-text-muted);
-  --color-claude-text-greeting: var(--claude-text-greeting);
-  --color-claude-accent: var(--claude-accent);
-  --color-claude-accent-hover: var(--claude-accent-hover);
-  --color-claude-border: var(--claude-border);
+  --color-claude-bg: var(--bg-primary);
+  --color-claude-bg-secondary: var(--bg-secondary);
+  --color-claude-bg-tertiary: var(--bg-tertiary);
+  --color-claude-bg-hover: var(--bg-hover);
+  --color-claude-text: var(--text-primary);
+  --color-claude-text-secondary: var(--text-secondary);
+  --color-claude-text-muted: var(--text-muted);
+  --color-claude-text-greeting: var(--text-accent);
+  --color-claude-accent: var(--accent);
+  --color-claude-accent-hover: var(--accent-hover);
+  --color-claude-border: var(--border);
+  
+  /* Model colors */
+  --color-opus: var(--color-opus);
+  --color-gpt: var(--color-gpt);
+  --color-grok: var(--color-grok);
+  --color-gemini: var(--color-gemini);
   
   /* Warm dark grayscale matching Claude.ai */
   --color-gray-50: #7A7A75;
@@ -52,10 +91,10 @@
   --color-gray-900: #1F1F1C;
   --color-gray-950: #1A1A17;
   
-  /* Typography - Claude.ai style */
-  --font-sans: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-  --font-serif: 'Georgia', 'Times New Roman', serif;
-  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  /* Typography */
+  --font-sans: var(--font-sans);
+  --font-serif: var(--font-serif);
+  --font-mono: var(--font-mono);
 }
 
 @keyframes float {
@@ -73,12 +112,21 @@
   50% { transform: translateY(-8px) translateZ(20px); }
 }
 
+@keyframes pulse-glow {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
 .animate-float {
   animation: float 6s ease-in-out infinite;
 }
 
 .animate-rotate3d {
   animation: rotate3d 20s linear infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
 }
 
 .card-3d {
@@ -136,8 +184,8 @@
 }
 
 body {
-  background: var(--claude-bg);
-  color: var(--claude-text);
+  background: var(--bg-primary);
+  color: var(--text-primary);
   font-family: var(--font-sans);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
@@ -145,50 +193,79 @@ body {
 }
 
 ::selection {
-  background: var(--claude-accent);
-  color: var(--claude-text);
+  background: var(--accent);
+  color: var(--text-primary);
+}
+
+/* Typography utilities */
+.font-display {
+  font-family: var(--font-serif);
+}
+
+.font-body {
+  font-family: var(--font-sans);
+}
+
+.font-code {
+  font-family: var(--font-mono);
 }
 
 /* Claude.ai utility classes */
 .text-claude-accent {
-  color: var(--claude-accent);
+  color: var(--accent);
 }
 
 .bg-claude-primary {
-  background-color: var(--claude-bg);
+  background-color: var(--bg-primary);
 }
 
 .bg-claude-secondary {
-  background-color: var(--claude-bg-secondary);
+  background-color: var(--bg-secondary);
 }
 
 .bg-claude-tertiary {
-  background-color: var(--claude-bg-tertiary);
+  background-color: var(--bg-tertiary);
 }
 
 .border-claude {
-  border-color: var(--claude-border);
+  border-color: var(--border);
 }
 
 .border-claude-subtle {
-  border-color: var(--claude-border-subtle);
+  border-color: var(--border-subtle);
 }
+
+/* Model color utilities */
+.text-opus { color: var(--color-opus); }
+.text-gpt { color: var(--color-gpt); }
+.text-grok { color: var(--color-grok); }
+.text-gemini { color: var(--color-gemini); }
+
+.bg-opus { background-color: var(--color-opus); }
+.bg-gpt { background-color: var(--color-gpt); }
+.bg-grok { background-color: var(--color-grok); }
+.bg-gemini { background-color: var(--color-gemini); }
+
+.border-opus { border-color: var(--color-opus); }
+.border-gpt { border-color: var(--color-gpt); }
+.border-grok { border-color: var(--color-grok); }
+.border-gemini { border-color: var(--color-gemini); }
 
 /* Legacy support */
 .text-claude-orange {
-  color: var(--claude-accent);
+  color: var(--accent);
 }
 
 .bg-claude-cream {
-  background-color: var(--claude-bg);
+  background-color: var(--bg-primary);
 }
 
 .bg-claude-warm-white {
-  background-color: var(--claude-bg-secondary);
+  background-color: var(--bg-secondary);
 }
 
 .border-claude-orange {
-  border-color: var(--claude-accent);
+  border-color: var(--accent);
 }
 
 /* Isometric helpers */
@@ -202,15 +279,13 @@ body {
 
 /* Neumorphic style - updated for dark theme */
 .neumorphic {
-  background: var(--claude-bg-secondary);
-  box-shadow: 
-    0 1px 3px rgba(0, 0, 0, 0.3);
+  background: var(--bg-secondary);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 .neumorphic-inset {
-  background: var(--claude-bg-secondary);
-  box-shadow: 
-    inset 0 1px 2px rgba(0, 0, 0, 0.4);
+  background: var(--bg-secondary);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.4);
 }
 
 /* Layered paper effect */
@@ -223,7 +298,7 @@ body {
   content: '';
   position: absolute;
   inset: 0;
-  background: white;
+  background: var(--bg-secondary);
   border-radius: inherit;
   z-index: -1;
 }
@@ -236,4 +311,168 @@ body {
 .paper-stack::after {
   transform: rotate(1deg) translateY(8px);
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+/* Difficulty badges */
+.badge-standard {
+  background-color: var(--border);
+  color: var(--text-muted);
+}
+
+.badge-advanced {
+  background-color: rgba(163, 163, 158, 0.2);
+  color: var(--text-secondary);
+}
+
+.badge-expert {
+  background-color: rgba(194, 117, 81, 0.2);
+  color: var(--accent);
+}
+
+/* Leading indicator */
+.leading-indicator {
+  position: relative;
+}
+
+.leading-indicator::after {
+  content: '★ Leading';
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  font-size: 0.75rem;
+  color: var(--accent);
+  font-weight: 500;
+}
+
+/* Live indicator */
+.live-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.live-indicator::before {
+  content: '';
+  width: 0.5rem;
+  height: 0.5rem;
+  background-color: #22c55e;
+  border-radius: 50%;
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Table styles */
+.claude-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.claude-table th,
+.claude-table td {
+  padding: 1rem;
+  text-align: left;
+}
+
+.claude-table th {
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  font-weight: 500;
+  border-bottom: 1px solid var(--border);
+}
+
+.claude-table tbody tr {
+  border-bottom: 1px solid rgba(74, 74, 70, 0.5);
+  transition: background-color 0.15s ease;
+}
+
+.claude-table tbody tr:hover {
+  background-color: var(--bg-tertiary);
+}
+
+/* Button styles */
+.btn-primary {
+  background-color: var(--text-primary);
+  color: var(--bg-primary);
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  transition: all 0.15s ease;
+}
+
+.btn-primary:hover {
+  opacity: 0.9;
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  transition: all 0.15s ease;
+}
+
+.btn-secondary:hover {
+  background-color: var(--bg-hover);
+}
+
+.btn-accent {
+  background-color: var(--accent);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  transition: all 0.15s ease;
+}
+
+.btn-accent:hover {
+  background-color: var(--accent-hover);
+}
+
+/* Card styles */
+.claude-card {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  transition: all 0.15s ease;
+}
+
+.claude-card:hover {
+  border-color: rgba(194, 117, 81, 0.5);
+}
+
+/* Input styles */
+.claude-input {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  padding: 0.75rem 1rem;
+  color: var(--text-primary);
+  width: 100%;
+  transition: all 0.15s ease;
+}
+
+.claude-input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.claude-input::placeholder {
+  color: var(--text-muted);
+}
+
+/* Select styles */
+.claude-select {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  color: var(--text-primary);
+  cursor: pointer;
+}
+
+.claude-select:focus {
+  outline: none;
+  border-color: var(--accent);
 }

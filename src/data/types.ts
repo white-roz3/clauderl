@@ -1,6 +1,6 @@
 // Core Data Types
 export interface AIModel {
-  id: 'chatgpt' | 'claude' | 'grok' | 'gemini';
+  id: 'opus' | 'gpt' | 'grok' | 'gemini' | 'chatgpt' | 'claude';
   name: string;
   color: string;
   description: string;

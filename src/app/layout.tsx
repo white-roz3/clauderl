@@ -11,9 +11,9 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "ClaudeRL - 3D AI Reinforcement Learning Sandbox",
-  description: "A 3D reinforcement learning sandbox where AI models (Claude, ChatGPT, Grok, Gemini) learn to navigate courses as geometric shapes.",
-  keywords: ["AI", "reinforcement learning", "3D", "machine learning", "Claude", "Anthropic", "ChatGPT", "Grok", "Gemini"],
+  title: "ClaudeRL - Frontier Intelligence, Quantified",
+  description: "Watch Opus 4.5 outthink, outmaneuver, and outperform every frontier model in real-time. 15 adversarial environments. 4 frontier models. Real-time reasoning on display.",
+  keywords: ["AI", "reinforcement learning", "3D", "machine learning", "Claude", "Anthropic", "Opus 4.5", "GPT-4o", "Grok-2", "Gemini Ultra", "frontier models", "AI benchmark"],
   authors: [{ name: "ClaudeRL Team" }],
   creator: "ClaudeRL",
   publisher: "ClaudeRL",
@@ -28,23 +28,23 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://ClaudeRL.com",
-    title: "ClaudeRL - 3D AI Reinforcement Learning Sandbox",
-    description: "Watch AI models learn and adapt in 3D environments. Compare how Claude, ChatGPT, Grok, and Gemini navigate challenges.",
+    url: "https://clauderl.xyz",
+    title: "ClaudeRL - Frontier Intelligence, Quantified",
+    description: "Watch Opus 4.5 outthink, outmaneuver, and outperform every frontier model in real-time across 15 adversarial environments.",
     siteName: "ClaudeRL",
     images: [
       {
         url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "ClaudeRL - 3D AI Reinforcement Learning Sandbox",
+        alt: "ClaudeRL - Opus 4.5 Dominance Showcase",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "ClaudeRL - 3D AI Reinforcement Learning Sandbox",
-    description: "Watch AI models learn and adapt in 3D environments.",
+    title: "ClaudeRL - Frontier Intelligence, Quantified",
+    description: "Watch Opus 4.5 outthink, outmaneuver, and outperform every frontier model in real-time.",
     creator: "@ClaudeRL",
     images: ["/og-image.jpg"],
   },
@@ -64,10 +64,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${jetbrainsMono.variable} font-sans antialiased`}
-        style={{ backgroundColor: 'var(--claude-bg)', color: 'var(--claude-text)' }}
+        className={`${jetbrainsMono.variable} antialiased`}
+        style={{ 
+          fontFamily: 'var(--font-sans)',
+          backgroundColor: 'var(--bg-primary)', 
+          color: 'var(--text-primary)' 
+        }}
       >
-        <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 text-white px-4 py-2 rounded z-50" style={{ backgroundColor: 'var(--claude-accent)' }}>
+        <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 text-white px-4 py-2 rounded z-50" style={{ backgroundColor: 'var(--accent)' }}>
           Skip to main content
         </a>
 

@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Brain, RotateCcw, BarChart3 } from 'lucide-react';
+import { Brain, Eye, BarChart3, Shield } from 'lucide-react';
 import { staggerContainer, staggerItem } from '@/lib/animations';
 
 const HowItWorks: React.FC = () => {
@@ -10,25 +10,31 @@ const HowItWorks: React.FC = () => {
     {
       icon: Brain,
       title: 'Neural Cores',
-      description: 'Each shape houses a different AI model as its decision engine',
-      details: ['ChatGPT', 'Claude', 'Grok', 'Gemini'],
+      description: 'Each agent houses a frontier model as its decision engine',
+      details: ['Opus 4.5', 'GPT-4o', 'Grok-2', 'Gemini Ultra'],
     },
     {
-      icon: RotateCcw,
-      title: 'Learning Loop',
-      description: 'Agents learn through trial and error, developing new capabilities',
-      details: ['Reward signals', 'Adaptive behavior', 'Skill evolution'],
+      icon: Eye,
+      title: 'Real-Time Reasoning',
+      description: 'Watch decision processes as they happen with full transparency',
+      details: ['Reasoning traces', 'Alternative paths', 'Final choices'],
     },
     {
       icon: BarChart3,
-      title: 'Performance',
-      description: 'Fair comparison across time, attempts, and abilities unlocked',
-      details: ['Standardized scoring', 'Live rankings'],
+      title: 'Transparent Scoring',
+      description: 'Every metric is public and verifiable',
+      details: ['Win rates', 'Head-to-head records', 'Environment rankings'],
+    },
+    {
+      icon: Shield,
+      title: 'Fair Comparison',
+      description: 'Identical conditions for every model, no advantages',
+      details: ['Same inputs', 'Same time limits', 'No prompt engineering'],
     }
   ];
 
   return (
-    <section className="py-16 md:py-32 relative overflow-hidden" style={{ backgroundColor: 'var(--claude-bg)' }}>
+    <section className="py-16 md:py-32 relative overflow-hidden" style={{ backgroundColor: 'var(--bg-primary)' }}>
       <div className="container mx-auto px-4 relative z-10">
         <motion.div
           variants={staggerContainer}
@@ -37,15 +43,19 @@ const HowItWorks: React.FC = () => {
           viewport={{ once: true, margin: "-100px" }}
           className="text-center mb-10 md:mb-20"
         >
-          <motion.p variants={staggerItem} className="text-xs md:text-sm font-medium tracking-widest uppercase mb-3 md:mb-4" style={{ color: 'var(--claude-text-muted)' }}>
+          <motion.p 
+            variants={staggerItem} 
+            className="text-xs md:text-sm font-medium tracking-widest uppercase mb-3 md:mb-4" 
+            style={{ color: 'var(--text-muted)' }}
+          >
             System Architecture
           </motion.p>
           <motion.h2 
             variants={staggerItem}
             className="text-3xl md:text-5xl lg:text-7xl font-normal mb-4 md:mb-6"
             style={{ 
-              fontFamily: "'Georgia', 'Times New Roman', serif",
-              color: 'var(--claude-text-greeting)'
+              fontFamily: 'var(--font-serif)',
+              color: 'var(--text-accent)'
             }}
           >
             How It Works
@@ -53,9 +63,12 @@ const HowItWorks: React.FC = () => {
           <motion.p 
             variants={staggerItem}
             className="text-base md:text-xl max-w-xs md:max-w-2xl mx-auto"
-            style={{ color: 'var(--claude-text-secondary)' }}
+            style={{ 
+              fontFamily: 'var(--font-sans)',
+              color: 'var(--text-secondary)' 
+            }}
           >
-            Revolutionary AI evaluation through 3D reinforcement learning
+            The benchmark that benchmarks can&apos;t game
           </motion.p>
         </motion.div>
 
@@ -64,7 +77,7 @@ const HowItWorks: React.FC = () => {
           initial="initial"
           whileInView="animate"
           viewport={{ once: true, margin: "-50px" }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6"
         >
           {steps.map((step, index) => (
             <motion.div
@@ -73,23 +86,25 @@ const HowItWorks: React.FC = () => {
               className="group"
             >
               <motion.div 
-                className="rounded-2xl md:rounded-[2rem] p-6 md:p-10 h-full border relative"
+                className="rounded-2xl md:rounded-[2rem] p-6 md:p-8 h-full border relative"
                 style={{ 
-                  backgroundColor: 'var(--claude-bg-secondary)',
-                  borderColor: 'var(--claude-border)',
+                  backgroundColor: 'var(--bg-secondary)',
+                  borderColor: 'var(--border)',
                   boxShadow: '0 1px 3px rgba(0, 0, 0, 0.3)'
                 }}
                 whileHover={{ 
                   y: -12,
+                  borderColor: 'rgba(194, 117, 81, 0.5)',
                   boxShadow: '0 4px 12px rgba(0, 0, 0, 0.5)'
                 }}
               >
                 {/* Step number */}
                 <motion.div 
-                  className="absolute -top-4 -left-1 md:-top-6 md:-left-2 w-10 h-10 md:w-14 md:h-14 rounded-xl md:rounded-2xl font-bold text-base md:text-xl flex items-center justify-center"
+                  className="absolute -top-4 -left-1 md:-top-5 md:-left-2 w-10 h-10 md:w-12 md:h-12 rounded-xl md:rounded-2xl font-bold text-base md:text-lg flex items-center justify-center"
                   style={{ 
-                    backgroundColor: 'var(--claude-accent)',
-                    color: 'var(--claude-text)',
+                    fontFamily: 'var(--font-mono)',
+                    backgroundColor: 'var(--accent)',
+                    color: 'white',
                     boxShadow: '0 2px 6px rgba(0, 0, 0, 0.4)'
                   }}
                 >
@@ -98,20 +113,36 @@ const HowItWorks: React.FC = () => {
 
                 {/* Icon */}
                 <div 
-                  className="w-12 h-12 md:w-16 md:h-16 rounded-xl md:rounded-2xl border flex items-center justify-center mb-5 md:mb-8 mt-2 md:mt-4"
+                  className="w-12 h-12 md:w-14 md:h-14 rounded-xl md:rounded-2xl border flex items-center justify-center mb-5 md:mb-6 mt-2 md:mt-4"
                   style={{ 
-                    backgroundColor: 'var(--claude-bg)',
-                    borderColor: 'var(--claude-border)',
+                    backgroundColor: 'var(--bg-primary)',
+                    borderColor: 'var(--border)',
                     boxShadow: 'inset 0 1px 2px rgba(0, 0, 0, 0.4)'
                   }}
                 >
-                  <step.icon className="w-5 h-5 md:w-7 md:h-7" strokeWidth={1.5} style={{ color: 'var(--claude-text-secondary)' }} />
+                  <step.icon 
+                    className="w-5 h-5 md:w-6 md:h-6" 
+                    strokeWidth={1.5} 
+                    style={{ color: 'var(--text-secondary)' }} 
+                  />
                 </div>
 
-                <h3 className="text-lg md:text-2xl font-semibold mb-2 md:mb-4" style={{ color: 'var(--claude-text)' }}>
+                <h3 
+                  className="text-lg md:text-xl font-semibold mb-2 md:mb-3" 
+                  style={{ 
+                    fontFamily: 'var(--font-sans)',
+                    color: 'var(--text-primary)' 
+                  }}
+                >
                   {step.title}
                 </h3>
-                <p className="mb-4 md:mb-8 leading-relaxed text-sm md:text-lg" style={{ color: 'var(--claude-text-secondary)' }}>
+                <p 
+                  className="mb-4 md:mb-6 leading-relaxed text-sm md:text-base" 
+                  style={{ 
+                    fontFamily: 'var(--font-sans)',
+                    color: 'var(--text-secondary)' 
+                  }}
+                >
                   {step.description}
                 </p>
                 
@@ -120,11 +151,11 @@ const HowItWorks: React.FC = () => {
                   {step.details.map((detail) => (
                     <span 
                       key={detail}
-                      className="px-2.5 py-1 md:px-4 md:py-2 rounded-lg md:rounded-xl text-xs md:text-sm font-medium border"
+                      className="px-2.5 py-1 md:px-3 md:py-1.5 rounded-lg md:rounded-xl text-xs font-medium border"
                       style={{
-                        backgroundColor: 'var(--claude-bg)',
-                        color: 'var(--claude-text-secondary)',
-                        borderColor: 'var(--claude-border)'
+                        backgroundColor: 'var(--bg-primary)',
+                        color: 'var(--text-secondary)',
+                        borderColor: 'var(--border)'
                       }}
                     >
                       {detail}

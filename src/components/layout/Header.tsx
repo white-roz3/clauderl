@@ -1,6 +1,6 @@
 'use client';
 
-import { NAVIGATION_LINKS } from '@/lib/constants';
+import { NAVIGATION_LINKS, CTAS } from '@/lib/constants';
 import { Menu, X } from 'lucide-react';
 import Link from 'next/link';
 import React, { useState } from 'react';
@@ -17,8 +17,8 @@ const Header: React.FC = () => {
     <header 
       className="sticky top-0 z-50 border-b"
       style={{
-        backgroundColor: 'var(--claude-bg)',
-        borderColor: 'var(--claude-border)',
+        backgroundColor: 'var(--bg-primary)',
+        borderColor: 'var(--border)',
         boxShadow: '0 1px 3px rgba(0, 0, 0, 0.3)'
       }}
     >
@@ -29,14 +29,14 @@ const Header: React.FC = () => {
             <motion.div
               className="text-xl md:text-2xl font-normal"
               style={{ 
-                fontFamily: "'Georgia', 'Times New Roman', serif",
-                color: 'var(--claude-text-greeting)'
+                fontFamily: 'var(--font-serif)',
+                color: 'var(--text-accent)'
               }}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               transition={{ type: "spring", stiffness: 400 }}
             >
-              Claude<span style={{ color: 'var(--claude-accent)' }}>RL</span>
+              Claude<span style={{ color: 'var(--accent)' }}>RL</span>
             </motion.div>
           </Link>
 
@@ -57,11 +57,12 @@ const Header: React.FC = () => {
                   <motion.div
                     className="px-4 py-2 rounded-lg text-sm font-medium cursor-pointer transition-colors"
                     style={{ 
-                      color: 'var(--claude-text-secondary)'
+                      fontFamily: 'var(--font-sans)',
+                      color: 'var(--text-secondary)'
                     }}
                     whileHover={{ 
-                      color: 'var(--claude-text)',
-                      backgroundColor: 'var(--claude-bg-tertiary)'
+                      color: 'var(--text-primary)',
+                      backgroundColor: 'var(--bg-tertiary)'
                     }}
                     whileTap={{ scale: 0.98 }}
                   >
@@ -74,17 +75,19 @@ const Header: React.FC = () => {
 
           {/* CTA Button - Desktop only */}
           <div className="hidden lg:block">
-            <Link href="/livesim">
+            <Link href="/live">
               <motion.button 
-                className="px-6 py-2.5 text-white font-medium text-sm rounded-lg"
+                className="px-6 py-2.5 font-medium text-sm rounded-lg"
                 style={{
-                  backgroundColor: 'var(--claude-accent)',
+                  fontFamily: 'var(--font-sans)',
+                  backgroundColor: 'var(--accent)',
+                  color: 'white',
                   boxShadow: '0 1px 3px rgba(0, 0, 0, 0.3)'
                 }}
-                whileHover={{ backgroundColor: 'var(--claude-accent-hover)' }}
+                whileHover={{ backgroundColor: 'var(--accent-hover)' }}
                 whileTap={{ scale: 0.98 }}
               >
-                Launch
+                {CTAS.live}
               </motion.button>
             </Link>
           </div>
@@ -93,7 +96,7 @@ const Header: React.FC = () => {
           <motion.button
             className="lg:hidden p-2.5 rounded-lg"
             style={{
-              color: 'var(--claude-text)',
+              color: 'var(--text-primary)',
               backgroundColor: 'transparent'
             }}
             onClick={toggleMenu}
@@ -139,8 +142,8 @@ const Header: React.FC = () => {
               <nav 
                 className="flex flex-col gap-1 p-3 rounded-lg border"
                 style={{
-                  backgroundColor: 'var(--claude-bg-secondary)',
-                  borderColor: 'var(--claude-border)',
+                  backgroundColor: 'var(--bg-secondary)',
+                  borderColor: 'var(--border)',
                   boxShadow: '0 1px 3px rgba(0, 0, 0, 0.3)'
                 }}
               >
@@ -162,7 +165,8 @@ const Header: React.FC = () => {
                         {...linkProps}
                         className="flex items-center px-4 py-3 rounded-lg transition-all font-medium text-base"
                         style={{ 
-                          color: 'var(--claude-text)'
+                          fontFamily: 'var(--font-sans)',
+                          color: 'var(--text-primary)'
                         }}
                         onClick={() => setIsMenuOpen(false)}
                       >
@@ -175,21 +179,23 @@ const Header: React.FC = () => {
                 {/* Mobile CTA Button */}
                 <motion.div 
                   className="pt-3 mt-2"
-                  style={{ borderTop: '1px solid var(--claude-border)' }}
+                  style={{ borderTop: '1px solid var(--border)' }}
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.25 }}
                 >
-                  <Link href="/livesim" onClick={() => setIsMenuOpen(false)}>
+                  <Link href="/live" onClick={() => setIsMenuOpen(false)}>
                     <motion.button 
-                      className="w-full py-3.5 text-white font-medium rounded-lg text-base"
+                      className="w-full py-3.5 font-medium rounded-lg text-base"
                       style={{
-                        backgroundColor: 'var(--claude-accent)',
+                        fontFamily: 'var(--font-sans)',
+                        backgroundColor: 'var(--accent)',
+                        color: 'white',
                         boxShadow: '0 1px 3px rgba(0, 0, 0, 0.3)'
                       }}
                       whileTap={{ scale: 0.98 }}
                     >
-                      Launch Simulation
+                      {CTAS.live}
                     </motion.button>
                   </Link>
                 </motion.div>
