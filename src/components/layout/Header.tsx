@@ -75,7 +75,7 @@ const Header: React.FC = () => {
 
           {/* CTA Button - Desktop only */}
           <div className="hidden lg:block">
-            <Link href="/live">
+            <Link href="/livesim">
               <motion.button 
                 className="px-6 py-2.5 font-medium text-sm rounded-lg"
                 style={{

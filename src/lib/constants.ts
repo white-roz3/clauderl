@@ -378,7 +378,7 @@ export const FAQ_ITEMS = [
 // Navigation links - Rebranded
 export const NAVIGATION_LINKS = [
   { href: '/', label: 'Arena' },
-  { href: '/live', label: 'Live Match' },
+  { href: '/livesim', label: 'Live Match' },
   { href: '/challenges', label: 'Challenges' },
   { href: 'https://playground.clauderl.xyz', label: 'Sandbox' },
   { href: '/rankings', label: 'Rankings' },

@@ -109,7 +109,7 @@ export default function ChallengesPage() {
                     viewport={{ once: true }}
                     transition={{ delay: index * 0.05 }}
                   >
-                    <Link href={`/live?challenge=${env.slug}`}>
+                    <Link href={`/livesim?challenge=${env.slug}`}>
                       <motion.div
                         className="rounded-xl p-6 border h-full group cursor-pointer"
                         style={{ 

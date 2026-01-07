@@ -89,7 +89,7 @@ const Courses: React.FC = () => {
               variants={staggerItem}
               className="group"
             >
-              <Link href={`/live?challenge=${env.slug}`}>
+              <Link href={`/livesim?challenge=${env.slug}`}>
                 <motion.div 
                   className="rounded-2xl md:rounded-3xl overflow-hidden border h-full"
                   style={{ 

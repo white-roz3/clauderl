@@ -96,7 +96,7 @@ const Footer: React.FC = () => {
               </h4>
               <ul className="space-y-2 md:space-y-3">
                 {[
-                  { href: '/live', label: 'Live Arena' },
+                  { href: '/livesim', label: 'Live Arena' },
                   { href: '/challenges', label: 'Challenges' },
                   { href: '/rankings', label: 'Rankings' },
                 ].map((link) => (

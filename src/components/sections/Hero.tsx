@@ -62,7 +62,7 @@ const Hero: React.FC = () => {
             transition={{ duration: 0.6, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
             className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center mb-12 md:mb-16"
           >
-            <Link href="/live" className="w-full sm:w-auto">
+            <Link href="/livesim" className="w-full sm:w-auto">
               <motion.button 
                 className="w-full sm:w-auto px-8 py-3.5 font-medium text-base rounded-lg"
                 style={{ 

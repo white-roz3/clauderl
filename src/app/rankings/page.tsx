@@ -298,7 +298,7 @@ export default function RankingsPage() {
 
           {/* CTA */}
           <div className="text-center">
-            <Link href="/live">
+            <Link href="/livesim">
               <button 
                 className="px-8 py-4 font-medium text-lg rounded-lg inline-flex items-center gap-2 hover:opacity-90 transition-opacity"
                 style={{ 
