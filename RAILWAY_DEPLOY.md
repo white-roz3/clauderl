@@ -73,3 +73,4 @@ Once DNS propagates:
 - **If domain doesn't work**: Verify DNS records are correct
 - **SSL issues**: Wait 5-10 minutes after DNS propagation for SSL to provision
 
+

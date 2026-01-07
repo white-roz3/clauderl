@@ -1,9 +1,99 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { Crown, Trophy, TrendingUp, Activity, ArrowRight } from 'lucide-react';
 import { MODELS } from '@/lib/constants';
 import Link from 'next/link';
+import { useRef, useState } from 'react';
+import { FloatingOrb, FloatingParticles, Grid3D } from '@/components/ui/FloatingElements';
+
+// 3D Stat Card Component
+interface StatItem {
+  icon: React.ComponentType<{ className?: string; strokeWidth?: number }>;
+  value: string;
+  label: string;
+  detail: string;
+}
+
+function StatCard3D({ stat, index }: { stat: StatItem; index: number }) {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [rotateX, setRotateX] = useState(0);
+  const [rotateY, setRotateY] = useState(0);
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5;
+    const y = (e.clientY - rect.top) / rect.height - 0.5;
+    setRotateY(x * 15);
+    setRotateX(-y * 15);
+  };
+
+  const handleMouseLeave = () => {
+    setRotateX(0);
+    setRotateY(0);
+  };
+
+  return (
+    <motion.div
+      ref={cardRef}
+      initial={{ opacity: 0, y: 30, rotateX: -15 }}
+      animate={{ opacity: 1, y: 0, rotateX: 0 }}
+      transition={{ delay: 0.1 * index, duration: 0.6 }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{ perspective: 800 }}
+      className="group"
+    >
+      <motion.div
+        animate={{ rotateX, rotateY }}
+        transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+        className="rounded-2xl p-6 text-center border relative overflow-hidden"
+        style={{ 
+          backgroundColor: 'var(--bg-secondary)',
+          borderColor: 'var(--border)',
+          boxShadow: '0 4px 20px rgba(0, 0, 0, 0.3)',
+          transformStyle: 'preserve-3d',
+        }}
+      >
+        {/* Glare */}
+        <div 
+          className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+          style={{
+            background: 'linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 50%)',
+          }}
+        />
+        
+        <div 
+          className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4"
+          style={{ 
+            backgroundColor: 'var(--accent)',
+            boxShadow: '0 4px 15px rgba(194, 117, 81, 0.4)',
+            transform: 'translateZ(20px)',
+          }}
+        >
+          <stat.icon className="w-6 h-6 text-white" strokeWidth={1.5} />
+        </div>
+        <div 
+          className="text-2xl md:text-3xl font-semibold mb-1"
+          style={{ 
+            fontFamily: 'var(--font-mono)',
+            color: stat.label === 'Current Leader' ? 'var(--accent)' : 'var(--text-primary)',
+            transform: 'translateZ(15px)',
+          }}
+        >
+          {stat.value}
+        </div>
+        <div className="text-sm font-medium mb-1" style={{ color: 'var(--text-primary)', transform: 'translateZ(10px)' }}>
+          {stat.label}
+        </div>
+        <div className="text-xs" style={{ color: 'var(--text-muted)', transform: 'translateZ(5px)' }}>
+          {stat.detail}
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+}
 
 export default function RankingsPage() {
   // Simulated rankings data
@@ -30,27 +120,49 @@ export default function RankingsPage() {
   ];
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: 'var(--bg-primary)' }}>
-      <div className="py-16 md:py-24">
+    <div className="min-h-screen relative overflow-hidden" style={{ backgroundColor: 'var(--bg-primary)' }}>
+      {/* 3D Background Elements */}
+      <FloatingOrb color="var(--claude-accent)" size={250} x="5%" y="10%" delay={0} blur={80} />
+      <FloatingOrb color="#10A37F" size={180} x="85%" y="50%" delay={2} blur={60} />
+      <FloatingOrb color="#4285F4" size={120} x="75%" y="80%" delay={4} blur={50} />
+      <FloatingParticles count={10} color="var(--claude-accent)" />
+      <Grid3D opacity={0.03} />
+
+      <div className="py-16 md:py-24 relative z-10">
         <div className="container mx-auto px-4">
-          {/* Header */}
-          <div className="text-center mb-12 md:mb-16">
-            <p 
+          {/* Header with 3D text effect */}
+          <motion.div 
+            className="text-center mb-12 md:mb-16"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8 }}
+          >
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
               className="text-xs md:text-sm font-medium tracking-widest uppercase mb-3 md:mb-4"
               style={{ color: 'var(--text-muted)' }}
             >
               Performance Rankings
-            </p>
-            <h1
+            </motion.p>
+            <motion.h1
+              initial={{ opacity: 0, y: 30, rotateX: -20 }}
+              animate={{ opacity: 1, y: 0, rotateX: 0 }}
+              transition={{ delay: 0.2, duration: 0.8 }}
               className="text-4xl md:text-6xl lg:text-7xl font-normal mb-6"
               style={{ 
                 fontFamily: 'var(--font-serif)',
-                color: 'var(--text-accent)'
+                color: 'var(--text-accent)',
+                textShadow: '0 10px 30px rgba(0,0,0,0.3), 0 20px 60px rgba(194,117,81,0.15)',
               }}
             >
               Model Rankings
-            </h1>
-            <p
+            </motion.h1>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
               className="text-lg max-w-2xl mx-auto"
               style={{ 
                 fontFamily: 'var(--font-sans)',
@@ -58,62 +170,44 @@ export default function RankingsPage() {
               }}
             >
               Aggregated performance across all cognitive challenges. Updated after every match.
-            </p>
-          </div>
+            </motion.p>
+          </motion.div>
 
-          {/* Opus Leading Banner */}
-          <div
-            className="mb-8 p-6 rounded-xl border max-w-3xl mx-auto"
+          {/* Opus Leading Banner with 3D glow */}
+          <motion.div
+            initial={{ opacity: 0, y: 20, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ delay: 0.4 }}
+            whileHover={{ scale: 1.02, boxShadow: '0 20px 60px rgba(194, 117, 81, 0.25)' }}
+            className="mb-8 p-6 rounded-xl border max-w-3xl mx-auto relative overflow-hidden"
             style={{ 
               backgroundColor: 'rgba(194, 117, 81, 0.1)',
-              borderColor: 'rgba(194, 117, 81, 0.3)'
+              borderColor: 'rgba(194, 117, 81, 0.3)',
+              boxShadow: '0 10px 40px rgba(194, 117, 81, 0.1)',
             }}
           >
+            {/* Animated shine */}
+            <motion.div
+              className="absolute inset-0 opacity-30 pointer-events-none"
+              style={{
+                background: 'linear-gradient(90deg, transparent, rgba(194,117,81,0.3), transparent)',
+                backgroundSize: '200% 100%',
+              }}
+              animate={{ backgroundPosition: ['200% 0%', '-200% 0%'] }}
+              transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
+            />
             <p 
-              className="font-medium text-center"
+              className="font-medium text-center relative z-10"
               style={{ color: 'var(--accent)' }}
             >
               Opus 4.5 currently leads in 12 of 15 environments
             </p>
-          </div>
+          </motion.div>
 
-          {/* Stats Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-12">
-            {stats.map((stat) => (
-              <div
-                key={stat.label}
-                className="rounded-2xl p-6 text-center border hover:-translate-y-1 transition-transform"
-                style={{ 
-                  backgroundColor: 'var(--bg-secondary)',
-                  borderColor: 'var(--border)',
-                  boxShadow: '0 1px 3px rgba(0, 0, 0, 0.3)'
-                }}
-              >
-                <div 
-                  className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4"
-                  style={{ 
-                    backgroundColor: 'var(--accent)',
-                    boxShadow: '0 2px 6px rgba(0, 0, 0, 0.4)'
-                  }}
-                >
-                  <stat.icon className="w-6 h-6 text-white" strokeWidth={1.5} />
-                </div>
-                <div 
-                  className="text-2xl md:text-3xl font-semibold mb-1"
-                  style={{ 
-                    fontFamily: 'var(--font-mono)',
-                    color: stat.label === 'Current Leader' ? 'var(--accent)' : 'var(--text-primary)'
-                  }}
-                >
-                  {stat.value}
-                </div>
-                <div className="text-sm font-medium mb-1" style={{ color: 'var(--text-primary)' }}>
-                  {stat.label}
-                </div>
-                <div className="text-xs" style={{ color: 'var(--text-muted)' }}>
-                  {stat.detail}
-                </div>
-              </div>
+          {/* Stats Grid with 3D cards */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-12" style={{ perspective: '1000px' }}>
+            {stats.map((stat, index) => (
+              <StatCard3D key={stat.label} stat={stat} index={index} />
             ))}
           </div>
 
@@ -296,23 +390,44 @@ export default function RankingsPage() {
             </div>
           </div>
 
-          {/* CTA */}
-          <div className="text-center">
+          {/* CTA with 3D effect */}
+          <motion.div 
+            className="text-center"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6 }}
+            style={{ perspective: '600px' }}
+          >
             <Link href="/livesim">
-              <button 
-                className="px-8 py-4 font-medium text-lg rounded-lg inline-flex items-center gap-2 hover:opacity-90 transition-opacity"
+              <motion.button 
+                className="px-8 py-4 font-medium text-lg rounded-lg inline-flex items-center gap-2 relative overflow-hidden group"
                 style={{ 
                   fontFamily: 'var(--font-sans)',
                   backgroundColor: 'var(--accent)',
                   color: 'white',
-                  boxShadow: '0 1px 3px rgba(0, 0, 0, 0.3)'
+                  boxShadow: '0 10px 30px rgba(194, 117, 81, 0.4)',
                 }}
+                whileHover={{ 
+                  scale: 1.05, 
+                  rotateX: -5,
+                  boxShadow: '0 20px 50px rgba(194, 117, 81, 0.5)'
+                }}
+                whileTap={{ scale: 0.98 }}
               >
-                Watch Live Matches
-                <ArrowRight className="w-5 h-5" />
-              </button>
+                {/* Shine effect */}
+                <motion.span
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100"
+                  style={{
+                    background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)',
+                  }}
+                  animate={{ x: ['-100%', '100%'] }}
+                  transition={{ duration: 0.6, repeat: Infinity, repeatDelay: 2 }}
+                />
+                <span className="relative z-10">Watch Live Matches</span>
+                <ArrowRight className="w-5 h-5 relative z-10" />
+              </motion.button>
             </Link>
-          </div>
+          </motion.div>
         </div>
       </div>
     </div>

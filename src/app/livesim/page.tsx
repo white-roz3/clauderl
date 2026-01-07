@@ -20,10 +20,142 @@ import { SorterChatMessage } from '@/lib/sorter-ai-service';
 import { WalkerChatMessage } from '@/lib/walker-ai-service';
 import { WallclimbChatMessage } from '@/lib/wallclimb-ai-service';
 import { WormChatMessage } from '@/lib/worm-ai-service';
-import { motion } from 'framer-motion';
+import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 import { Suspense, useCallback, useEffect, useRef, useState } from 'react';
+
+// 3D Simulation Card Component
+interface SimulationCard3DProps {
+  course: SimCatalogItem;
+  index: number;
+  isAvailable: boolean;
+  isSelected: boolean;
+  onSelect: () => void;
+  thumbnailPath: string | null;
+}
+
+function SimulationCard3D({ course, index, isAvailable, isSelected, onSelect, thumbnailPath }: SimulationCard3DProps) {
+  const cardRef = useRef<HTMLButtonElement>(null);
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+
+  const mouseXSpring = useSpring(x, { stiffness: 200, damping: 20 });
+  const mouseYSpring = useSpring(y, { stiffness: 200, damping: 20 });
+
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ['8deg', '-8deg']);
+  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ['-8deg', '8deg']);
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!cardRef.current || !isAvailable) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const xPct = (e.clientX - rect.left) / rect.width - 0.5;
+    const yPct = (e.clientY - rect.top) / rect.height - 0.5;
+    x.set(xPct);
+    y.set(yPct);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
+
+  return (
+    <motion.button
+      ref={cardRef}
+      onClick={onSelect}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      disabled={!isAvailable}
+      initial={{ opacity: 0, y: 30, rotateX: -10 }}
+      animate={{ opacity: 1, y: 0, rotateX: 0 }}
+      transition={{ delay: index * 0.05, duration: 0.5 }}
+      className={`p-4 text-left rounded-xl group relative overflow-hidden ${
+        !isAvailable ? 'opacity-50 cursor-not-allowed' : ''
+      }`}
+      style={{ 
+        transformStyle: 'preserve-3d',
+        backgroundColor: isSelected ? 'var(--claude-accent)' : 'var(--claude-bg-tertiary)',
+        border: isSelected ? '2px solid var(--claude-accent)' : '1px solid var(--claude-border)',
+        boxShadow: isSelected 
+          ? '0 20px 40px rgba(194,117,81,0.4), 0 0 0 1px rgba(194,117,81,0.5)'
+          : '0 4px 20px rgba(0,0,0,0.2)'
+      }}
+    >
+      <motion.div
+        style={{
+          rotateX: isAvailable ? rotateX : 0,
+          rotateY: isAvailable ? rotateY : 0,
+          transformStyle: 'preserve-3d',
+        }}
+      >
+        {/* Glare effect */}
+        <div 
+          className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none rounded-xl"
+          style={{
+            background: 'linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 50%, transparent 100%)',
+          }}
+        />
+
+        <div className="flex justify-between items-start mb-2" style={{ transform: 'translateZ(10px)' }}>
+          <h3 className="font-medium text-sm" style={{ color: isSelected ? 'white' : 'var(--claude-text)' }}>
+            {course.name}
+          </h3>
+          {!isAvailable && (
+            <span className="px-2 py-0.5 text-xs rounded-full" style={{ backgroundColor: 'var(--claude-bg-hover)', color: 'var(--claude-text-muted)' }}>Soon</span>
+          )}
+        </div>
+
+        <div className="mb-3" style={{ transform: 'translateZ(20px)' }}>
+          {thumbnailPath ? (
+            <div className="relative w-full rounded-lg overflow-hidden group-hover:shadow-lg transition-shadow" style={{ aspectRatio: '16/9', backgroundColor: 'var(--claude-bg)' }}>
+              <Image
+                src={thumbnailPath}
+                alt={`${course.name} thumbnail`}
+                fill
+                className="object-cover transition-transform duration-300 group-hover:scale-105"
+                sizes="(max-width: 768px) 100vw, 33vw"
+              />
+              {/* Reflection effect */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+            </div>
+          ) : (
+            <div className="w-full rounded-lg flex items-center justify-center" style={{ aspectRatio: '16/9', backgroundColor: 'var(--claude-bg)' }}>
+              <div className="w-8 h-8 rounded-lg" style={{ backgroundColor: 'var(--claude-bg-hover)' }} />
+            </div>
+          )}
+        </div>
+
+        <p className="text-xs mb-3 line-clamp-2" style={{ color: isSelected ? 'rgba(255,255,255,0.8)' : 'var(--claude-text-secondary)', transform: 'translateZ(5px)' }}>
+          {course.synopsis}
+        </p>
+
+        <div className="flex flex-wrap gap-1" style={{ transform: 'translateZ(15px)' }}>
+          {course.skills.slice(0, 2).map((skill) => (
+            <span
+              key={skill}
+              className="px-2 py-1 text-xs rounded-md"
+              style={{ 
+                backgroundColor: isSelected ? 'rgba(255,255,255,0.2)' : 'var(--claude-bg)', 
+                color: isSelected ? 'white' : 'var(--claude-text-muted)' 
+              }}
+            >
+              {skill}
+            </span>
+          ))}
+          {course.skills.length > 2 && (
+            <span className="px-2 py-1 text-xs rounded-md" style={{ 
+              backgroundColor: isSelected ? 'rgba(255,255,255,0.2)' : 'var(--claude-bg)', 
+              color: isSelected ? 'white' : 'var(--claude-text-muted)' 
+            }}>
+              +{course.skills.length - 2}
+            </span>
+          )}
+        </div>
+      </motion.div>
+    </motion.button>
+  );
+}
 
 function LiveSimContent() {
   const searchParams = useSearchParams();
@@ -1377,7 +1509,7 @@ function LiveSimContent() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen" style={{ backgroundColor: 'var(--claude-bg)' }}>
       <div className="py-8 md:py-12">
         <div className="container mx-auto px-4">
           {/* Header */}
@@ -1386,42 +1518,46 @@ function LiveSimContent() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            <p className="text-gray-400 text-sm font-medium tracking-widest uppercase mb-3">
-              Real-time Simulation
+            <p className="text-sm font-medium tracking-widest uppercase mb-3" style={{ color: 'var(--claude-text-muted)' }}>
+              Live Arena
             </p>
             <h1 
-              className="text-4xl md:text-6xl font-black text-black mb-3"
+              className="text-4xl md:text-6xl font-normal mb-3"
               style={{ 
-                fontFamily: 'Inter, sans-serif',
-                textShadow: '2px 2px 0 #e5e5e5, 3px 3px 8px rgba(0,0,0,0.08)'
+                fontFamily: "'Tiempos Headline', Georgia, serif",
+                color: 'var(--claude-text-greeting)',
+                letterSpacing: '-0.02em'
               }}
             >
-              Live Sim
+              Live Match
             </h1>
-            <p className="text-lg text-gray-500 max-w-xl mx-auto">
-              Watch AI agents learn and evolve in real-time
+            <p className="text-lg max-w-xl mx-auto" style={{ color: 'var(--claude-text-secondary)' }}>
+              Watch frontier models compete in real-time
             </p>
           </motion.div>
 
           {/* Unified Simulation Viewport */}
           <div className="mb-8">
             <motion.div 
-              className="bg-white border border-gray-100 rounded-2xl p-4 md:p-6 overflow-hidden"
+              className="rounded-2xl p-4 md:p-6 overflow-hidden"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
-              style={{ boxShadow: '0 15px 40px rgba(0,0,0,0.06)' }}
+              style={{ 
+                backgroundColor: 'var(--claude-bg-secondary)',
+                border: '1px solid var(--claude-border)'
+              }}
             >
               {/* Current Course Title */}
               <div className="mb-4 flex items-center justify-between">
                 <h2 
-                  className="text-xl md:text-2xl font-bold text-black"
-                  style={{ fontFamily: 'Space Grotesk, sans-serif' }}
+                  className="text-xl md:text-2xl font-medium"
+                  style={{ color: 'var(--claude-text)' }}
                 >
                   {selectedCourse ? selectedCourse.name : 'Select a Simulation'}
                 </h2>
                 {selectedCourse && (
-                  <span className="px-3 py-1.5 bg-black text-white text-xs font-medium rounded-full">
+                  <span className="px-3 py-1.5 text-xs font-medium rounded-full" style={{ backgroundColor: 'var(--claude-accent)', color: 'white' }}>
                     Running
                   </span>
                 )}
@@ -1566,20 +1702,20 @@ function LiveSimContent() {
                     // Simulations with chat: Scoreboard + Unity Agent Log + Agents Chat
                     <div className="space-y-4">
                       {/* Unity Agent Log */}
-                      <div className="bg-gray-50 border border-gray-200 rounded-xl font-mono w-full overflow-hidden" style={{ aspectRatio: '16/6' }}>
+                      <div className="rounded-xl font-mono w-full overflow-hidden" style={{ aspectRatio: '16/6', backgroundColor: 'var(--claude-bg-tertiary)', border: '1px solid var(--claude-border)' }}>
                         {/* Panel header */}
-                        <div className="border-b border-gray-200 px-4 py-3 bg-white flex items-center justify-between">
-                          <h3 className="text-sm font-semibold text-black" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
+                        <div className="px-4 py-3 flex items-center justify-between" style={{ borderBottom: '1px solid var(--claude-border)', backgroundColor: 'var(--claude-bg-secondary)' }}>
+                          <h3 className="text-sm font-semibold" style={{ color: 'var(--claude-text)' }}>
                             Agent Log
                           </h3>
                           <div className="flex items-center gap-1.5">
                             <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-                            <span className="text-xs text-gray-500">Live</span>
+                            <span className="text-xs" style={{ color: 'var(--claude-text-muted)' }}>Live</span>
                           </div>
                         </div>
 
                         {/* Terminal content */}
-                        <div className="p-4 h-full flex flex-col bg-gray-900">
+                        <div className="p-4 h-full flex flex-col" style={{ backgroundColor: '#1a1a18' }}>
                           <div className="flex-1 overflow-hidden relative min-h-0">
                             <motion.div
                               className="space-y-1 h-full"
@@ -1617,7 +1753,7 @@ function LiveSimContent() {
 
                           {/* Blinking cursor */}
                           <div className="flex items-center mt-2 flex-shrink-0">
-                            <div className="text-gray-500 text-xs font-mono">
+                            <div className="text-xs font-mono" style={{ color: 'var(--claude-text-muted)' }}>
                               {selectedCourse?.name || 'simulation'}$
                             </div>
                             <motion.div
@@ -1631,13 +1767,13 @@ function LiveSimContent() {
 
                       {/* Soccer Scoreboard */}
                       {selectedCourse?.id === 'soccer' && (
-                        <div className="bg-white border border-gray-200 rounded-xl font-mono w-full overflow-hidden" style={{ aspectRatio: '16/4.5' }}>
+                        <div className="rounded-xl font-mono w-full overflow-hidden" style={{ aspectRatio: '16/4.5', backgroundColor: 'var(--claude-bg-secondary)', border: '1px solid var(--claude-border)' }}>
                           {/* Scoreboard header */}
-                          <div className="border-b border-gray-200 px-4 py-3 bg-gray-50 flex items-center justify-between">
-                            <h3 className="text-sm font-semibold text-black" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
+                          <div className="px-4 py-3 flex items-center justify-between" style={{ borderBottom: '1px solid var(--claude-border)', backgroundColor: 'var(--claude-bg-tertiary)' }}>
+                            <h3 className="text-sm font-semibold" style={{ color: 'var(--claude-text)' }}>
                               Scoreboard
                             </h3>
-                            <span className="text-xs text-gray-500">
+                            <span className="text-xs" style={{ color: 'var(--claude-text-muted)' }}>
                               {soccerGoalAnnouncement || "Match in progress"}
                             </span>
                           </div>
@@ -1650,20 +1786,20 @@ function LiveSimContent() {
                       )}
 
                       {/* Agents Chat Log */}
-                      <div className="bg-gray-50 border border-gray-200 rounded-xl font-mono w-full overflow-hidden" style={{ aspectRatio: '16/9' }}>
+                      <div className="rounded-xl font-mono w-full overflow-hidden" style={{ aspectRatio: '16/9', backgroundColor: 'var(--claude-bg-tertiary)', border: '1px solid var(--claude-border)' }}>
                         {/* Panel header */}
-                        <div className="border-b border-gray-200 px-4 py-3 bg-white flex items-center justify-between">
-                          <h3 className="text-sm font-semibold text-black" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
+                        <div className="px-4 py-3 flex items-center justify-between" style={{ borderBottom: '1px solid var(--claude-border)', backgroundColor: 'var(--claude-bg-secondary)' }}>
+                          <h3 className="text-sm font-semibold" style={{ color: 'var(--claude-text)' }}>
                             Agent Chat
                           </h3>
                           <div className="flex items-center gap-1.5">
-                            <div className="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></div>
-                            <span className="text-xs text-gray-500">Active</span>
+                            <div className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: 'var(--claude-accent)' }}></div>
+                            <span className="text-xs" style={{ color: 'var(--claude-text-muted)' }}>Active</span>
                           </div>
                         </div>
 
                         {/* Chat content */}
-                        <div className="p-4 h-full flex flex-col bg-gray-900">
+                        <div className="p-4 h-full flex flex-col" style={{ backgroundColor: '#1a1a18' }}>
 
                           {serviceTimeout && (
                             <div className="flex-1 flex items-center justify-center">
@@ -1671,7 +1807,7 @@ function LiveSimContent() {
                                 <div className="text-red-400 text-sm font-mono mb-2">
                                   Service Timeout
                                 </div>
-                                <div className="text-gray-400 text-xs font-mono">
+                                <div className="text-xs font-mono" style={{ color: 'var(--claude-text-muted)' }}>
                                   Reload to continue to see logs
                                 </div>
                               </div>
@@ -2029,8 +2165,8 @@ function LiveSimContent() {
 
                           {/* Blinking cursor */}
                           <div className="flex items-center mt-2 flex-shrink-0">
-                            <span className="text-gray-500 text-xs mr-1">chat$</span>
-                            <div className="w-1.5 h-3 bg-blue-400 animate-pulse"></div>
+                            <span className="text-xs mr-1" style={{ color: 'var(--claude-text-muted)' }}>chat$</span>
+                            <div className="w-1.5 h-3 animate-pulse" style={{ backgroundColor: 'var(--claude-accent)' }}></div>
                           </div>
                         </div>
                       </div>
@@ -2038,7 +2174,7 @@ function LiveSimContent() {
                   ) : (
                     // Other simulations: No panels
                     <div className="flex justify-center items-center">
-                      <div className="text-center text-gray-500">
+                      <div className="text-center" style={{ color: 'var(--claude-text-muted)' }}>
                         <div className="text-lg font-mono mb-2">No additional panels</div>
                         <div className="text-sm">Simulation running in viewport</div>
                       </div>
@@ -2057,93 +2193,41 @@ function LiveSimContent() {
             transition={{ delay: 0.2 }}
           >
             <div 
-              className="bg-white border border-gray-100 rounded-2xl p-6"
-              style={{ boxShadow: '0 15px 40px rgba(0,0,0,0.06)' }}
+              className="rounded-2xl p-6"
+              style={{ backgroundColor: 'var(--claude-bg-secondary)', border: '1px solid var(--claude-border)' }}
             >
               <div className="flex items-center justify-between mb-6">
                 <h2 
-                  className="text-xl font-bold text-black"
-                  style={{ fontFamily: 'Space Grotesk, sans-serif' }}
+                  className="text-xl font-medium"
+                  style={{ color: 'var(--claude-text)' }}
                 >
                   Select Simulation
                 </h2>
-                <span className="text-sm text-gray-500">
+                <span className="text-sm" style={{ color: 'var(--claude-text-muted)' }}>
                   {SIM_CATALOG.filter(s => s.status === 'prototype' || s.status === 'available').length} available
                 </span>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {SIM_CATALOG.map((course) => {
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4" style={{ perspective: '1000px' }}>
+                {SIM_CATALOG.map((course, index) => {
                   const isAvailable = course.status === 'prototype' || course.status === 'available';
                   const isSelected = selectedCourse?.id === course.id;
 
                   return (
-                    <motion.button
+                    <SimulationCard3D
                       key={course.id}
-                      onClick={() => {
+                      course={course}
+                      index={index}
+                      isAvailable={isAvailable}
+                      isSelected={isSelected}
+                      onSelect={() => {
                         if (isAvailable) {
                           setSelectedCourse(course);
                           localStorage.setItem('selectedSimulation', course.id);
                         }
                       }}
-                      disabled={!isAvailable}
-                      whileHover={isAvailable ? { y: -4 } : {}}
-                      whileTap={isAvailable ? { scale: 0.98 } : {}}
-                      className={`p-4 text-left rounded-xl transition-all duration-300 ${isSelected
-                          ? 'bg-black text-white ring-2 ring-black'
-                          : isAvailable
-                            ? 'bg-gray-50 hover:bg-gray-100 border border-gray-200'
-                            : 'bg-gray-50 opacity-50 cursor-not-allowed border border-gray-100'
-                        }`}
-                      style={{ boxShadow: isSelected ? '0 10px 25px rgba(0,0,0,0.2)' : '0 4px 12px rgba(0,0,0,0.04)' }}
-                    >
-                      <div className="flex justify-between items-start mb-2">
-                        <h3 className={`font-bold text-sm ${isSelected ? 'text-white' : 'text-black'}`} style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
-                          {course.name}
-                        </h3>
-                        {!isAvailable && (
-                          <span className="px-2 py-0.5 bg-gray-200 text-gray-500 text-xs rounded-full">Soon</span>
-                        )}
-                      </div>
-
-                      <div className="mb-3">
-                        {getThumbnailPath(course.id) ? (
-                          <div className="relative w-full bg-gray-200 rounded-lg overflow-hidden" style={{ aspectRatio: '16/9' }}>
-                            <Image
-                              src={getThumbnailPath(course.id)!}
-                              alt={`${course.name} thumbnail`}
-                              fill
-                              className="object-cover"
-                              sizes="(max-width: 768px) 100vw, 33vw"
-                            />
-                          </div>
-                        ) : (
-                          <div className="w-full bg-gray-200 rounded-lg flex items-center justify-center" style={{ aspectRatio: '16/9' }}>
-                            <div className="w-8 h-8 bg-gray-300 rounded-lg" />
-                          </div>
-                        )}
-                      </div>
-
-                      <p className={`text-xs mb-3 line-clamp-2 ${isSelected ? 'text-gray-300' : 'text-gray-500'}`}>
-                        {course.synopsis}
-                      </p>
-
-                      <div className="flex flex-wrap gap-1">
-                        {course.skills.slice(0, 2).map((skill) => (
-                          <span
-                            key={skill}
-                            className={`px-2 py-1 text-xs rounded-md ${isSelected ? 'bg-white/20 text-white' : 'bg-gray-100 text-gray-600'}`}
-                          >
-                            {skill}
-                          </span>
-                        ))}
-                        {course.skills.length > 2 && (
-                          <span className={`px-2 py-1 text-xs rounded-md ${isSelected ? 'bg-white/20 text-white' : 'bg-gray-100 text-gray-500'}`}>
-                            +{course.skills.length - 2}
-                          </span>
-                        )}
-                      </div>
-                    </motion.button>
+                      thumbnailPath={getThumbnailPath(course.id)}
+                    />
                   );
                 })}
               </div>
@@ -2159,10 +2243,10 @@ function LiveSimContent() {
 export default function LiveSimPage() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: 'var(--claude-bg)' }}>
         <div className="text-center">
-          <div className="w-16 h-16 border-4 border-gray-200 border-t-black rounded-full animate-spin mx-auto mb-4" />
-          <p className="text-gray-500 font-medium" style={{ fontFamily: 'Space Grotesk, sans-serif' }}>
+          <div className="w-16 h-16 border-4 rounded-full animate-spin mx-auto mb-4" style={{ borderColor: 'var(--claude-border)', borderTopColor: 'var(--claude-accent)' }} />
+          <p className="font-medium" style={{ color: 'var(--claude-text-secondary)' }}>
             Loading simulation...
           </p>
         </div>
