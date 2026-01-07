@@ -11,7 +11,7 @@ const HowItWorks: React.FC = () => {
       icon: Brain,
       title: 'Neural Cores',
       description: 'Each agent houses a frontier model as its decision engine',
-      details: ['Opus 4.5', 'GPT-4o', 'Grok-2', 'Gemini Ultra'],
+      details: ['Opus 4.5', 'GPT-5', 'Grok 4', 'Gemini 3 Pro'],
     },
     {
       icon: Eye,

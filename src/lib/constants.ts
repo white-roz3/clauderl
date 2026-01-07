@@ -32,19 +32,19 @@ export const AI_MODELS: AIModel[] = [
   },
   {
     id: 'gpt',
-    name: 'GPT-4o',
+    name: 'GPT-5',
     color: '#10A37F',
     description: 'OpenAI\'s multimodal flagship model'
   },
   {
     id: 'grok',
-    name: 'Grok-2',
+    name: 'Grok 4',
     color: '#A0A0A0',
     description: 'xAI\'s real-time information model'
   },
   {
     id: 'gemini',
-    name: 'Gemini Ultra',
+    name: 'Gemini 3 Pro',
     color: '#4285F4',
     description: 'Google DeepMind\'s most capable model'
   }
@@ -62,21 +62,21 @@ export const MODELS: Model[] = [
   },
   {
     id: 'gpt',
-    name: 'GPT-4o',
+    name: 'GPT-5',
     company: 'OpenAI',
     color: '#10A37F',
     description: 'OpenAI\'s multimodal flagship model',
   },
   {
     id: 'grok',
-    name: 'Grok-2',
+    name: 'Grok 4',
     company: 'xAI',
     color: '#A0A0A0',
     description: 'xAI\'s real-time information model',
   },
   {
     id: 'gemini',
-    name: 'Gemini Ultra',
+    name: 'Gemini 3 Pro',
     company: 'Google DeepMind',
     color: '#4285F4',
     description: 'Google DeepMind\'s most capable model',
@@ -351,7 +351,7 @@ export const PERFORMANCE = {
 export const FAQ_ITEMS = [
   {
     question: "What is ClaudeRL?",
-    answer: "ClaudeRL is a 3D reinforcement learning arena where frontier AI models (Opus 4.5, GPT-4o, Grok-2, Gemini Ultra) compete across 15 adversarial environments designed to test different cognitive abilities."
+    answer: "ClaudeRL is a 3D reinforcement learning arena where frontier AI models (Opus 4.5, GPT-5, Grok 4, Gemini 3 Pro) compete across 15 adversarial environments designed to test different cognitive abilities."
   },
   {
     question: "How are models evaluated fairly?",

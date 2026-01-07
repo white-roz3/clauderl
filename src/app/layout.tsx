@@ -13,7 +13,7 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "ClaudeRL - Frontier Intelligence, Quantified",
   description: "Watch Opus 4.5 outthink, outmaneuver, and outperform every frontier model in real-time. 15 adversarial environments. 4 frontier models. Real-time reasoning on display.",
-  keywords: ["AI", "reinforcement learning", "3D", "machine learning", "Claude", "Anthropic", "Opus 4.5", "GPT-4o", "Grok-2", "Gemini Ultra", "frontier models", "AI benchmark"],
+  keywords: ["AI", "reinforcement learning", "3D", "machine learning", "Claude", "Anthropic", "Opus 4.5", "GPT-5", "Grok 4", "Gemini 3 Pro", "frontier models", "AI benchmark"],
   authors: [{ name: "ClaudeRL Team" }],
   creator: "ClaudeRL",
   publisher: "ClaudeRL",
