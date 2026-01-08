@@ -25,13 +25,13 @@ export default function Scoreboard({ onGoalScored }: ScoreboardProps) {
 
           if (team === "Blue") {
             setBlueScore((prev) => prev + 1);
-            setLastGoal("GPT-5 scores!");
-            onGoalScored?.("GPT-5 scores!");
+            setLastGoal("Opus 4.5 scores!");
+            onGoalScored?.("Opus 4.5 scores!");
           }
           if (team === "Purple") {
             setPurpleScore((prev) => prev + 1);
-            setLastGoal("Grok 4 scores!");
-            onGoalScored?.("Grok 4 scores!");
+            setLastGoal("GPT-5 scores!");
+            onGoalScored?.("GPT-5 scores!");
           }
         }
       }
@@ -43,13 +43,13 @@ export default function Scoreboard({ onGoalScored }: ScoreboardProps) {
 
         if (team === "Blue") {
           setBlueScore((prev) => prev + 1);
-          setLastGoal("GPT-5 scores!");
-          onGoalScored?.("GPT-5 scores!");
+          setLastGoal("Opus 4.5 scores!");
+          onGoalScored?.("Opus 4.5 scores!");
         }
         if (team === "Purple") {
           setPurpleScore((prev) => prev + 1);
-          setLastGoal("Grok 4 scores!");
-          onGoalScored?.("Grok 4 scores!");
+          setLastGoal("GPT-5 scores!");
+          onGoalScored?.("GPT-5 scores!");
         }
       }
     };
@@ -61,9 +61,9 @@ export default function Scoreboard({ onGoalScored }: ScoreboardProps) {
   return (
     <div className="text-center">
       <div className="text-3xl font-bold font-mono">
-        <span style={{ color: '#10A37F' }}>GPT-5</span>
+        <span style={{ color: '#C27551' }}>Opus 4.5</span>
         <span className="mx-4" style={{ color: 'var(--claude-text)' }}>{blueScore}:{purpleScore}</span>
-        <span style={{ color: '#A0A0A0' }}>Grok 4</span>
+        <span style={{ color: '#10A37F' }}>GPT-5</span>
       </div>
     </div>
   );
