@@ -343,7 +343,7 @@ function LiveSimContent() {
 
     setIsGeneratingSoccerChat(true);
     try {
-      console.log('Generating continuous soccer chat message...');
+      console.log('Generating continuous soccer chat message...', { sessionId: soccerChatSessionId.current, logsCount: logs.length });
       const response = await fetch('/api/soccer-ai-chat', {
         method: 'POST',
         headers: {
@@ -359,7 +359,7 @@ function LiveSimContent() {
       if (response.ok) {
         const data = await response.json();
         console.log('Continuous soccer chat API response data:', data);
-        if (data.success && data.messages) {
+        if (data.success && data.messages && data.messages.length > 0) {
           console.log('Successfully received continuous soccer messages:', data.messages.length);
           setSoccerChatLogs(prev => {
             // Take the last 1-2 messages from the new conversation
@@ -377,20 +377,57 @@ function LiveSimContent() {
             return sliced;
           });
         } else {
-          console.log('Continuous soccer chat API returned error:', data.error);
-          // Don't add error message to chat logs
+          console.log('Continuous soccer chat API returned no messages or error:', data.error || 'No messages');
+          // Show error in chat if it's the first attempt
+          setSoccerChatLogs(prev => {
+            if (prev.length === 0) {
+              return [{
+                id: `error_${Date.now()}`,
+                agent: 'agent1' as const,
+                message: 'Waiting for AI service to initialize...',
+                timestamp: new Date(),
+                personality: 'analytical' as const
+              }];
+            }
+            return prev;
+          });
         }
       } else {
-        console.log('Continuous soccer chat API request failed with status:', response.status);
-        // Don't add error message to chat logs
+        const errorData = await response.json().catch(() => ({}));
+        console.log('Continuous soccer chat API request failed with status:', response.status, errorData);
+        // Show error in chat if it's the first attempt
+        setSoccerChatLogs(prev => {
+          if (prev.length === 0) {
+            return [{
+              id: `error_${Date.now()}`,
+              agent: 'agent1' as const,
+              message: 'Chat service temporarily unavailable. Retrying...',
+              timestamp: new Date(),
+              personality: 'analytical' as const
+            }];
+          }
+          return prev;
+        });
       }
     } catch (error) {
       console.error('Failed to generate continuous soccer chat:', error);
-      // Don't add error message to chat logs
+      // Show error in chat if it's the first attempt
+      setSoccerChatLogs(prev => {
+        if (prev.length === 0) {
+          return [{
+            id: `error_${Date.now()}`,
+            agent: 'agent1' as const,
+            message: 'Failed to connect to chat service. Please refresh.',
+            timestamp: new Date(),
+            personality: 'analytical' as const
+          }];
+        }
+        return prev;
+      });
     } finally {
       setIsGeneratingSoccerChat(false);
     }
-  }, [isGeneratingSoccerChat, selectedCourse?.id, serviceTimeout, checkRateLimit]);
+  }, [isGeneratingSoccerChat, selectedCourse?.id, serviceTimeout, checkRateLimit, logs]);
 
   // Function to generate a single 3D Ball chat message
   const generateBall3DChatMessage = useCallback(async () => {
@@ -1850,28 +1887,36 @@ function LiveSimContent() {
                                     </motion.div>
                                   );
                                 })}
-                                {selectedCourse?.id === 'soccer' && soccerChatLogs.map((log, index) => {
-                                  const isNewest = index === soccerChatLogs.length - 1;
-                                  const isGROK = log.agent === 'agent2';
-                                  const textColor = isGROK ? 'text-[#8B5CF6]' : 'text-[#0066CC]'; // Purple for GROK, Blue for ChatGPT
+                                {selectedCourse?.id === 'soccer' && (
+                                  soccerChatLogs.length === 0 ? (
+                                    <div className="text-xs font-mono" style={{ color: 'var(--claude-text-muted)' }}>
+                                      {isGeneratingSoccerChat ? '> system: generating agent chat...' : '> system: waiting for agent chat...'}
+                                    </div>
+                                  ) : (
+                                    soccerChatLogs.map((log, index) => {
+                                      const isNewest = index === soccerChatLogs.length - 1;
+                                      const isGROK = log.agent === 'agent2';
+                                      const textColor = isGROK ? 'text-[#8B5CF6]' : 'text-[#0066CC]'; // Purple for GROK, Blue for ChatGPT
 
-                                  return (
-                                    <motion.div
-                                      key={log.id}
-                                      initial={isNewest ? { opacity: 0, y: 20 } : false}
-                                      animate={{ opacity: 1, y: 0 }}
-                                      transition={{ duration: 0.3, ease: "easeOut" }}
-                                      className={`${textColor} text-xs font-mono break-words overflow-hidden`}
-                                      style={{
-                                        wordBreak: 'break-word',
-                                        whiteSpace: 'pre-wrap',
-                                        lineHeight: '1.5'
-                                      }}
-                                    >
-                                      {`> ${log.agent === 'agent1' ? 'ChatGPT' : 'GROK'}: ${log.message}`}
-                                    </motion.div>
-                                  );
-                                })}
+                                      return (
+                                        <motion.div
+                                          key={log.id}
+                                          initial={isNewest ? { opacity: 0, y: 20 } : false}
+                                          animate={{ opacity: 1, y: 0 }}
+                                          transition={{ duration: 0.3, ease: "easeOut" }}
+                                          className={`${textColor} text-xs font-mono break-words overflow-hidden`}
+                                          style={{
+                                            wordBreak: 'break-word',
+                                            whiteSpace: 'pre-wrap',
+                                            lineHeight: '1.5'
+                                          }}
+                                        >
+                                          {`> ${log.agent === 'agent1' ? 'Opus 4.5' : 'GPT-5'}: ${log.message}`}
+                                        </motion.div>
+                                      );
+                                    })
+                                  )
+                                )}
                                 {selectedCourse?.id === 'ball3d' && ball3DChatLogs.map((log, index) => {
                                   const isNewest = index === ball3DChatLogs.length - 1;
                                   const textColor = 'text-[#0066CC]'; // Blue for Claude (solo agent)
@@ -2173,6 +2218,89 @@ function LiveSimContent() {
                     </div>
                   ) : (
                     // Other simulations: No panels
+                    <div className="flex justify-center items-center">
+                      <div className="text-center" style={{ color: 'var(--claude-text-muted)' }}>
+                        <div className="text-lg font-mono mb-2">No additional panels</div>
+                        <div className="text-sm">Simulation running in viewport</div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Course Selector */}
+          <motion.div 
+            className="mb-8"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+          >
+            <div 
+              className="rounded-2xl p-6"
+              style={{ backgroundColor: 'var(--claude-bg-secondary)', border: '1px solid var(--claude-border)' }}
+            >
+              <div className="flex items-center justify-between mb-6">
+                <h2 
+                  className="text-xl font-medium"
+                  style={{ color: 'var(--claude-text)' }}
+                >
+                  Select Simulation
+                </h2>
+                <span className="text-sm" style={{ color: 'var(--claude-text-muted)' }}>
+                  {SIM_CATALOG.filter(s => s.status === 'prototype' || s.status === 'available').length} available
+                </span>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4" style={{ perspective: '1000px' }}>
+                {SIM_CATALOG.map((course, index) => {
+                  const isAvailable = course.status === 'prototype' || course.status === 'available';
+                  const isSelected = selectedCourse?.id === course.id;
+
+                  return (
+                    <SimulationCard3D
+                      key={course.id}
+                      course={course}
+                      index={index}
+                      isAvailable={isAvailable}
+                      isSelected={isSelected}
+                      onSelect={() => {
+                        if (isAvailable) {
+                          setSelectedCourse(course);
+                          localStorage.setItem('selectedSimulation', course.id);
+                        }
+                      }}
+                      thumbnailPath={getThumbnailPath(course.id)}
+                    />
+                  );
+                })}
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </div>
+
+    </div>
+  );
+}
+
+export default function LiveSimPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: 'var(--claude-bg)' }}>
+        <div className="text-center">
+          <div className="w-16 h-16 border-4 rounded-full animate-spin mx-auto mb-4" style={{ borderColor: 'var(--claude-border)', borderTopColor: 'var(--claude-accent)' }} />
+          <p className="font-medium" style={{ color: 'var(--claude-text-secondary)' }}>
+            Loading simulation...
+          </p>
+        </div>
+      </div>
+    }>
+      <LiveSimContent />
+    </Suspense>
+  );
+}
                     <div className="flex justify-center items-center">
                       <div className="text-center" style={{ color: 'var(--claude-text-muted)' }}>
                         <div className="text-lg font-mono mb-2">No additional panels</div>
