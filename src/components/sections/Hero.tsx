@@ -161,12 +161,12 @@ const Hero: React.FC = () => {
       <Grid3D opacity={0.04} />
 
       <div className="container mx-auto px-5 md:px-6 relative z-10">
-        <div className="text-center">
+          <div className="text-center">
           {/* Title - 3D floating effect with parallax */}
-          <motion.div
+            <motion.div
             style={{ x: parallaxXSlow, y: parallaxYSlow }}
-          >
-            <motion.h1
+            >
+              <motion.h1
               initial={{ opacity: 0, y: 40, rotateX: -20 }}
               animate={{ opacity: 1, y: 0, rotateX: 0 }}
               transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
@@ -181,11 +181,11 @@ const Hero: React.FC = () => {
               }}
             >
               Claude<span style={{ color: 'var(--accent)' }}>RL</span>
-            </motion.h1>
-          </motion.div>
+              </motion.h1>
+              </motion.div>
 
           {/* Tagline - Opus 4.5 dominance messaging */}
-          <motion.p
+              <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
@@ -197,10 +197,10 @@ const Hero: React.FC = () => {
             }}
           >
             {TAGLINES.primary}
-          </motion.p>
+              </motion.p>
 
           {/* CTA Buttons with 3D effects */}
-          <motion.div
+              <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
@@ -235,7 +235,7 @@ const Hero: React.FC = () => {
                 />
                 <span className="relative z-10">{CTAS.primary}</span>
               </motion.button>
-            </Link>
+              </Link>
 
             <Link href="/rankings" className="w-full sm:w-auto">
               <motion.button 
@@ -257,18 +257,18 @@ const Hero: React.FC = () => {
               >
                 {CTAS.secondary}
               </motion.button>
-            </Link>
-          </motion.div>
+              </Link>
+              </motion.div>
 
           {/* Model Cards - Neural Cores with 3D effects */}
-          <motion.div 
+            <motion.div
             className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-5 max-w-sm md:max-w-4xl mx-auto"
             style={{ x: parallaxX, y: parallaxY, transformStyle: 'preserve-3d' }}
           >
             {MODELS.map((model, index) => (
               <ModelCard3D key={model.id} model={model} index={index} />
-            ))}
-          </motion.div>
+              ))}
+            </motion.div>
 
           {/* Stats Banner with 3D glow effect */}
           <motion.div
@@ -315,9 +315,187 @@ const Hero: React.FC = () => {
               Updated after every match. No cherry-picking. No prompt engineering.
             </p>
           </motion.div>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+  );
+};
+
+export default Hero;
+
+      <FloatingOrb color="var(--claude-accent)" size={300} x="10%" y="20%" delay={0} blur={80} />
+      <FloatingOrb color="#10A37F" size={200} x="80%" y="60%" delay={2} blur={60} />
+      <FloatingOrb color="#4285F4" size={150} x="70%" y="10%" delay={4} blur={50} />
+      
+      {/* Floating geometric shapes */}
+      <FloatingShape type="ring" color="var(--claude-accent)" size={60} x="5%" y="30%" delay={1} />
+      <FloatingShape type="sphere" color="#10A37F" size={40} x="90%" y="40%" delay={2} />
+      <FloatingShape type="ring" color="#4285F4" size={30} x="15%" y="70%" delay={0.5} />
+      
+      {/* Floating particles */}
+      <FloatingParticles count={15} color="var(--claude-accent)" />
+      
+      {/* Animated 3D grid floor */}
+      <Grid3D opacity={0.04} />
+
+      <div className="container mx-auto px-5 md:px-6 relative z-10">
+          <div className="text-center">
+          {/* Title - 3D floating effect with parallax */}
+            <motion.div
+            style={{ x: parallaxXSlow, y: parallaxYSlow }}
+            >
+              <motion.h1
+              initial={{ opacity: 0, y: 40, rotateX: -20 }}
+              animate={{ opacity: 1, y: 0, rotateX: 0 }}
+              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+              className="text-5xl sm:text-6xl md:text-8xl lg:text-[9rem] font-normal mb-4 md:mb-6 tracking-tight"
+              style={{ 
+                fontFamily: 'var(--font-serif)',
+                color: 'var(--text-accent)',
+                letterSpacing: '-0.02em',
+                lineHeight: 1.1,
+                textShadow: '0 10px 30px rgba(0,0,0,0.3), 0 20px 60px rgba(194,117,81,0.15)',
+                transformStyle: 'preserve-3d',
+              }}
+            >
+              Claude<span style={{ color: 'var(--accent)' }}>RL</span>
+              </motion.h1>
+              </motion.div>
+
+          {/* Tagline - Opus 4.5 dominance messaging */}
+              <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+            className="text-base md:text-xl lg:text-2xl mb-8 md:mb-12 max-w-xs md:max-w-3xl mx-auto"
+            style={{ 
+              fontFamily: 'var(--font-sans)',
+              color: 'var(--text-secondary)',
+              lineHeight: 1.625
+            }}
+          >
+            {TAGLINES.primary}
+              </motion.p>
+
+          {/* CTA Buttons with 3D effects */}
+            <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+            className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center mb-12 md:mb-16"
+            style={{ perspective: 600 }}
+          >
+            <Link href="/livesim" className="w-full sm:w-auto">
+              <motion.button 
+                className="w-full sm:w-auto px-8 py-3.5 font-medium text-base rounded-lg relative overflow-hidden group"
+                style={{ 
+                  fontFamily: 'var(--font-sans)',
+                  backgroundColor: 'var(--text-primary)',
+                  color: 'var(--bg-primary)',
+                  boxShadow: '0 4px 15px rgba(236, 236, 234, 0.2), 0 8px 30px rgba(0, 0, 0, 0.3)',
+                }}
+                whileHover={{ 
+                  scale: 1.05, 
+                  rotateX: -5,
+                  boxShadow: '0 10px 30px rgba(236, 236, 234, 0.3), 0 15px 50px rgba(0, 0, 0, 0.4)'
+                }}
+                whileTap={{ scale: 0.98 }}
+              >
+                {/* Shine effect */}
+                <motion.span
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100"
+                  style={{
+                    background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)',
+                    transform: 'translateX(-100%)',
+                  }}
+                  animate={{ transform: ['translateX(-100%)', 'translateX(100%)'] }}
+                  transition={{ duration: 0.6, repeat: Infinity, repeatDelay: 2 }}
+                />
+                <span className="relative z-10">{CTAS.primary}</span>
+              </motion.button>
+              </Link>
+
+            <Link href="/rankings" className="w-full sm:w-auto">
+              <motion.button 
+                className="w-full sm:w-auto px-8 py-3.5 font-medium text-base rounded-lg border relative overflow-hidden"
+                style={{ 
+                  fontFamily: 'var(--font-sans)',
+                  backgroundColor: 'transparent',
+                  color: 'var(--text-primary)',
+                  borderColor: 'var(--border)',
+                  boxShadow: '0 4px 15px rgba(0, 0, 0, 0.2)'
+                }}
+                whileHover={{ 
+                  scale: 1.05, 
+                  rotateX: -5,
+                  backgroundColor: 'var(--bg-hover)',
+                  boxShadow: '0 10px 30px rgba(0, 0, 0, 0.3), 0 0 0 1px var(--border)'
+                }}
+                whileTap={{ scale: 0.98 }}
+              >
+                {CTAS.secondary}
+              </motion.button>
+              </Link>
+            </motion.div>
+
+          {/* Model Cards - Neural Cores with 3D effects */}
+            <motion.div
+            className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-5 max-w-sm md:max-w-4xl mx-auto"
+            style={{ x: parallaxX, y: parallaxY, transformStyle: 'preserve-3d' }}
+          >
+            {MODELS.map((model, index) => (
+              <ModelCard3D key={model.id} model={model} index={index} />
+              ))}
+            </motion.div>
+
+          {/* Stats Banner with 3D glow effect */}
+          <motion.div
+            initial={{ opacity: 0, y: 30, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 0.6, delay: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            whileHover={{ 
+              scale: 1.02, 
+              boxShadow: '0 20px 60px rgba(194, 117, 81, 0.2), 0 0 0 1px rgba(194, 117, 81, 0.4)' 
+            }}
+            className="mt-12 md:mt-16 p-4 md:p-6 rounded-xl border max-w-2xl mx-auto relative overflow-hidden"
+            style={{ 
+              backgroundColor: 'rgba(194, 117, 81, 0.1)',
+              borderColor: 'rgba(194, 117, 81, 0.3)',
+              boxShadow: '0 10px 40px rgba(194, 117, 81, 0.1)',
+            }}
+          >
+            {/* Animated gradient border */}
+            <motion.div
+              className="absolute inset-0 rounded-xl opacity-30 pointer-events-none"
+              style={{
+                background: 'linear-gradient(90deg, transparent, rgba(194,117,81,0.3), transparent)',
+                backgroundSize: '200% 100%',
+              }}
+              animate={{
+                backgroundPosition: ['200% 0%', '-200% 0%'],
+              }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                ease: 'linear',
+              }}
+            />
+            <p 
+              className="text-sm md:text-base font-medium relative z-10"
+              style={{ color: 'var(--accent)' }}
+            >
+              Opus 4.5 currently leads in 12 of 15 environments
+            </p>
+            <p 
+              className="text-xs md:text-sm mt-1 relative z-10"
+              style={{ color: 'var(--text-muted)' }}
+            >
+              Updated after every match. No cherry-picking. No prompt engineering.
+            </p>
+            </motion.div>
+          </div>
+        </div>
+      </section>
   );
 };
 

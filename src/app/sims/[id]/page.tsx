@@ -150,3 +150,16 @@ const SimulationDetailPage: React.FC = () => {
 };
 
 export default SimulationDetailPage;
+
+            >
+              Explore All Simulations
+              <ArrowRight className="w-5 h-5" />
+            </motion.button>
+          </Link>
+        </motion.div>
+      </div>
+    </div>
+  );
+};
+
+export default SimulationDetailPage;

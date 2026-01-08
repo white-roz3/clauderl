@@ -110,8 +110,8 @@ const Abilities: React.FC = () => {
           >
             The cognitive skills tested and developed across all challenges
           </p>
-        </motion.div>
-
+          </motion.div>
+          
         {/* Abilities Grid */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 md:gap-5 mb-8 md:mb-12">
           {abilities.map((ability, index) => {
@@ -119,8 +119,8 @@ const Abilities: React.FC = () => {
             const isSelected = selectedAbility === ability.id;
             
             return (
-              <motion.div
-                key={ability.id}
+            <motion.div
+              key={ability.id}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -170,7 +170,7 @@ const Abilities: React.FC = () => {
                     )}
                   </div>
 
-                  {/* Icon */}
+                {/* Icon */}
                   <div 
                     className="w-10 h-10 md:w-14 md:h-14 rounded-xl md:rounded-2xl flex items-center justify-center mb-3 md:mb-4 border"
                     style={ability.unlocked ? { 
@@ -187,9 +187,9 @@ const Abilities: React.FC = () => {
                       strokeWidth={2} 
                       style={{ color: ability.unlocked ? 'white' : 'var(--text-muted)' }} 
                     />
-                  </div>
+                </div>
 
-                  {/* Content */}
+                {/* Content */}
                   <h3 
                     className="font-semibold text-sm md:text-base mb-1"
                     style={{ color: ability.unlocked ? 'var(--text-primary)' : 'var(--text-muted)' }}
@@ -199,7 +199,7 @@ const Abilities: React.FC = () => {
                   <p className="text-xs md:text-sm leading-relaxed line-clamp-2" style={{ color: 'var(--text-muted)' }}>
                     {ability.description}
                   </p>
-
+                  
                   {/* Progress indicator */}
                   <div className="mt-3 md:mt-4">
                     <div className="h-1 md:h-1.5 rounded-full overflow-hidden" style={{ backgroundColor: 'var(--bg-primary)' }}>
@@ -217,24 +217,24 @@ const Abilities: React.FC = () => {
               </motion.div>
             );
           })}
-        </div>
+                </div>
 
         {/* Selected ability details */}
         <AnimatePresence>
-          {selectedAbility && (
-            <motion.div
+        {selectedAbility && (
+          <motion.div
               initial={{ opacity: 0, y: 20, height: 0 }}
               animate={{ opacity: 1, y: 0, height: 'auto' }}
               exit={{ opacity: 0, y: -10, height: 0 }}
               transition={{ duration: 0.3 }}
               className="mb-8 md:mb-12 overflow-hidden"
-            >
-              {(() => {
-                const ability = abilities.find(a => a.id === selectedAbility);
-                if (!ability) return null;
+          >
+            {(() => {
+              const ability = abilities.find(a => a.id === selectedAbility);
+              if (!ability) return null;
                 const Icon = ability.icon;
 
-                return (
+              return (
                   <div 
                     className="rounded-2xl md:rounded-3xl p-6 md:p-10 border"
                     style={{ 
@@ -261,7 +261,7 @@ const Abilities: React.FC = () => {
                           strokeWidth={1.5} 
                           style={{ color: ability.unlocked ? 'white' : 'var(--text-muted)' }} 
                         />
-                      </div>
+                    </div>
 
                       {/* Content */}
                       <div className="flex-1">
@@ -270,8 +270,8 @@ const Abilities: React.FC = () => {
                             className="text-xl md:text-2xl font-semibold"
                             style={{ color: 'var(--text-primary)' }}
                           >
-                            {ability.name}
-                          </h3>
+                      {ability.name}
+                    </h3>
                           <span 
                             className="px-3 py-1 rounded-full text-xs font-semibold border"
                             style={ability.unlocked ? {
@@ -286,23 +286,23 @@ const Abilities: React.FC = () => {
                           >
                             {ability.unlocked ? 'Active' : 'Locked'}
                           </span>
-                        </div>
-                        
+                  </div>
+
                         <p className="leading-relaxed mb-4 text-sm md:text-base" style={{ color: 'var(--text-secondary)' }}>
-                          {ability.details}
-                        </p>
+                        {ability.details}
+                      </p>
 
                         <div className="flex items-center gap-2 text-sm">
                           <span style={{ color: 'var(--text-muted)' }}>Tested in:</span>
                           <span className="font-medium" style={{ color: 'var(--text-primary)' }}>{ability.unlockedBy}</span>
-                        </div>
-                      </div>
                     </div>
                   </div>
-                );
-              })()}
-            </motion.div>
-          )}
+                  </div>
+                </div>
+              );
+            })()}
+          </motion.div>
+        )}
         </AnimatePresence>
 
         {/* Progress card */}
@@ -359,8 +359,8 @@ const Abilities: React.FC = () => {
                     {progressPercent}%
                   </span>
                 </div>
-              </div>
-
+            </div>
+            
               {/* Stats */}
               <div>
                 <div className="text-3xl md:text-4xl font-semibold mb-1" style={{ color: 'var(--text-primary)' }}>
@@ -377,7 +377,82 @@ const Abilities: React.FC = () => {
                     <ChevronRight className="w-4 h-4" />
                   </span>
                 </div>
+                  </div>
+                </div>
               </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+};
+
+export default Abilities;
+
+          <div 
+            className="rounded-2xl md:rounded-3xl p-6 md:p-8 inline-block border"
+            style={{ 
+              backgroundColor: 'var(--bg-secondary)',
+              borderColor: 'var(--border)',
+              boxShadow: '0 1px 3px rgba(0, 0, 0, 0.3)'
+            }}
+          >
+            <div className="flex items-center gap-6 md:gap-10">
+              {/* Progress circle */}
+              <div className="relative">
+                <svg className="w-20 h-20 md:w-24 md:h-24 transform -rotate-90">
+                  <circle
+                    cx="50%"
+                    cy="50%"
+                    r="45%"
+                    fill="none"
+                    stroke="var(--bg-primary)"
+                    strokeWidth="8"
+                  />
+                  <motion.circle
+                    cx="50%"
+                    cy="50%"
+                    r="45%"
+                    fill="none"
+                    stroke="var(--accent)"
+                    strokeWidth="8"
+                    strokeLinecap="round"
+                    initial={{ pathLength: 0 }}
+                    whileInView={{ pathLength: progressPercent / 100 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.5, duration: 1, ease: "easeOut" }}
+                    style={{ 
+                      strokeDasharray: "283",
+                      strokeDashoffset: "0"
+                    }}
+                  />
+                </svg>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <span 
+                    className="text-2xl md:text-3xl font-semibold" 
+                    style={{ color: 'var(--text-primary)' }}
+                  >
+                    {progressPercent}%
+                  </span>
+              </div>
+            </div>
+            
+              {/* Stats */}
+              <div>
+                <div className="text-3xl md:text-4xl font-semibold mb-1" style={{ color: 'var(--text-primary)' }}>
+                  {unlockedCount}<span style={{ color: 'var(--text-muted)' }}>/{abilities.length}</span>
+                </div>
+                <p className="text-sm md:text-base mb-3" style={{ color: 'var(--text-secondary)' }}>
+                  Abilities Demonstrated
+                </p>
+                
+                <div className="flex items-center gap-2 text-sm">
+                  <span style={{ color: 'var(--text-muted)' }}>Next goal:</span>
+                  <span className="font-semibold flex items-center gap-1" style={{ color: 'var(--text-primary)' }}>
+                    {abilities.find(a => !a.unlocked)?.name || 'All Complete'}
+                    <ChevronRight className="w-4 h-4" />
+                  </span>
+              </div>
+            </div>
             </div>
           </div>
         </motion.div>

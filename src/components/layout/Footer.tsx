@@ -198,3 +198,80 @@ const Footer: React.FC = () => {
 };
 
 export default Footer;
+
+                  color: 'var(--text-primary)'
+                }}
+              >
+                Resources
+              </h4>
+              <ul className="space-y-2 md:space-y-3">
+                {[
+                  { href: '/research', label: 'Research' },
+                  { href: '/how-it-works', label: 'How It Works' },
+                  { href: '/api', label: 'API' },
+                ].map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      className="transition-colors text-xs md:text-sm hover:underline"
+                      style={{ 
+                        fontFamily: 'var(--font-sans)',
+                        color: 'var(--text-secondary)'
+                      }}
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Legal Links */}
+            <div className="hidden md:block">
+              <h4 
+                className="font-medium mb-3 md:mb-4 text-sm"
+                style={{ 
+                  fontFamily: 'var(--font-sans)',
+                  color: 'var(--text-primary)'
+                }}
+              >
+                Legal
+              </h4>
+              <ul className="space-y-2 md:space-y-3">
+                {LEGAL_LINKS.map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      className="transition-colors text-xs md:text-sm hover:underline"
+                      style={{ 
+                        fontFamily: 'var(--font-sans)',
+                        color: 'var(--text-secondary)'
+                      }}
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom Bar */}
+        <div className="mt-8 md:mt-12 pt-6 md:pt-8 border-t" style={{ borderColor: 'var(--border)' }}>
+          <p 
+            className="text-xs md:text-sm text-center md:text-left"
+            style={{ 
+              fontFamily: 'var(--font-sans)',
+              color: 'var(--text-muted)'
+            }}
+          >
+            {TAGLINES.built}
+          </p>
+        </div>
+      </div>
+    </footer>
+  );
+};
+
+export default Footer;

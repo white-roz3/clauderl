@@ -212,3 +212,27 @@ const SimulationFilters: React.FC<SimulationFiltersProps> = ({ sims, onFilteredS
 };
 
 export default SimulationFilters;
+
+      {/* Clear Filters */}
+      {hasActiveFilters && (
+        <motion.div 
+          className="mt-6 pt-6 border-t border-gray-100"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+        >
+          <motion.button
+            onClick={clearFilters}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-600 hover:text-black transition-colors"
+          >
+            <X className="w-4 h-4" />
+            Clear all filters
+          </motion.button>
+        </motion.div>
+      )}
+    </motion.div>
+  );
+};
+
+export default SimulationFilters;

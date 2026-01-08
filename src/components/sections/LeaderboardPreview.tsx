@@ -56,8 +56,8 @@ const LeaderboardPreview: React.FC = () => {
           >
             Aggregated performance across all cognitive challenges. Updated after every match.
           </p>
-        </motion.div>
-
+          </motion.div>
+          
         {/* Opus Leading Banner */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -76,7 +76,7 @@ const LeaderboardPreview: React.FC = () => {
             Opus 4.5 currently leads in 12 of 15 environments
           </p>
         </motion.div>
-          
+
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-10 md:mb-16">
           {stats.map((stat, index) => {
@@ -89,7 +89,7 @@ const LeaderboardPreview: React.FC = () => {
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
               >
-                <motion.div
+        <motion.div
                   className="rounded-2xl md:rounded-3xl p-6 md:p-8 text-center border"
                   style={{ 
                     backgroundColor: 'var(--bg-secondary)',
@@ -107,7 +107,7 @@ const LeaderboardPreview: React.FC = () => {
                     }}
                   >
                     <Icon className="w-5 h-5 md:w-6 md:h-6" strokeWidth={2} />
-                  </div>
+            </div>
                   <p 
                     className="text-xs md:text-sm mb-2" 
                     style={{ color: 'var(--text-muted)' }}
@@ -124,8 +124,8 @@ const LeaderboardPreview: React.FC = () => {
                     {stat.value}
                   </p>
                   <p className="text-xs" style={{ color: 'var(--text-muted)' }}>{stat.subtitle}</p>
-                </motion.div>
-              </motion.div>
+          </motion.div>
+        </motion.div>
             );
           })}
         </div>
@@ -153,7 +153,7 @@ const LeaderboardPreview: React.FC = () => {
                 }}
               >
                 <Trophy className="w-5 h-5 text-white" />
-              </div>
+            </div>
               <div>
                 <h3 
                   className="text-lg md:text-xl font-semibold" 
@@ -163,10 +163,10 @@ const LeaderboardPreview: React.FC = () => {
                   }}
                 >
                   Top Performers
-                </h3>
+            </h3>
                 <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
                   Head-to-head rankings across all challenges
-                </p>
+            </p>
               </div>
             </div>
           </div>
@@ -271,6 +271,91 @@ const LeaderboardPreview: React.FC = () => {
                           className="font-mono"
                           style={{ color: 'var(--text-primary)' }}
                         >
+                          {entry.avgScore.toLocaleString()}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4">
+                        <span style={{ color: 'var(--text-secondary)' }}>
+                          {entry.environment}
+                        </span>
+                      </td>
+                    </motion.tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+
+          {/* CTA */}
+          <div className="p-6 md:p-8 border-t text-center" style={{ borderColor: 'var(--border)' }}>
+            <Link href="/rankings">
+              <motion.button 
+                className="px-8 py-4 font-medium text-base md:text-lg rounded-lg inline-flex items-center gap-2"
+                style={{ 
+                  fontFamily: 'var(--font-sans)',
+                  backgroundColor: 'var(--accent)',
+                  color: 'white',
+                  boxShadow: '0 1px 3px rgba(0, 0, 0, 0.3)'
+                }}
+                whileHover={{ backgroundColor: 'var(--accent-hover)' }}
+                whileTap={{ scale: 0.98 }}
+              >
+                View Full Rankings
+                <ArrowRight className="w-5 h-5" />
+              </motion.button>
+            </Link>
+          </div>
+        </motion.div>
+
+        {/* Fair Competition Note */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="flex justify-center"
+        >
+          <div 
+            className="rounded-2xl md:rounded-3xl p-6 md:p-8 max-w-2xl text-center border"
+            style={{ 
+              backgroundColor: 'var(--bg-secondary)',
+              borderColor: 'var(--border)',
+              boxShadow: '0 1px 3px rgba(0, 0, 0, 0.3)'
+            }}
+          >
+            <div 
+              className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4 border"
+              style={{ 
+                backgroundColor: 'var(--bg-primary)',
+                borderColor: 'var(--border)',
+                boxShadow: '0 2px 6px rgba(0, 0, 0, 0.4)'
+              }}
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ color: 'var(--text-primary)' }}>
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+              </svg>
+            </div>
+            <h4 
+              className="text-lg md:text-xl font-semibold mb-3" 
+              style={{ color: 'var(--text-primary)' }}
+            >
+              Transparent Scoring
+            </h4>
+            <p 
+              className="text-sm md:text-base leading-relaxed" 
+              style={{ color: 'var(--text-secondary)' }}
+            >
+              Every model receives identical inputs, time constraints, and environmental conditions. 
+              No prompt engineering advantages. No cherry-picked scenarios. The data speaks for itself.
+            </p>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+};
+
+export default LeaderboardPreview;
+
                           {entry.avgScore.toLocaleString()}
                         </span>
                       </td>

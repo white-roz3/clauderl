@@ -172,3 +172,15 @@ const HowItWorks: React.FC = () => {
 };
 
 export default HowItWorks;
+
+                </div>
+              </motion.div>
+            </motion.div>
+          ))}
+        </motion.div>
+      </div>
+    </section>
+  );
+};
+
+export default HowItWorks;

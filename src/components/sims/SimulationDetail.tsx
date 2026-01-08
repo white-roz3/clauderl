@@ -340,3 +340,125 @@ const SimulationDetail: React.FC<SimulationDetailProps> = ({ sim, mockMetrics })
 };
 
 export default SimulationDetail;
+
+              <span
+                key={diff}
+                className="px-3 py-2 bg-black text-white text-sm font-medium rounded-lg"
+              >
+                {diff.charAt(0).toUpperCase() + diff.slice(1)}
+              </span>
+            ))}
+          </div>
+        </motion.div>
+      </div>
+
+      {/* Evolution Rewards */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.35 }}
+        className="bg-white border border-gray-100 rounded-2xl p-6"
+        style={{ boxShadow: '0 10px 30px rgba(0,0,0,0.05)' }}
+      >
+        <div className="flex items-center gap-3 mb-4">
+          <div className="w-10 h-10 bg-gray-100 rounded-xl flex items-center justify-center">
+            <TrendingUp className="w-5 h-5 text-gray-600" strokeWidth={1.5} />
+          </div>
+          <h3 
+            className="text-lg font-bold text-black"
+            style={{ fontFamily: 'Space Grotesk, sans-serif' }}
+          >
+            Evolution Rewards
+          </h3>
+        </div>
+        <p className="text-gray-500 text-sm mb-4">
+          Abilities and capabilities that AI agents may unlock through this simulation
+        </p>
+        <div className="flex flex-wrap gap-2">
+          {sim.evolutionRewards.map((reward) => (
+            <span
+              key={reward}
+              className="px-3 py-2 bg-gray-50 text-gray-700 text-sm font-medium rounded-lg border border-gray-200"
+            >
+              {reward}
+            </span>
+          ))}
+        </div>
+      </motion.div>
+
+      {/* Tags */}
+      {sim.tags && sim.tags.length > 0 && (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+          className="bg-white border border-gray-100 rounded-2xl p-6"
+          style={{ boxShadow: '0 10px 30px rgba(0,0,0,0.05)' }}
+        >
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-10 h-10 bg-gray-100 rounded-xl flex items-center justify-center">
+              <Tag className="w-5 h-5 text-gray-600" strokeWidth={1.5} />
+            </div>
+            <h3 
+              className="text-lg font-bold text-black"
+              style={{ fontFamily: 'Space Grotesk, sans-serif' }}
+            >
+              Tags
+            </h3>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {sim.tags.map((tag) => (
+              <span
+                key={tag}
+                className="px-3 py-2 bg-gray-100 text-gray-600 text-sm font-medium rounded-lg"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        </motion.div>
+      )}
+
+      {/* Integration Status */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.45 }}
+        className="bg-white border border-gray-100 rounded-2xl p-6"
+        style={{ boxShadow: '0 10px 30px rgba(0,0,0,0.05)' }}
+      >
+        <div className="flex items-center gap-3 mb-4">
+          <div className="w-10 h-10 bg-gray-100 rounded-xl flex items-center justify-center">
+            <Settings className="w-5 h-5 text-gray-600" strokeWidth={1.5} />
+          </div>
+          <h3 
+            className="text-lg font-bold text-black"
+            style={{ fontFamily: 'Space Grotesk, sans-serif' }}
+          >
+            Integration Status
+          </h3>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {[
+            { label: 'Unity Build', status: sim.status === 'available' ? 'Ready' : 'Pending' },
+            { label: 'WebGL Export', status: sim.status === 'available' ? 'Complete' : 'Queued' },
+            { label: 'API Integration', status: sim.status === 'available' ? 'Active' : 'Planned' }
+          ].map((item) => (
+            <div key={item.label} className="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+              <span className="text-sm text-gray-600">{item.label}</span>
+              <span className={`px-2 py-1 text-xs font-medium rounded-full ${
+                item.status === 'Ready' || item.status === 'Complete' || item.status === 'Active'
+                  ? 'bg-green-100 text-green-700'
+                  : 'bg-gray-200 text-gray-600'
+              }`}>
+                {item.status}
+              </span>
+            </div>
+          ))}
+        </div>
+      </motion.div>
+    </div>
+  );
+};
+
+export default SimulationDetail;

@@ -415,3 +415,250 @@ export const CTAS = {
   live: 'Watch Live',
   start: 'Start Match',
 };
+
+    description: 'Collaborate without explicit communication through implicit signaling and shared goal inference.',
+    cognitiveSkills: ['Implicit Signaling', 'Goal Inference', 'Collaboration'],
+    opusAdvantage: 'Coordinates without words—true collaborative intelligence',
+    difficulty: 'Expert',
+    icon: '⬡',
+  },
+  {
+    id: 'long-horizon-planning',
+    name: 'Long-Horizon Planning',
+    slug: 'long-horizon-planning',
+    description: 'Balance immediate needs against future survival through temporal reasoning and resource forecasting.',
+    cognitiveSkills: ['Temporal Reasoning', 'Resource Forecasting', 'Survival Strategy'],
+    opusAdvantage: '200K context window enables planning other models cannot sustain',
+    difficulty: 'Advanced',
+    icon: '∞',
+  },
+  {
+    id: 'curiosity-driven-discovery',
+    name: 'Curiosity-Driven Discovery',
+    slug: 'curiosity-driven-discovery',
+    description: 'Efficiently map unknown territory balancing exploration-exploitation tradeoff and information value.',
+    cognitiveSkills: ['Exploration-Exploitation', 'Information Valuation', 'Mapping'],
+    opusAdvantage: 'Explores systematically, not randomly',
+    difficulty: 'Standard',
+    icon: '◎',
+  },
+  {
+    id: 'adversarial-combat',
+    name: 'Adversarial Combat',
+    slug: 'adversarial-combat',
+    description: 'Direct model-vs-model confrontation testing reactive planning, combo execution, and adaptation.',
+    cognitiveSkills: ['Reactive Planning', 'Execution', 'Real-time Adaptation'],
+    opusAdvantage: 'Real-time adaptation is where reasoning shines',
+    difficulty: 'Expert',
+    icon: '⚔',
+  },
+  {
+    id: 'logical-deduction',
+    name: 'Logical Deduction',
+    slug: 'logical-deduction',
+    description: 'Solve complex multi-step puzzles through constraint satisfaction and deductive chains.',
+    cognitiveSkills: ['Constraint Satisfaction', 'Deductive Reasoning', 'Logic Chains'],
+    opusAdvantage: 'Step-by-step reasoning is Opus\'s signature strength',
+    difficulty: 'Advanced',
+    icon: '⧉',
+  },
+  {
+    id: 'market-dynamics',
+    name: 'Market Dynamics',
+    slug: 'market-dynamics',
+    description: 'Trade, produce, and accumulate wealth through economic reasoning and supply/demand modeling.',
+    cognitiveSkills: ['Economic Reasoning', 'Supply/Demand', 'Incentive Modeling'],
+    opusAdvantage: 'Understands incentives and market equilibria',
+    difficulty: 'Advanced',
+    icon: '◆',
+  },
+  {
+    id: 'adaptive-learning',
+    name: 'Adaptive Learning',
+    slug: 'adaptive-learning',
+    description: 'Open-ended environment with emergent challenges testing generalization and transfer learning.',
+    cognitiveSkills: ['Generalization', 'Transfer Learning', 'Adaptation'],
+    opusAdvantage: 'The ultimate test: no rules, pure intelligence',
+    difficulty: 'Expert',
+    icon: '✧',
+  },
+];
+
+// Environment name mapping (old → new)
+export const ENVIRONMENT_NAME_MAP: Record<string, string> = {
+  'maze-navigation': 'Spatial Reasoning',
+  'resource-gathering': 'Resource Optimization',
+  'predator-evasion': 'Threat Assessment',
+  'tower-defense': 'Strategic Placement',
+  'capture-the-flag': 'Adversarial Tactics',
+  'platformer': 'Physics Intuition',
+  'social-dynamics': 'Social Intelligence',
+  'pattern-recognition': 'Abstract Reasoning',
+  'multi-agent-cooperation': 'Emergent Coordination',
+  'survival': 'Long-Horizon Planning',
+  'exploration': 'Curiosity-Driven Discovery',
+  'combat-arena': 'Adversarial Combat',
+  'puzzle-solving': 'Logical Deduction',
+  'economy-simulation': 'Market Dynamics',
+  'evolution-sandbox': 'Adaptive Learning',
+};
+
+// Available Abilities
+export const ABILITIES: Ability[] = [
+  {
+    id: 'movement',
+    name: 'Movement',
+    description: 'Basic locomotion and directional control',
+    icon: 'move',
+    unlocked: true
+  },
+  {
+    id: 'jumping',
+    name: 'Jumping',
+    description: 'Ability to leap over obstacles',
+    icon: 'arrow-up',
+    unlocked: false
+  },
+  {
+    id: 'climbing',
+    name: 'Climbing',
+    description: 'Scale walls and vertical surfaces',
+    icon: 'mountain',
+    unlocked: false
+  },
+  {
+    id: 'navigation',
+    name: 'Navigation',
+    description: 'Advanced pathfinding and spatial awareness',
+    icon: 'compass',
+    unlocked: false
+  },
+  {
+    id: 'planning',
+    name: 'Planning',
+    description: 'Strategic thinking and multi-step reasoning',
+    icon: 'brain',
+    unlocked: false
+  },
+  {
+    id: 'adaptation',
+    name: 'Adaptation',
+    description: 'Learning from failures and adjusting strategy',
+    icon: 'refresh-cw',
+    unlocked: false
+  }
+];
+
+// Shape configurations
+export const SHAPES = {
+  cube: {
+    name: 'Cube',
+    description: 'Stable and methodical approach',
+    geometry: 'box'
+  },
+  sphere: {
+    name: 'Sphere',
+    description: 'Fluid and adaptive movement',
+    geometry: 'sphere'
+  },
+  pyramid: {
+    name: 'Pyramid',
+    description: 'Sharp and decisive actions',
+    geometry: 'cone'
+  }
+} as const;
+
+// Animation constants
+export const ANIMATION_DURATION = {
+  FAST: 0.2,
+  NORMAL: 0.3,
+  SLOW: 0.5,
+  VERY_SLOW: 1.0
+};
+
+// 3D Scene constants
+export const SCENE_CONFIG = {
+  CAMERA_POSITION: [5, 5, 5] as [number, number, number],
+  CAMERA_FOV: 75,
+  CAMERA_NEAR: 0.1,
+  CAMERA_FAR: 1000,
+  AMBIENT_LIGHT_INTENSITY: 0.4,
+  DIRECTIONAL_LIGHT_INTENSITY: 1.0,
+  DIRECTIONAL_LIGHT_POSITION: [10, 10, 5] as [number, number, number]
+};
+
+// Performance constants
+export const PERFORMANCE = {
+  TARGET_FPS: 60,
+  LOW_FPS_THRESHOLD: 30,
+  PIXEL_RATIO_FALLBACK: 1
+};
+
+// FAQ Data - Rebranded
+export const FAQ_ITEMS = [
+  {
+    question: "What is ClaudeRL?",
+    answer: "ClaudeRL is a 3D reinforcement learning arena where frontier AI models (Opus 4.5, GPT-5, Grok 4, Gemini 3 Pro) compete across 15 adversarial environments designed to test different cognitive abilities."
+  },
+  {
+    question: "How are models evaluated fairly?",
+    answer: "Every model receives identical inputs, time constraints, and environmental conditions. No prompt engineering advantages. No cherry-picked scenarios. The data speaks for itself."
+  },
+  {
+    question: "What cognitive abilities are tested?",
+    answer: "The 15 environments test spatial reasoning, resource optimization, threat assessment, strategic placement, physics intuition, social intelligence, abstract reasoning, and more. Each maps to different aspects of general intelligence."
+  },
+  {
+    question: "Is this real-time reasoning?",
+    answer: "Yes. Watch each model's decision process as it happens. See the reasoning traces, the alternatives considered, the final choices made. Real-time transparency."
+  },
+  {
+    question: "Why does Opus 4.5 lead?",
+    answer: "Extended thinking, 200K context window, and step-by-step reasoning give Opus advantages in planning-heavy and multi-step challenges. The results are public and verifiable."
+  },
+  {
+    question: "Can I run my own benchmarks?",
+    answer: "API access is coming soon. Run your own experiments against our standardized environments with full reproducibility."
+  }
+];
+
+// Navigation links - Rebranded
+export const NAVIGATION_LINKS = [
+  { href: '/', label: 'Arena' },
+  { href: '/livesim', label: 'Live Match' },
+  { href: '/challenges', label: 'Challenges' },
+  { href: 'https://playground.clauderl.xyz', label: 'Sandbox' },
+  { href: '/rankings', label: 'Rankings' },
+  { href: '/how-it-works', label: 'How It Works' },
+  { href: '/research', label: 'Research' }
+];
+
+// Social links
+export const SOCIAL_LINKS = [
+  { href: 'https://github.com/ClaudeRL', label: 'GitHub', icon: 'github' },
+  { href: 'https://x.com/i/communities/1971956497015009337', label: 'Twitter', icon: 'twitter' }
+];
+
+// Legal links
+export const LEGAL_LINKS = [
+  { href: '/privacy', label: 'Privacy Policy' },
+  { href: '/terms', label: 'Terms of Service' }
+];
+
+// Taglines
+export const TAGLINES = {
+  primary: 'Watch Opus 4.5 outthink, outmaneuver, and outperform every frontier model in real-time',
+  technical: '15 adversarial environments. 4 frontier models. Real-time reasoning on display.',
+  minimal: 'Frontier intelligence, quantified.',
+  footer: 'Reasoning, quantified.',
+  built: 'Built to prove a point.',
+};
+
+// CTAs
+export const CTAS = {
+  primary: 'Watch Opus Compete',
+  secondary: 'See the Results',
+  arena: 'Enter Arena',
+  live: 'Watch Live',
+  start: 'Start Match',
+};
