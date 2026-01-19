@@ -1,183 +1,297 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Brain, Eye, BarChart3, Shield } from 'lucide-react';
-import { staggerContainer, staggerItem } from '@/lib/animations';
 
 const HowItWorks: React.FC = () => {
+  const [activeStep, setActiveStep] = useState(0);
+  const [progress, setProgress] = useState([0, 0, 0, 0]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveStep((prev) => (prev + 1) % 4);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    setProgress((prev) => {
+      const newProgress = [...prev];
+      newProgress[activeStep] = 100;
+      return newProgress;
+    });
+  }, [activeStep]);
+
   const steps = [
     {
-      icon: Brain,
-      title: 'Neural Cores',
-      description: 'Each agent houses a frontier model as its decision engine',
-      details: ['Opus 4.5', 'GPT-5', 'Grok 4', 'Gemini 3 Pro'],
+      id: '01',
+      title: 'NEURAL INITIALIZATION',
+      command: './init_cores --model opus-4.5',
+      status: 'COMPLETE',
+      metrics: { cores: 128, memory: '4.2TB', latency: '12ms' },
+      output: ['Loading model weights...', 'Allocating VRAM: 80GB', 'Neural cores: ONLINE']
     },
     {
-      icon: Eye,
-      title: 'Real-Time Reasoning',
-      description: 'Watch decision processes as they happen with full transparency',
-      details: ['Reasoning traces', 'Alternative paths', 'Final choices'],
+      id: '02', 
+      title: 'ENVIRONMENT DEPLOYMENT',
+      command: './deploy_env --seed random',
+      status: 'ACTIVE',
+      metrics: { seed: '0x7F3A2B', complexity: 'HIGH', agents: 4 },
+      output: ['Generating world...', 'Seed: 0x7F3A2B1C', 'Environment: READY']
     },
     {
-      icon: BarChart3,
-      title: 'Transparent Scoring',
-      description: 'Every metric is public and verifiable',
-      details: ['Win rates', 'Head-to-head records', 'Environment rankings'],
+      id: '03',
+      title: 'REASONING EXECUTION',
+      command: './run_inference --realtime',
+      status: 'PENDING',
+      metrics: { tokens: '32K', throughput: '150/s', accuracy: '96%' },
+      output: ['Processing input...', 'Generating response...', 'Confidence: 0.96']
     },
     {
-      icon: Shield,
-      title: 'Fair Comparison',
-      description: 'Identical conditions for every model, no advantages',
-      details: ['Same inputs', 'Same time limits', 'No prompt engineering'],
+      id: '04',
+      title: 'SCORE RECORDING',
+      command: './record_score --verify',
+      status: 'PENDING',
+      metrics: { score: 94520, verified: true, rank: '#1' },
+      output: ['Calculating score...', 'Verification: PASS', 'Rank updated: #1']
     }
   ];
 
   return (
-    <section className="py-16 md:py-32 relative overflow-hidden" style={{ backgroundColor: 'var(--bg-primary)' }}>
-      <div className="container mx-auto px-4 relative z-10">
+    <section 
+      className="py-12 md:py-20 relative overflow-hidden font-mono"
+      style={{ backgroundColor: 'var(--bg-primary)' }}
+    >
+      <div className="container mx-auto px-4">
+        
+        {/* Section Header */}
         <motion.div
-          variants={staggerContainer}
-          initial="initial"
-          whileInView="animate"
-          viewport={{ once: true, margin: "-100px" }}
-          className="text-center mb-10 md:mb-20"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="mb-8"
         >
-          <motion.p 
-            variants={staggerItem} 
-            className="text-xs md:text-sm font-medium tracking-widest uppercase mb-3 md:mb-4" 
-            style={{ color: 'var(--text-muted)' }}
-          >
-            System Architecture
-          </motion.p>
-          <motion.h2 
-            variants={staggerItem}
-            className="text-3xl md:text-5xl lg:text-7xl font-normal mb-4 md:mb-6"
-            style={{ 
-              fontFamily: 'var(--font-serif)',
-              color: 'var(--text-accent)'
-            }}
-          >
-            How It Works
-          </motion.h2>
-          <motion.p 
-            variants={staggerItem}
-            className="text-base md:text-xl max-w-xs md:max-w-2xl mx-auto"
-            style={{ 
-              fontFamily: 'var(--font-sans)',
-              color: 'var(--text-secondary)' 
-            }}
-          >
-            The benchmark that benchmarks can&apos;t game
-          </motion.p>
+          <div className="hud-panel inline-block" style={{ border: '1px solid var(--border)' }}>
+            <div className="hud-panel-header">
+              <span className="hud-panel-title">SYSTEM WORKFLOW</span>
+            </div>
+            <div className="px-4 py-3">
+              <h2 className="text-xl md:text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>
+                <span style={{ color: 'var(--accent)' }}>{'>'}</span> HOW IT WORKS
+              </h2>
+            </div>
+          </div>
         </motion.div>
 
-        <motion.div
-          variants={staggerContainer}
-          initial="initial"
-          whileInView="animate"
-          viewport={{ once: true, margin: "-50px" }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6"
-        >
-          {steps.map((step, index) => (
-            <motion.div
-              key={step.title}
-              variants={staggerItem}
-              className="group"
-            >
-              <motion.div 
-                className="rounded-2xl md:rounded-[2rem] p-6 md:p-8 h-full border relative"
+        {/* Main HUD Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
+          
+          {/* Steps Timeline - Left */}
+          <div className="lg:col-span-1 space-y-2">
+            {steps.map((step, index) => (
+              <motion.div
+                key={step.id}
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                className="hud-panel cursor-pointer"
                 style={{ 
-                  backgroundColor: 'var(--bg-secondary)',
-                  borderColor: 'var(--border)',
-                  boxShadow: '0 1px 3px rgba(0, 0, 0, 0.3)'
+                  border: `1px solid ${activeStep === index ? 'var(--accent)' : 'var(--border)'}`,
+                  background: activeStep === index ? 'rgba(0, 212, 170, 0.05)' : 'var(--bg-panel)'
                 }}
-                whileHover={{ 
-                  y: -12,
-                  borderColor: 'rgba(194, 117, 81, 0.5)',
-                  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.5)'
-                }}
+                onClick={() => setActiveStep(index)}
               >
-                {/* Step number */}
-                <motion.div 
-                  className="absolute -top-4 -left-1 md:-top-5 md:-left-2 w-10 h-10 md:w-12 md:h-12 rounded-xl md:rounded-2xl font-bold text-base md:text-lg flex items-center justify-center"
-                  style={{ 
-                    fontFamily: 'var(--font-mono)',
-                    backgroundColor: 'var(--accent)',
-                    color: 'white',
-                    boxShadow: '0 2px 6px rgba(0, 0, 0, 0.4)'
-                  }}
-                >
-                  {index + 1}
-                </motion.div>
-
-                {/* Icon */}
-                <div 
-                  className="w-12 h-12 md:w-14 md:h-14 rounded-xl md:rounded-2xl border flex items-center justify-center mb-5 md:mb-6 mt-2 md:mt-4"
-                  style={{ 
-                    backgroundColor: 'var(--bg-primary)',
-                    borderColor: 'var(--border)',
-                    boxShadow: 'inset 0 1px 2px rgba(0, 0, 0, 0.4)'
-                  }}
-                >
-                  <step.icon 
-                    className="w-5 h-5 md:w-6 md:h-6" 
-                    strokeWidth={1.5} 
-                    style={{ color: 'var(--text-secondary)' }} 
-                  />
-                </div>
-
-                <h3 
-                  className="text-lg md:text-xl font-semibold mb-2 md:mb-3" 
-                  style={{ 
-                    fontFamily: 'var(--font-sans)',
-                    color: 'var(--text-primary)' 
-                  }}
-                >
-                  {step.title}
-                </h3>
-                <p 
-                  className="mb-4 md:mb-6 leading-relaxed text-sm md:text-base" 
-                  style={{ 
-                    fontFamily: 'var(--font-sans)',
-                    color: 'var(--text-secondary)' 
-                  }}
-                >
-                  {step.description}
-                </p>
-                
-                {/* Tags */}
-                <div className="flex flex-wrap gap-1.5 md:gap-2">
-                  {step.details.map((detail) => (
+                <div className="p-3">
+                  <div className="flex items-center justify-between mb-2">
                     <span 
-                      key={detail}
-                      className="px-2.5 py-1 md:px-3 md:py-1.5 rounded-lg md:rounded-xl text-xs font-medium border"
-                      style={{
-                        backgroundColor: 'var(--bg-primary)',
-                        color: 'var(--text-secondary)',
-                        borderColor: 'var(--border)'
+                      className="text-lg font-bold"
+                      style={{ color: activeStep === index ? 'var(--accent)' : 'var(--text-muted)' }}
+                    >
+                      [{step.id}]
+                    </span>
+                    <span 
+                      className="text-xs px-2 py-0.5"
+                      style={{ 
+                        border: `1px solid ${
+                          step.status === 'COMPLETE' ? 'var(--green)' :
+                          step.status === 'ACTIVE' ? 'var(--accent)' : 'var(--border)'
+                        }`,
+                        color: step.status === 'COMPLETE' ? 'var(--green)' :
+                               step.status === 'ACTIVE' ? 'var(--accent)' : 'var(--text-muted)'
                       }}
                     >
-                      {detail}
+                      {step.status}
                     </span>
+                  </div>
+                  <div className="text-xs font-semibold mb-2" style={{ color: 'var(--text-primary)' }}>
+                    {step.title}
+                  </div>
+                  {/* Progress bar */}
+                  <div className="hud-progress">
+                    <motion.div 
+                      className="hud-progress-bar"
+                      initial={{ width: 0 }}
+                      animate={{ width: activeStep >= index ? '100%' : '0%' }}
+                      transition={{ duration: 0.5 }}
+                    />
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Main Display - Center */}
+          <div className="lg:col-span-2">
+            <div 
+              className="hud-panel h-full min-h-[350px] relative"
+              style={{ border: '1px solid var(--border)' }}
+            >
+              {/* Corner decorations */}
+              <div className="absolute top-0 left-0 w-4 h-4 border-t border-l" style={{ borderColor: 'var(--accent)' }} />
+              <div className="absolute top-0 right-0 w-4 h-4 border-t border-r" style={{ borderColor: 'var(--accent)' }} />
+              <div className="absolute bottom-0 left-0 w-4 h-4 border-b border-l" style={{ borderColor: 'var(--accent)' }} />
+              <div className="absolute bottom-0 right-0 w-4 h-4 border-b border-r" style={{ borderColor: 'var(--accent)' }} />
+
+              <div className="hud-panel-header">
+                <div className="flex items-center gap-2">
+                  <span className="status-dot" />
+                  <span className="hud-panel-title">TERMINAL OUTPUT</span>
+                </div>
+                <span className="text-xs" style={{ color: 'var(--text-muted)' }}>
+                  STEP {steps[activeStep].id}/04
+                </span>
+              </div>
+
+              <div className="p-4 space-y-4">
+                {/* Command */}
+                <div 
+                  className="p-3"
+                  style={{ background: 'var(--bg-tertiary)', border: '1px solid var(--border)' }}
+                >
+                  <div className="text-xs mb-1" style={{ color: 'var(--text-muted)' }}>
+                    $ COMMAND
+                  </div>
+                  <code style={{ color: 'var(--accent)' }}>
+                    {steps[activeStep].command}
+                  </code>
+                </div>
+
+                {/* Output */}
+                <div 
+                  className="p-3 min-h-[120px]"
+                  style={{ background: 'var(--bg-tertiary)', border: '1px solid var(--border)' }}
+                >
+                  <div className="text-xs mb-2" style={{ color: 'var(--text-muted)' }}>
+                    $ OUTPUT
+                  </div>
+                  {steps[activeStep].output.map((line, i) => (
+                    <motion.div
+                      key={i}
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: i * 0.2 }}
+                      className="text-sm py-1"
+                      style={{ color: 'var(--text-secondary)' }}
+                    >
+                      <span style={{ color: 'var(--accent)' }}>{'>'}</span> {line}
+                    </motion.div>
                   ))}
                 </div>
-              </motion.div>
-            </motion.div>
-          ))}
-        </motion.div>
-      </div>
-    </section>
-  );
-};
 
-export default HowItWorks;
-
+                {/* Metrics Grid */}
+                <div className="grid grid-cols-3 gap-2">
+                  {Object.entries(steps[activeStep].metrics).map(([key, value]) => (
+                    <div 
+                      key={key}
+                      className="p-2 text-center"
+                      style={{ background: 'var(--bg-tertiary)', border: '1px solid var(--border)' }}
+                    >
+                      <div className="text-xs uppercase" style={{ color: 'var(--text-muted)' }}>
+                        {key}
+                      </div>
+                      <div className="text-sm font-bold" style={{ color: 'var(--accent)' }}>
+                        {String(value)}
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              </motion.div>
-            </motion.div>
-          ))}
-        </motion.div>
+              </div>
+            </div>
+          </div>
+
+          {/* Stats Panel - Right */}
+          <div className="space-y-4">
+            
+            {/* System Stats */}
+            <div className="hud-panel" style={{ border: '1px solid var(--border)' }}>
+              <div className="hud-panel-header">
+                <span className="hud-panel-title">SYSTEM STATS</span>
+              </div>
+              <div className="hud-panel-content space-y-3">
+                {[
+                  { label: 'ENVIRONMENTS', value: '15', status: 'ACTIVE' },
+                  { label: 'AVG MATCH TIME', value: '4.2min', status: null },
+                  { label: 'TOTAL MATCHES', value: '24,847', status: null },
+                  { label: 'UPTIME', value: '99.97%', status: 'ONLINE' },
+                ].map((stat) => (
+                  <div key={stat.label} className="flex justify-between items-center">
+                    <span className="text-xs" style={{ color: 'var(--text-muted)' }}>
+                      {stat.label}
+                    </span>
+                    <div className="flex items-center gap-2">
+                      <span className="text-sm font-semibold" style={{ color: 'var(--text-primary)' }}>
+                        {stat.value}
+                      </span>
+                      {stat.status && (
+                        <span 
+                          className="text-xs px-1"
+                          style={{ 
+                            color: 'var(--green)',
+                            border: '1px solid var(--green)'
+                          }}
+                        >
+                          {stat.status}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Network */}
+            <div className="hud-panel" style={{ border: '1px solid var(--border)' }}>
+              <div className="hud-panel-header">
+                <span className="hud-panel-title">NETWORK</span>
+              </div>
+              <div className="hud-panel-content">
+                <div className="h-16 flex items-end gap-0.5 mb-2">
+                  {[...Array(20)].map((_, i) => {
+                    const height = 30 + Math.sin(i * 0.5 + Date.now() / 1000) * 30 + Math.random() * 20;
+                    return (
+                      <div 
+                        key={i}
+                        className="flex-1 transition-all"
+                        style={{ 
+                          height: `${height}%`,
+                          background: 'var(--accent)',
+                          opacity: 0.3 + (i / 20) * 0.7
+                        }}
+                      />
+                    );
+                  })}
+                </div>
+                <div className="flex justify-between text-xs" style={{ color: 'var(--text-muted)' }}>
+                  <span>↓ 1.6 GBps</span>
+                  <span>↑ 1.2 GBps</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
       </div>
     </section>
   );

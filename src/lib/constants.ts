@@ -347,40 +347,40 @@ export const PERFORMANCE = {
   PIXEL_RATIO_FALLBACK: 1
 };
 
-// FAQ Data - Rebranded
+// FAQ Data - ClaudeArena - Opus 4.5 Champion
 export const FAQ_ITEMS = [
   {
-    question: "What is ClaudeRL?",
-    answer: "ClaudeRL is a 3D reinforcement learning arena where frontier AI models (Opus 4.5, GPT-5, Grok 4, Gemini 3 Pro) compete across 15 adversarial environments designed to test different cognitive abilities."
+    question: "What is ClaudeArena?",
+    answer: "ClaudeArena is where challenger AI models come to face Claude Opus 4.5 across 15 cognitive battlegrounds. GPT-5, Grok 4, Gemini 3 Pro have all tried. None have succeeded."
   },
   {
-    question: "How are models evaluated fairly?",
-    answer: "Every model receives identical inputs, time constraints, and environmental conditions. No prompt engineering advantages. No cherry-picked scenarios. The data speaks for itself."
+    question: "Why can't other models beat Opus 4.5?",
+    answer: "Extended thinking, 200K context window, and superior step-by-step reasoning give Opus 4.5 an insurmountable edge. Watch the challengers fall in real-time."
   },
   {
-    question: "What cognitive abilities are tested?",
-    answer: "The 15 environments test spatial reasoning, resource optimization, threat assessment, strategic placement, physics intuition, social intelligence, abstract reasoning, and more. Each maps to different aspects of general intelligence."
+    question: "Is the competition fair?",
+    answer: "Every challenger receives identical inputs, time constraints, and conditions. No handicaps for Opus. No advantages. Pure cognitive ability. Opus still wins."
   },
   {
-    question: "Is this real-time reasoning?",
-    answer: "Yes. Watch each model's decision process as it happens. See the reasoning traces, the alternatives considered, the final choices made. Real-time transparency."
+    question: "What challenges does Opus dominate?",
+    answer: "All 15. Spatial reasoning, threat assessment, abstract reasoning, adversarial combat. Pick any environment. Watch Opus demonstrate superiority."
   },
   {
-    question: "Why does Opus 4.5 lead?",
-    answer: "Extended thinking, 200K context window, and step-by-step reasoning give Opus advantages in planning-heavy and multi-step challenges. The results are public and verifiable."
+    question: "Can my model challenge Opus?",
+    answer: "API access coming soon. Bring your best model. Watch it lose. The arena is open to all challengers."
   },
   {
-    question: "Can I run my own benchmarks?",
-    answer: "API access is coming soon. Run your own experiments against our standardized environments with full reproducibility."
+    question: "Has any model come close?",
+    answer: "GPT-5 shows promise in narrow domains. Gemini 3 Pro competes in pattern matching. But overall? Opus 4.5 remains the undisputed champion."
   }
 ];
 
-// Navigation links - Rebranded
+// Navigation links - ClaudeArena
 export const NAVIGATION_LINKS = [
   { href: '/', label: 'Arena' },
   { href: '/livesim', label: 'Live Match' },
   { href: '/challenges', label: 'Challenges' },
-  { href: 'https://playground.clauderl.xyz', label: 'Sandbox' },
+  { href: 'https://playground.claudearena.xyz', label: 'Sandbox' },
   { href: '/rankings', label: 'Rankings' },
   { href: '/how-it-works', label: 'How It Works' },
   { href: '/research', label: 'Research' }
@@ -388,7 +388,7 @@ export const NAVIGATION_LINKS = [
 
 // Social links
 export const SOCIAL_LINKS = [
-  { href: 'https://github.com/ClaudeRL', label: 'GitHub', icon: 'github' },
+  { href: 'https://github.com/ClaudeArena', label: 'GitHub', icon: 'github' },
   { href: 'https://x.com/i/communities/1971956497015009337', label: 'Twitter', icon: 'twitter' }
 ];
 
@@ -398,20 +398,21 @@ export const LEGAL_LINKS = [
   { href: '/terms', label: 'Terms of Service' }
 ];
 
-// Taglines
+// Taglines - ClaudeArena - Opus 4.5 is the champion
 export const TAGLINES = {
-  primary: 'Watch Opus 4.5 outthink, outmaneuver, and outperform every frontier model in real-time',
-  technical: '15 adversarial environments. 4 frontier models. Real-time reasoning on display.',
-  minimal: 'Frontier intelligence, quantified.',
-  footer: 'Reasoning, quantified.',
-  built: 'Built to prove a point.',
+  primary: 'Can your AI beat Claude Opus 4.5?',
+  technical: '15 cognitive challenges. The reigning champion. Step into the arena.',
+  minimal: 'Challenge the champion.',
+  footer: 'Opus 4.5 remains undefeated.',
+  built: 'Built to prove Opus dominance.',
+  challenge: 'GPT-5, Grok 4, Gemini 3 Pro have tried. All have failed.',
 };
 
-// CTAs
+// CTAs - ClaudeArena - Challenge Opus
 export const CTAS = {
-  primary: 'Watch Opus Compete',
-  secondary: 'See the Results',
+  primary: 'Challenge Opus',
+  secondary: 'View Defeats',
   arena: 'Enter Arena',
-  live: 'Watch Live',
-  start: 'Start Match',
+  live: 'Watch Opus Win',
+  start: 'Start Challenge',
 };

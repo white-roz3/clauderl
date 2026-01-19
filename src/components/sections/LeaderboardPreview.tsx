@@ -1,439 +1,392 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { ArrowRight, Trophy, Timer, Activity, Crown } from 'lucide-react';
 import { MODELS } from '@/lib/constants';
 
 const LeaderboardPreview: React.FC = () => {
+  const [activeModel, setActiveModel] = useState('opus');
+  const [scanProgress, setScanProgress] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setScanProgress((prev) => (prev + 1) % 100);
+    }, 50);
+    return () => clearInterval(interval);
+  }, []);
+
   const previewData = [
-    { rank: 1, modelId: 'opus', environment: 'Abstract Reasoning', winRate: 78, avgScore: 94520 },
-    { rank: 2, modelId: 'gpt', environment: 'Resource Optimization', winRate: 71, avgScore: 87340 },
-    { rank: 3, modelId: 'gemini', environment: 'Physics Intuition', winRate: 68, avgScore: 82150 },
-    { rank: 4, modelId: 'grok', environment: 'Adversarial Combat', winRate: 62, avgScore: 76890 },
+    { rank: 1, modelId: 'opus', winRate: 78, avgScore: 94520, status: 'CHAMPION', trend: '+2.3%' },
+    { rank: 2, modelId: 'gpt', winRate: 71, avgScore: 87340, status: 'ACTIVE', trend: '-0.8%' },
+    { rank: 3, modelId: 'gemini', winRate: 68, avgScore: 82150, status: 'ACTIVE', trend: '+1.1%' },
+    { rank: 4, modelId: 'grok', winRate: 62, avgScore: 76890, status: 'ACTIVE', trend: '-0.3%' },
   ];
 
   const getModel = (id: string) => MODELS.find(m => m.id === id);
+  const currentModel = getModel(activeModel);
 
-  const stats = [
-    { label: 'Current Leader', value: 'Opus 4.5', icon: Crown, subtitle: 'Anthropic' },
-    { label: 'Win Rate', value: '78%', icon: Timer, subtitle: '12/15 environments' },
-    { label: 'Total Matches', value: '24,847', icon: Activity, subtitle: 'Recorded sessions' },
+  const logs = [
+    { time: '08:32:10', type: 'MATCH_END', message: 'Opus defeated GPT-5 in Spatial Reasoning' },
+    { time: '08:31:45', type: 'SCORE_UPDATE', message: 'New high score: 94,520 pts' },
+    { time: '08:30:22', type: 'MATCH_START', message: 'Opus vs Gemini - Abstract Reasoning' },
   ];
 
   return (
-    <section className="py-16 md:py-32 relative overflow-hidden" style={{ backgroundColor: 'var(--bg-primary)' }}>
+    <section 
+      className="py-12 md:py-20 relative overflow-hidden font-mono"
+      style={{ backgroundColor: 'var(--bg-primary)' }}
+    >
       <div className="container mx-auto px-4">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-12 md:mb-20"
-        >
-          <p 
-            className="text-xs md:text-sm font-medium tracking-widest uppercase mb-3 md:mb-4" 
-            style={{ color: 'var(--text-muted)' }}
-          >
-            Performance Metrics
-          </p>
-          <h2 
-            className="text-3xl md:text-5xl lg:text-7xl font-normal mb-4 md:mb-6"
-            style={{ 
-              fontFamily: 'var(--font-serif)',
-              color: 'var(--text-accent)'
-            }}
-          >
-            Model Rankings
-          </h2>
-          <p 
-            className="text-base md:text-xl max-w-xs md:max-w-2xl mx-auto" 
-            style={{ 
-              fontFamily: 'var(--font-sans)',
-              color: 'var(--text-secondary)' 
-            }}
-          >
-            Aggregated performance across all cognitive challenges. Updated after every match.
-          </p>
-          </motion.div>
+        
+        {/* HUD Grid Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
           
-        {/* Opus Leading Banner */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mb-8 md:mb-12 p-4 md:p-6 rounded-xl border max-w-2xl mx-auto text-center"
-          style={{ 
-            backgroundColor: 'rgba(194, 117, 81, 0.1)',
-            borderColor: 'rgba(194, 117, 81, 0.3)'
-          }}
-        >
-          <p 
-            className="font-medium text-sm md:text-base"
-            style={{ color: 'var(--accent)' }}
-          >
-            Opus 4.5 currently leads in 12 of 15 environments
-          </p>
-        </motion.div>
+          {/* LEFT: Model Schematic Display */}
+          <div className="lg:col-span-2">
+            <div 
+              className="hud-panel h-full min-h-[400px] relative"
+              style={{ border: '1px solid var(--border)' }}
+            >
+              {/* Corner decorations */}
+              <div className="absolute top-0 left-0 w-4 h-4 border-t border-l" style={{ borderColor: 'var(--accent)' }} />
+              <div className="absolute top-0 right-0 w-4 h-4 border-t border-r" style={{ borderColor: 'var(--accent)' }} />
+              <div className="absolute bottom-0 left-0 w-4 h-4 border-b border-l" style={{ borderColor: 'var(--accent)' }} />
+              <div className="absolute bottom-0 right-0 w-4 h-4 border-b border-r" style={{ borderColor: 'var(--accent)' }} />
 
-        {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-10 md:mb-16">
-          {stats.map((stat, index) => {
-            const Icon = stat.icon;
-            return (
+              {/* Scanning line effect */}
               <motion.div
-                key={stat.label}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-              >
-        <motion.div
-                  className="rounded-2xl md:rounded-3xl p-6 md:p-8 text-center border"
-                  style={{ 
-                    backgroundColor: 'var(--bg-secondary)',
-                    borderColor: 'var(--border)',
-                    boxShadow: '0 1px 3px rgba(0, 0, 0, 0.3)'
-                  }}
-                  whileHover={{ y: -8, boxShadow: '0 4px 12px rgba(0, 0, 0, 0.5)' }}
-                >
-                  <div 
-                    className="w-12 h-12 md:w-14 md:h-14 rounded-xl md:rounded-2xl flex items-center justify-center mx-auto mb-4"
-                    style={{ 
-                      backgroundColor: 'var(--accent)',
-                      color: 'white',
-                      boxShadow: '0 2px 6px rgba(0, 0, 0, 0.4)'
-                    }}
-                  >
-                    <Icon className="w-5 h-5 md:w-6 md:h-6" strokeWidth={2} />
-            </div>
-                  <p 
-                    className="text-xs md:text-sm mb-2" 
-                    style={{ color: 'var(--text-muted)' }}
-                  >
-                    {stat.label}
-                  </p>
-                  <p 
-                    className="text-2xl md:text-4xl font-semibold mb-1"
-                    style={{ 
-                      fontFamily: 'var(--font-mono)',
-                      color: stat.label === 'Current Leader' ? 'var(--accent)' : 'var(--text-primary)'
-                    }}
-                  >
-                    {stat.value}
-                  </p>
-                  <p className="text-xs" style={{ color: 'var(--text-muted)' }}>{stat.subtitle}</p>
-          </motion.div>
-        </motion.div>
-            );
-          })}
-        </div>
-
-        {/* Rankings Table */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="rounded-2xl md:rounded-3xl overflow-hidden border mb-10 md:mb-16"
-          style={{ 
-            backgroundColor: 'var(--bg-secondary)',
-            borderColor: 'var(--border)',
-            boxShadow: '0 1px 3px rgba(0, 0, 0, 0.3)'
-          }}
-        >
-          {/* Table Header */}
-          <div className="p-6 md:p-8 border-b" style={{ borderColor: 'var(--border)' }}>
-            <div className="flex items-center gap-3 mb-2">
-              <div 
-                className="w-10 h-10 rounded-xl flex items-center justify-center"
+                className="absolute left-0 right-0 h-px opacity-50"
                 style={{ 
-                  backgroundColor: 'var(--accent)',
-                  boxShadow: '0 2px 6px rgba(0, 0, 0, 0.4)'
+                  background: 'linear-gradient(90deg, transparent, var(--accent), transparent)',
+                  top: `${scanProgress}%`
+                }}
+              />
+
+              {/* Header */}
+              <div className="hud-panel-header">
+                <div className="flex items-center gap-3">
+                  <div className="status-dot" />
+                  <span className="hud-panel-title">MODEL ANALYSIS</span>
+                </div>
+                <div className="flex items-center gap-2 text-xs" style={{ color: 'var(--text-muted)' }}>
+                  <span>SCANNING...</span>
+                  <span style={{ color: 'var(--accent)' }}>{scanProgress}%</span>
+                </div>
+              </div>
+
+              {/* Schematic Area */}
+              <div className="p-6 relative">
+                {/* Grid background */}
+                <div 
+                  className="absolute inset-6 opacity-30"
+                  style={{
+                    backgroundImage: 'linear-gradient(var(--grid-color-strong) 1px, transparent 1px), linear-gradient(90deg, var(--grid-color-strong) 1px, transparent 1px)',
+                    backgroundSize: '30px 30px'
+                  }}
+                />
+
+                {/* ASCII Art Model Visualization */}
+                <pre 
+                  className="text-center relative z-10 text-xs leading-tight"
+                  style={{ color: 'var(--accent)' }}
+                >
+{`
+                         ┌─────────────────────┐
+                         │   NEURAL NETWORK    │
+                         │   ████████████████  │
+                         └─────────┬───────────┘
+                                   │
+              ┌────────────────────┼────────────────────┐
+              │                    │                    │
+        ┌─────┴─────┐        ┌─────┴─────┐        ┌─────┴─────┐
+        │  SPATIAL  │        │ TEMPORAL  │        │ ABSTRACT  │
+        │   92%     │        │   87%     │        │   94%     │
+        └─────┬─────┘        └─────┬─────┘        └─────┬─────┘
+              │                    │                    │
+              └────────────────────┼────────────────────┘
+                                   │
+                         ┌─────────┴───────────┐
+                         │   OUTPUT LAYER      │
+                         │   CONFIDENCE: 96%   │
+                         └─────────────────────┘
+`}
+                </pre>
+
+                {/* Floating Labels */}
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="absolute top-8 left-8 px-3 py-1.5 text-xs"
+                  style={{ 
+                    background: 'var(--bg-panel)', 
+                    border: '1px solid var(--accent)',
+                    color: 'var(--accent)'
+                  }}
+                >
+                  PROCESSING: 72%
+                  <div className="mt-1 flex gap-0.5">
+                    {[...Array(10)].map((_, i) => (
+                      <div 
+                        key={i} 
+                        className="w-2 h-3"
+                        style={{ background: i < 7 ? 'var(--accent)' : 'var(--border)' }}
+                      />
+                    ))}
+                  </div>
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.2 }}
+                  className="absolute top-8 right-8 px-3 py-1.5 text-xs"
+                  style={{ 
+                    background: 'var(--bg-panel)', 
+                    border: '1px solid var(--border)',
+                    color: 'var(--text-secondary)'
+                  }}
+                >
+                  MEMORY: 4.2TB
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.4 }}
+                  className="absolute bottom-8 left-8 px-3 py-1.5 text-xs"
+                  style={{ 
+                    background: 'var(--bg-panel)', 
+                    border: '1px solid var(--accent)',
+                    color: 'var(--accent)'
+                  }}
+                >
+                  INFERENCE: 24ms
+                </motion.div>
+              </div>
+
+              {/* Bottom Status Bar */}
+              <div 
+                className="absolute bottom-0 left-0 right-0 px-4 py-2 flex items-center justify-between text-xs"
+                style={{ 
+                  background: 'rgba(0, 212, 170, 0.05)',
+                  borderTop: '1px solid var(--border)'
                 }}
               >
-                <Trophy className="w-5 h-5 text-white" />
-            </div>
-              <div>
-                <h3 
-                  className="text-lg md:text-xl font-semibold" 
-                  style={{ 
-                    fontFamily: 'var(--font-sans)',
-                    color: 'var(--text-primary)' 
-                  }}
-                >
-                  Top Performers
-            </h3>
-                <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
-                  Head-to-head rankings across all challenges
-            </p>
+                <div className="flex items-center gap-4">
+                  <span style={{ color: 'var(--text-muted)' }}>MODEL:</span>
+                  <span style={{ color: 'var(--accent)' }}>OPUS-4.5</span>
+                </div>
+                <div className="flex items-center gap-4">
+                  <span style={{ color: 'var(--text-muted)' }}>STATUS:</span>
+                  <span className="flex items-center gap-1">
+                    <span className="status-dot" style={{ width: 4, height: 4 }} />
+                    <span style={{ color: 'var(--green)' }}>ONLINE</span>
+                  </span>
+                </div>
+                <div className="hidden md:flex items-center gap-4">
+                  <span style={{ color: 'var(--text-muted)' }}>UPTIME:</span>
+                  <span style={{ color: 'var(--text-primary)' }}>99.97%</span>
+                </div>
               </div>
             </div>
           </div>
 
-          {/* Table */}
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead>
-                <tr className="border-b" style={{ borderColor: 'var(--border)' }}>
-                  <th 
-                    className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider" 
-                    style={{ color: 'var(--text-muted)' }}
-                  >
-                    Rank
-                  </th>
-                  <th 
-                    className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider" 
-                    style={{ color: 'var(--text-muted)' }}
-                  >
-                    Model
-                  </th>
-                  <th 
-                    className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider" 
-                    style={{ color: 'var(--text-muted)' }}
-                  >
-                    Win Rate
-                  </th>
-                  <th 
-                    className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider" 
-                    style={{ color: 'var(--text-muted)' }}
-                  >
-                    Avg Score
-                  </th>
-                  <th 
-                    className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider" 
-                    style={{ color: 'var(--text-muted)' }}
-                  >
-                    Best Challenge
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {previewData.map((entry, index) => {
-                  const model = getModel(entry.modelId);
-                  if (!model) return null;
+          {/* RIGHT: Data Panels */}
+          <div className="space-y-4">
+            
+            {/* Win Rate Panel */}
+            <div className="hud-panel" style={{ border: '1px solid var(--border)' }}>
+              <div className="hud-panel-header">
+                <span className="hud-panel-title">WIN RATE</span>
+                <span className="hud-panel-icon">↗</span>
+              </div>
+              <div className="hud-panel-content">
+                <div className="flex items-end justify-between mb-3">
+                  <div className="hud-stat-value">78<span className="hud-stat-unit">%</span></div>
+                  <span className="text-xs" style={{ color: 'var(--green)' }}>+2.3%</span>
+                </div>
+                <div className="hud-progress">
+                  <div className="hud-progress-bar" style={{ width: '78%' }} />
+                </div>
+                <div className="flex justify-between mt-2 text-xs" style={{ color: 'var(--text-muted)' }}>
+                  <span>0%</span>
+                  <span>100%</span>
+                </div>
+              </div>
+            </div>
 
-                  return (
-                    <motion.tr
-                      key={index}
-                      initial={{ opacity: 0, x: -20 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: index * 0.05 }}
-                      className="border-b transition-colors"
+            {/* Matches Panel */}
+            <div className="hud-panel" style={{ border: '1px solid var(--border)' }}>
+              <div className="hud-panel-header">
+                <span className="hud-panel-title">TOTAL MATCHES</span>
+                <span className="hud-panel-icon">↗</span>
+              </div>
+              <div className="hud-panel-content">
+                <div className="hud-stat-value">24,847</div>
+                <div className="text-xs mt-2" style={{ color: 'var(--text-muted)' }}>
+                  +127 TODAY
+                </div>
+                {/* Mini graph */}
+                <div className="mt-3 h-12 flex items-end gap-1">
+                  {[40, 65, 45, 80, 60, 75, 90, 70, 85, 95].map((h, i) => (
+                    <div 
+                      key={i}
+                      className="flex-1"
                       style={{ 
-                        borderColor: 'rgba(74, 74, 70, 0.5)'
+                        height: `${h}%`,
+                        background: i === 9 ? 'var(--accent)' : 'var(--border)'
                       }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.backgroundColor = 'var(--bg-tertiary)';
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.backgroundColor = 'transparent';
-                      }}
-                    >
-                      <td className="px-6 py-4">
-                        <span 
-                          className="font-mono"
-                          style={{ color: entry.rank === 1 ? 'var(--accent)' : 'var(--text-secondary)' }}
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Environments Panel */}
+            <div className="hud-panel" style={{ border: '1px solid var(--border)' }}>
+              <div className="hud-panel-header">
+                <span className="hud-panel-title">ENVIRONMENTS</span>
+                <span className="hud-panel-icon">↗</span>
+              </div>
+              <div className="hud-panel-content">
+                <div className="flex items-baseline gap-2">
+                  <span className="hud-stat-value">12</span>
+                  <span style={{ color: 'var(--text-muted)' }}>/</span>
+                  <span className="text-xl" style={{ color: 'var(--text-secondary)' }}>15</span>
+                </div>
+                <div className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>
+                  DOMINATED BY OPUS
+                </div>
+                <div className="hud-segments mt-3">
+                  {[...Array(15)].map((_, i) => (
+                    <div key={i} className={`hud-segment ${i < 12 ? 'active' : ''}`} />
+                  ))}
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        {/* Bottom Section: Rankings Table + Logs */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-4">
+          
+          {/* Rankings Table */}
+          <div className="lg:col-span-2">
+            <div className="hud-panel" style={{ border: '1px solid var(--border)' }}>
+              <div className="hud-panel-header">
+                <span className="hud-panel-title">LIVE RANKINGS</span>
+                <span className="status-badge">
+                  <span className="status-dot" style={{ width: 4, height: 4 }} />
+                  REAL-TIME
+                </span>
+              </div>
+              <div className="overflow-x-auto">
+                <table className="hud-table">
+                  <thead>
+                    <tr>
+                      <th>RANK</th>
+                      <th>MODEL</th>
+                      <th>WIN RATE</th>
+                      <th>SCORE</th>
+                      <th>STATUS</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {previewData.map((entry) => {
+                      const model = getModel(entry.modelId);
+                      if (!model) return null;
+                      return (
+                        <tr 
+                          key={entry.modelId}
+                          className="cursor-pointer"
+                          onClick={() => setActiveModel(entry.modelId)}
+                          style={{ 
+                            background: activeModel === entry.modelId ? 'rgba(0, 212, 170, 0.1)' : 'transparent'
+                          }}
                         >
-                          #{entry.rank}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4">
-                        <div className="flex items-center gap-3">
-                          <div 
-                            className="w-3 h-3 rounded-full"
-                            style={{ backgroundColor: model.color }}
-                          />
-                          <div>
-                            <p 
-                              className="font-medium"
-                              style={{ color: 'var(--text-primary)' }}
-                            >
+                          <td style={{ color: entry.rank === 1 ? 'var(--accent)' : 'var(--text-secondary)' }}>
+                            #{entry.rank}
+                          </td>
+                          <td>
+                            <div className="flex items-center gap-2">
+                              <div 
+                                className="w-2 h-2 rounded-full"
+                                style={{ backgroundColor: model.color }}
+                              />
                               {model.name}
-                            </p>
-                            <p className="text-xs" style={{ color: 'var(--text-muted)' }}>
-                              {model.company}
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="px-6 py-4">
-                        <span 
-                          className="font-mono"
-                          style={{ color: entry.winRate > 70 ? 'var(--accent)' : 'var(--text-primary)' }}
-                        >
-                          {entry.winRate}%
-                        </span>
-                      </td>
-                      <td className="px-6 py-4">
-                        <span 
-                          className="font-mono"
-                          style={{ color: 'var(--text-primary)' }}
-                        >
-                          {entry.avgScore.toLocaleString()}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4">
-                        <span style={{ color: 'var(--text-secondary)' }}>
-                          {entry.environment}
-                        </span>
-                      </td>
-                    </motion.tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
-
-          {/* CTA */}
-          <div className="p-6 md:p-8 border-t text-center" style={{ borderColor: 'var(--border)' }}>
-            <Link href="/rankings">
-              <motion.button 
-                className="px-8 py-4 font-medium text-base md:text-lg rounded-lg inline-flex items-center gap-2"
-                style={{ 
-                  fontFamily: 'var(--font-sans)',
-                  backgroundColor: 'var(--accent)',
-                  color: 'white',
-                  boxShadow: '0 1px 3px rgba(0, 0, 0, 0.3)'
-                }}
-                whileHover={{ backgroundColor: 'var(--accent-hover)' }}
-                whileTap={{ scale: 0.98 }}
-              >
-                View Full Rankings
-                <ArrowRight className="w-5 h-5" />
-              </motion.button>
-            </Link>
-          </div>
-        </motion.div>
-
-        {/* Fair Competition Note */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="flex justify-center"
-        >
-          <div 
-            className="rounded-2xl md:rounded-3xl p-6 md:p-8 max-w-2xl text-center border"
-            style={{ 
-              backgroundColor: 'var(--bg-secondary)',
-              borderColor: 'var(--border)',
-              boxShadow: '0 1px 3px rgba(0, 0, 0, 0.3)'
-            }}
-          >
-            <div 
-              className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4 border"
-              style={{ 
-                backgroundColor: 'var(--bg-primary)',
-                borderColor: 'var(--border)',
-                boxShadow: '0 2px 6px rgba(0, 0, 0, 0.4)'
-              }}
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ color: 'var(--text-primary)' }}>
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-              </svg>
+                            </div>
+                          </td>
+                          <td>
+                            <span style={{ color: entry.winRate > 70 ? 'var(--accent)' : 'var(--text-primary)' }}>
+                              {entry.winRate}%
+                            </span>
+                            <span 
+                              className="ml-2 text-xs"
+                              style={{ color: entry.trend.startsWith('+') ? 'var(--green)' : 'var(--red)' }}
+                            >
+                              {entry.trend}
+                            </span>
+                          </td>
+                          <td>{entry.avgScore.toLocaleString()}</td>
+                          <td>
+                            <span 
+                              className="status-badge"
+                              style={entry.status === 'CHAMPION' ? {
+                                borderColor: 'var(--accent)',
+                                color: 'var(--accent)'
+                              } : {
+                                borderColor: 'var(--border)',
+                                color: 'var(--text-muted)',
+                                background: 'transparent'
+                              }}
+                            >
+                              {entry.status}
+                            </span>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+              <div className="p-4 border-t" style={{ borderColor: 'var(--border)' }}>
+                <Link href="/rankings">
+                  <button className="hud-button w-full">
+                    VIEW FULL RANKINGS
+                  </button>
+                </Link>
+              </div>
             </div>
-            <h4 
-              className="text-lg md:text-xl font-semibold mb-3" 
-              style={{ color: 'var(--text-primary)' }}
-            >
-              Transparent Scoring
-            </h4>
-            <p 
-              className="text-sm md:text-base leading-relaxed" 
-              style={{ color: 'var(--text-secondary)' }}
-            >
-              Every model receives identical inputs, time constraints, and environmental conditions. 
-              No prompt engineering advantages. No cherry-picked scenarios. The data speaks for itself.
-            </p>
-          </div>
-        </motion.div>
-      </div>
-    </section>
-  );
-};
-
-export default LeaderboardPreview;
-
-                          {entry.avgScore.toLocaleString()}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4">
-                        <span style={{ color: 'var(--text-secondary)' }}>
-                          {entry.environment}
-                        </span>
-                      </td>
-                    </motion.tr>
-                  );
-                })}
-              </tbody>
-            </table>
           </div>
 
-          {/* CTA */}
-          <div className="p-6 md:p-8 border-t text-center" style={{ borderColor: 'var(--border)' }}>
-            <Link href="/rankings">
-              <motion.button 
-                className="px-8 py-4 font-medium text-base md:text-lg rounded-lg inline-flex items-center gap-2"
-                style={{ 
-                  fontFamily: 'var(--font-sans)',
-                  backgroundColor: 'var(--accent)',
-                  color: 'white',
-                  boxShadow: '0 1px 3px rgba(0, 0, 0, 0.3)'
-                }}
-                whileHover={{ backgroundColor: 'var(--accent-hover)' }}
-                whileTap={{ scale: 0.98 }}
-              >
-                View Full Rankings
-                <ArrowRight className="w-5 h-5" />
-              </motion.button>
-            </Link>
-          </div>
-        </motion.div>
-
-        {/* Fair Competition Note */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="flex justify-center"
-        >
-          <div 
-            className="rounded-2xl md:rounded-3xl p-6 md:p-8 max-w-2xl text-center border"
-            style={{ 
-              backgroundColor: 'var(--bg-secondary)',
-              borderColor: 'var(--border)',
-              boxShadow: '0 1px 3px rgba(0, 0, 0, 0.3)'
-            }}
-          >
-            <div 
-              className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4 border"
-              style={{ 
-                backgroundColor: 'var(--bg-primary)',
-                borderColor: 'var(--border)',
-                boxShadow: '0 2px 6px rgba(0, 0, 0, 0.4)'
-              }}
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ color: 'var(--text-primary)' }}>
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-              </svg>
+          {/* Logs Panel */}
+          <div className="hud-panel" style={{ border: '1px solid var(--border)' }}>
+            <div className="hud-panel-header">
+              <span className="hud-panel-title">LOGS</span>
+              <span className="hud-panel-icon">↗</span>
             </div>
-            <h4 
-              className="text-lg md:text-xl font-semibold mb-3" 
-              style={{ color: 'var(--text-primary)' }}
-            >
-              Transparent Scoring
-            </h4>
-            <p 
-              className="text-sm md:text-base leading-relaxed" 
-              style={{ color: 'var(--text-secondary)' }}
-            >
-              Every model receives identical inputs, time constraints, and environmental conditions. 
-              No prompt engineering advantages. No cherry-picked scenarios. The data speaks for itself.
-            </p>
+            <div className="hud-panel-content hud-log">
+              {logs.map((log, i) => (
+                <div key={i} className="hud-log-entry">
+                  <span className="hud-log-time">{log.time}</span>
+                  <span className="hud-log-type">{log.type}</span>
+                  <span className="hud-log-message">{log.message}</span>
+                </div>
+              ))}
+            </div>
+            <div className="px-4 pb-4">
+              <Link href="/livesim">
+                <button className="hud-button hud-button-primary w-full">
+                  WATCH LIVE
+                </button>
+              </Link>
+            </div>
           </div>
-        </motion.div>
+
+        </div>
+
       </div>
     </section>
   );

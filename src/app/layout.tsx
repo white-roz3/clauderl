@@ -1,22 +1,30 @@
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import type { Metadata } from "next";
-import { JetBrains_Mono } from "next/font/google";
+import { Fira_Code, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+
+const firaCode = Fira_Code({
+  variable: "--font-fira-code",
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["300", "400", "500", "600", "700"],
+});
 
 const jetbrainsMono = JetBrains_Mono({
   variable: "--font-jetbrains-mono",
   subsets: ["latin"],
   display: "swap",
+  weight: ["300", "400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
-  title: "ClaudeRL - Frontier Intelligence, Quantified",
-  description: "Watch Opus 4.5 outthink, outmaneuver, and outperform every frontier model in real-time. 15 adversarial environments. 4 frontier models. Real-time reasoning on display.",
-  keywords: ["AI", "reinforcement learning", "3D", "machine learning", "Claude", "Anthropic", "Opus 4.5", "GPT-5", "Grok 4", "Gemini 3 Pro", "frontier models", "AI benchmark"],
-  authors: [{ name: "ClaudeRL Team" }],
-  creator: "ClaudeRL",
-  publisher: "ClaudeRL",
+  title: "ClaudeArena - Can Your AI Beat Opus 4.5?",
+  description: "The arena where AI challengers face Claude Opus 4.5. GPT-5, Grok 4, Gemini 3 Pro have tried across 15 cognitive battlegrounds. All have failed. Watch the defeats live.",
+  keywords: ["AI", "Claude Opus 4.5", "AI benchmark", "AI competition", "GPT-5 vs Claude", "Grok vs Claude", "Gemini vs Claude", "AI arena", "AI battle", "frontier models", "AI champion"],
+  authors: [{ name: "ClaudeArena Team" }],
+  creator: "ClaudeArena",
+  publisher: "ClaudeArena",
   robots: "index, follow",
   icons: {
     icon: [
@@ -28,24 +36,24 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://clauderl.xyz",
-    title: "ClaudeRL - Frontier Intelligence, Quantified",
-    description: "Watch Opus 4.5 outthink, outmaneuver, and outperform every frontier model in real-time across 15 adversarial environments.",
-    siteName: "ClaudeRL",
+    url: "https://claudearena.xyz",
+    title: "ClaudeArena - Can Your AI Beat Opus 4.5?",
+    description: "The arena where AI challengers face Claude Opus 4.5. GPT-5, Grok 4, Gemini 3 Pro have tried. All have failed.",
+    siteName: "ClaudeArena",
     images: [
       {
         url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "ClaudeRL - Opus 4.5 Dominance Showcase",
+        alt: "ClaudeArena - Challenge the Champion",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "ClaudeRL - Frontier Intelligence, Quantified",
-    description: "Watch Opus 4.5 outthink, outmaneuver, and outperform every frontier model in real-time.",
-    creator: "@ClaudeRL",
+    title: "ClaudeArena - Can Your AI Beat Opus 4.5?",
+    description: "The arena where AI challengers face Claude Opus 4.5. GPT-5, Grok 4, Gemini 3 Pro have tried. All have failed.",
+    creator: "@ClaudeArena",
     images: ["/og-image.jpg"],
   },
 };
@@ -53,7 +61,7 @@ export const metadata: Metadata = {
 export const viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#2F2F2C",
+  themeColor: "#1A1A17",
 };
 
 export default function RootLayout({
@@ -62,13 +70,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="scroll-smooth">
       <body
-        className={`${jetbrainsMono.variable} antialiased`}
+        className={`${firaCode.variable} ${jetbrainsMono.variable} antialiased`}
         style={{ 
-          fontFamily: 'var(--font-sans)',
+          fontFamily: 'var(--font-mono)',
           backgroundColor: 'var(--bg-primary)', 
-          color: 'var(--text-primary)' 
+          color: 'var(--text-primary)',
+          overflowX: 'hidden',
         }}
       >
         <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 text-white px-4 py-2 rounded z-50" style={{ backgroundColor: 'var(--accent)' }}>

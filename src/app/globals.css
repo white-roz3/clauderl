@@ -1,25 +1,39 @@
 @import "tailwindcss";
 
 :root {
-  /* Claude.ai Dark Theme - Primary Palette */
-  --bg-primary: #2F2F2C;
-  --bg-secondary: #3D3D3A;
-  --bg-tertiary: #454542;
-  --bg-hover: #4A4A46;
+  /* ClaudeArena Theme - Claude Orange + Terminal Aesthetic */
+  --bg-primary: #0a0a0a;
+  --bg-secondary: #111111;
+  --bg-tertiary: #1a1a1a;
+  --bg-panel: rgba(17, 17, 17, 0.95);
+  --bg-hover: #1f1f1f;
+  
+  /* Claude Orange Accent */
+  --accent: #C27551;
+  --accent-dim: #a86544;
+  --accent-glow: rgba(194, 117, 81, 0.3);
+  --accent-hover: #d4845e;
+  
+  /* Secondary Colors */
+  --green: #22c55e;
+  --amber: #d4a000;
+  --red: #ef4444;
+  --blue: #3b82f6;
   
   /* Text Colors */
-  --text-primary: #ECECEA;
-  --text-secondary: #A3A39E;
-  --text-muted: #7A7A75;
-  --text-accent: #C4A982;
-  
-  /* Accent */
-  --accent: #C27551;
-  --accent-hover: #D4856A;
+  --text-primary: #e8e8e8;
+  --text-secondary: #a0a0a0;
+  --text-muted: #606060;
+  --text-accent: #C27551;
   
   /* Borders */
-  --border: #4A4A46;
-  --border-subtle: #3D3D3A;
+  --border: #2a2a2a;
+  --border-subtle: #1f1f1f;
+  --border-glow: rgba(194, 117, 81, 0.2);
+  
+  /* Grid lines */
+  --grid-color: rgba(194, 117, 81, 0.03);
+  --grid-color-strong: rgba(194, 117, 81, 0.06);
   
   /* Model Colors */
   --color-opus: #C27551;
@@ -27,831 +41,292 @@
   --color-grok: #A0A0A0;
   --color-gemini: #4285F4;
   
-  /* Legacy CSS variable names (for compatibility) */
-  --claude-bg: var(--bg-primary);
-  --claude-bg-secondary: var(--bg-secondary);
-  --claude-bg-tertiary: var(--bg-tertiary);
-  --claude-bg-hover: var(--bg-hover);
-  --claude-text: var(--text-primary);
-  --claude-text-secondary: var(--text-secondary);
-  --claude-text-muted: var(--text-muted);
-  --claude-text-greeting: var(--text-accent);
-  --claude-accent: var(--accent);
-  --claude-accent-hover: var(--accent-hover);
-  --claude-border: var(--border);
-  
   /* Legacy support */
   --background: var(--bg-primary);
   --foreground: var(--text-primary);
-  --claude-orange: var(--accent);
-  --claude-cream: var(--bg-primary);
-  --claude-warm-white: var(--bg-secondary);
-  --claude-charcoal: var(--text-primary);
-  --claude-warm-gray: var(--text-secondary);
+  --claude-accent: var(--accent);
 
   /* Typography */
-  --font-sans: 'Söhne', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --font-serif: 'Tiempos Headline', Georgia, 'Times New Roman', serif;
-  --font-mono: 'Söhne Mono', Monaco, Consolas, 'JetBrains Mono', monospace;
+  --font-sans: 'JetBrains Mono', 'Fira Code', 'SF Mono', 'Monaco', monospace;
+  --font-serif: 'JetBrains Mono', 'Fira Code', monospace;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'SF Mono', 'Monaco', 'Consolas', monospace;
 }
 
 @theme inline {
   --color-background: var(--bg-primary);
   --color-foreground: var(--text-primary);
-  
-  /* Claude.ai dark theme color system */
-  --color-claude-bg: var(--bg-primary);
-  --color-claude-bg-secondary: var(--bg-secondary);
-  --color-claude-bg-tertiary: var(--bg-tertiary);
-  --color-claude-bg-hover: var(--bg-hover);
-  --color-claude-text: var(--text-primary);
-  --color-claude-text-secondary: var(--text-secondary);
-  --color-claude-text-muted: var(--text-muted);
-  --color-claude-text-greeting: var(--text-accent);
-  --color-claude-accent: var(--accent);
-  --color-claude-accent-hover: var(--accent-hover);
-  --color-claude-border: var(--border);
-  
-  /* Model colors */
-  --color-opus: var(--color-opus);
-  --color-gpt: var(--color-gpt);
-  --color-grok: var(--color-grok);
-  --color-gemini: var(--color-gemini);
-  
-  /* Warm dark grayscale matching Claude.ai */
-  --color-gray-50: #7A7A75;
-  --color-gray-100: #A3A39E;
-  --color-gray-200: #ECECEA;
-  --color-gray-300: #4A4A46;
-  --color-gray-400: #454542;
-  --color-gray-500: #3D3D3A;
-  --color-gray-600: #2F2F2C;
-  --color-gray-700: #2A2A27;
-  --color-gray-800: #252522;
-  --color-gray-900: #1F1F1C;
-  --color-gray-950: #1A1A17;
-  
-  /* Typography */
   --font-sans: var(--font-sans);
   --font-serif: var(--font-serif);
   --font-mono: var(--font-mono);
 }
 
-@keyframes float {
-  0%, 100% { transform: translateY(0px) rotateX(0deg) rotateY(0deg); }
-  50% { transform: translateY(-10px) rotateX(5deg) rotateY(5deg); }
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
 }
 
-@keyframes rotate3d {
-  from { transform: rotateY(0deg); }
-  to { transform: rotateY(360deg); }
-}
-
-@keyframes subtle-float {
-  0%, 100% { transform: translateY(0) translateZ(0); }
-  50% { transform: translateY(-8px) translateZ(20px); }
+@keyframes scan {
+  0% { transform: translateY(-100%); opacity: 0; }
+  50% { opacity: 0.3; }
+  100% { transform: translateY(100%); opacity: 0; }
 }
 
 @keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 5px var(--accent-glow); }
+  50% { box-shadow: 0 0 15px var(--accent-glow); }
+}
+
+@keyframes flicker {
   0%, 100% { opacity: 1; }
-  50% { opacity: 0.6; }
+  92% { opacity: 1; }
+  93% { opacity: 0.8; }
+  94% { opacity: 1; }
 }
 
-.animate-float {
-  animation: float 6s ease-in-out infinite;
-}
-
-.animate-rotate3d {
-  animation: rotate3d 20s linear infinite;
+.animate-blink {
+  animation: blink 1s step-end infinite;
 }
 
 .animate-pulse-glow {
   animation: pulse-glow 2s ease-in-out infinite;
 }
 
-.card-3d {
-  transform-style: preserve-3d;
-  transition: transform 0.3s ease;
+.animate-flicker {
+  animation: flicker 4s ease-in-out infinite;
 }
 
-.card-3d:hover {
-  transform: translateY(-8px) rotateX(5deg) rotateY(-5deg);
-}
+/* ============================================
+   BASE STYLES
+   ============================================ */
 
-/* Claude.ai subtle shadows for dark theme */
-.shadow-claude {
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-}
-
-.shadow-claude-md {
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
-}
-
-.shadow-claude-lg {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-}
-
-/* Legacy 3D shadows - updated for dark theme */
-.shadow-3d {
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-}
-
-.shadow-3d-lg {
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
-}
-
-.shadow-3d-hover {
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.shadow-3d-hover:hover {
-  transform: translateY(-12px) scale(1.02);
-  box-shadow: 
-    0 4px 8px rgba(0,0,0,0.04),
-    0 8px 16px rgba(0,0,0,0.04),
-    0 16px 32px rgba(0,0,0,0.06),
-    0 32px 64px rgba(0,0,0,0.08),
-    0 64px 128px rgba(0,0,0,0.1);
-}
-
-.perspective-1000 {
-  perspective: 1000px;
-}
-
-/* Removed heavy 3D text shadow - Claude.ai uses clean typography */
-.text-3d {
-  /* No text shadow for Claude.ai aesthetic */
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--bg-primary);
   color: var(--text-primary);
-  font-family: var(--font-sans);
-  line-height: 1.5;
+  font-family: var(--font-mono);
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-size: 13px;
+}
+
+/* Scanline overlay */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.02) 0px,
+    rgba(0, 0, 0, 0.02) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+  z-index: 9999;
 }
 
 ::selection {
   background: var(--accent);
-  color: var(--text-primary);
+  color: var(--bg-primary);
 }
 
-/* Typography utilities */
-.font-display {
-  font-family: var(--font-serif);
-}
+/* ============================================
+   HUD PANEL STYLES
+   ============================================ */
 
-.font-body {
-  font-family: var(--font-sans);
-}
-
-.font-code {
-  font-family: var(--font-mono);
-}
-
-/* Claude.ai utility classes */
-.text-claude-accent {
-  color: var(--accent);
-}
-
-.bg-claude-primary {
-  background-color: var(--bg-primary);
-}
-
-.bg-claude-secondary {
-  background-color: var(--bg-secondary);
-}
-
-.bg-claude-tertiary {
-  background-color: var(--bg-tertiary);
-}
-
-.border-claude {
-  border-color: var(--border);
-}
-
-.border-claude-subtle {
-  border-color: var(--border-subtle);
-}
-
-/* Model color utilities */
-.text-opus { color: var(--color-opus); }
-.text-gpt { color: var(--color-gpt); }
-.text-grok { color: var(--color-grok); }
-.text-gemini { color: var(--color-gemini); }
-
-.bg-opus { background-color: var(--color-opus); }
-.bg-gpt { background-color: var(--color-gpt); }
-.bg-grok { background-color: var(--color-grok); }
-.bg-gemini { background-color: var(--color-gemini); }
-
-.border-opus { border-color: var(--color-opus); }
-.border-gpt { border-color: var(--color-gpt); }
-.border-grok { border-color: var(--color-grok); }
-.border-gemini { border-color: var(--color-gemini); }
-
-/* Legacy support */
-.text-claude-orange {
-  color: var(--accent);
-}
-
-.bg-claude-cream {
-  background-color: var(--bg-primary);
-}
-
-.bg-claude-warm-white {
-  background-color: var(--bg-secondary);
-}
-
-.border-claude-orange {
-  border-color: var(--accent);
-}
-
-/* Isometric helpers */
-.isometric {
-  transform: rotateX(60deg) rotateZ(-45deg);
-}
-
-.preserve-3d {
-  transform-style: preserve-3d;
-}
-
-/* Neumorphic style - updated for dark theme */
-.neumorphic {
-  background: var(--bg-secondary);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-}
-
-.neumorphic-inset {
-  background: var(--bg-secondary);
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.4);
-}
-
-/* Layered paper effect */
-.paper-stack {
+.hud-panel {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
   position: relative;
 }
 
-.paper-stack::before,
-.paper-stack::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: var(--bg-secondary);
-  border-radius: inherit;
-  z-index: -1;
+.hud-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(194, 117, 81, 0.03);
 }
 
-.paper-stack::before {
-  transform: rotate(-2deg) translateY(4px);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-}
-
-.paper-stack::after {
-  transform: rotate(1deg) translateY(8px);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
-}
-
-/* Difficulty badges */
-.badge-standard {
-  background-color: var(--border);
-  color: var(--text-muted);
-}
-
-.badge-advanced {
-  background-color: rgba(163, 163, 158, 0.2);
+.hud-panel-title {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
   color: var(--text-secondary);
 }
 
-.badge-expert {
-  background-color: rgba(194, 117, 81, 0.2);
-  color: var(--accent);
+.hud-panel-content {
+  padding: 12px;
 }
 
-/* Leading indicator */
-.leading-indicator {
-  position: relative;
-}
+/* ============================================
+   STATUS INDICATORS
+   ============================================ */
 
-.leading-indicator::after {
-  content: '★ Leading';
-  position: absolute;
-  top: 0.75rem;
-  right: 0.75rem;
-  font-size: 0.75rem;
-  color: var(--accent);
-  font-weight: 500;
-}
-
-/* Live indicator */
-.live-indicator {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.live-indicator::before {
-  content: '';
-  width: 0.5rem;
-  height: 0.5rem;
-  background-color: #22c55e;
+.status-dot {
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
-  animation: pulse-glow 2s ease-in-out infinite;
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent-glow);
 }
 
-/* Table styles */
-.claude-table {
+.status-dot.green {
+  background: var(--green);
+  box-shadow: 0 0 8px rgba(34, 197, 94, 0.4);
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  background: rgba(194, 117, 81, 0.1);
+}
+
+/* ============================================
+   BUTTONS
+   ============================================ */
+
+.hud-button {
+  padding: 8px 16px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  background: transparent;
+  border: 1px solid var(--accent);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.hud-button:hover {
+  background: rgba(194, 117, 81, 0.1);
+  box-shadow: 0 0 15px var(--accent-glow);
+}
+
+.hud-button-primary {
+  background: var(--accent);
+  color: var(--bg-primary);
+  border-color: var(--accent);
+}
+
+.hud-button-primary:hover {
+  background: var(--accent-hover);
+}
+
+/* ============================================
+   TABLES
+   ============================================ */
+
+.hud-table {
   width: 100%;
   border-collapse: collapse;
+  font-size: 11px;
 }
 
-.claude-table th,
-.claude-table td {
-  padding: 1rem;
+.hud-table th {
+  padding: 8px 12px;
   text-align: left;
-}
-
-.claude-table th {
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
   color: var(--text-muted);
-  font-size: 0.875rem;
-  font-weight: 500;
   border-bottom: 1px solid var(--border);
+  background: rgba(194, 117, 81, 0.03);
 }
 
-.claude-table tbody tr {
-  border-bottom: 1px solid rgba(74, 74, 70, 0.5);
-  transition: background-color 0.15s ease;
-}
-
-.claude-table tbody tr:hover {
-  background-color: var(--bg-tertiary);
-}
-
-/* Button styles */
-.btn-primary {
-  background-color: var(--text-primary);
-  color: var(--bg-primary);
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.5rem;
-  font-weight: 500;
-  transition: all 0.15s ease;
-}
-
-.btn-primary:hover {
-  opacity: 0.9;
-}
-
-.btn-secondary {
-  background-color: transparent;
+.hud-table td {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border-subtle);
   color: var(--text-primary);
-  border: 1px solid var(--border);
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.5rem;
-  font-weight: 500;
-  transition: all 0.15s ease;
 }
 
-.btn-secondary:hover {
-  background-color: var(--bg-hover);
+.hud-table tr:hover td {
+  background: rgba(194, 117, 81, 0.05);
 }
 
-.btn-accent {
-  background-color: var(--accent);
-  color: white;
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.5rem;
-  font-weight: 500;
-  transition: all 0.15s ease;
+/* ============================================
+   PROGRESS
+   ============================================ */
+
+.hud-progress {
+  height: 4px;
+  background: var(--bg-tertiary);
+  overflow: hidden;
 }
 
-.btn-accent:hover {
-  background-color: var(--accent-hover);
+.hud-progress-bar {
+  height: 100%;
+  background: var(--accent);
+  transition: width 0.3s ease;
 }
 
-/* Card styles */
-.claude-card {
-  background-color: var(--bg-secondary);
-  border: 1px solid var(--border);
-  border-radius: 0.75rem;
-  padding: 1.5rem;
-  transition: all 0.15s ease;
+.hud-segments {
+  display: flex;
+  gap: 2px;
 }
 
-.claude-card:hover {
-  border-color: rgba(194, 117, 81, 0.5);
+.hud-segment {
+  flex: 1;
+  height: 16px;
+  background: var(--bg-tertiary);
 }
 
-/* Input styles */
-.claude-input {
-  background-color: var(--bg-secondary);
-  border: 1px solid var(--border);
-  border-radius: 0.5rem;
-  padding: 0.75rem 1rem;
-  color: var(--text-primary);
-  width: 100%;
-  transition: all 0.15s ease;
+.hud-segment.active {
+  background: var(--accent);
 }
 
-.claude-input:focus {
-  outline: none;
-  border-color: var(--accent);
+/* ============================================
+   SCROLLBAR
+   ============================================ */
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
 }
 
-.claude-input::placeholder {
-  color: var(--text-muted);
-}
-
-/* Select styles */
-.claude-select {
-  background-color: var(--bg-secondary);
-  border: 1px solid var(--border);
-  border-radius: 0.5rem;
-  padding: 0.5rem 1rem;
-  color: var(--text-primary);
-  cursor: pointer;
-}
-
-.claude-select:focus {
-  outline: none;
-  border-color: var(--accent);
-}
-
-  0%, 100% { transform: translateY(0px) rotateX(0deg) rotateY(0deg); }
-  50% { transform: translateY(-10px) rotateX(5deg) rotateY(5deg); }
-}
-
-@keyframes rotate3d {
-  from { transform: rotateY(0deg); }
-  to { transform: rotateY(360deg); }
-}
-
-@keyframes subtle-float {
-  0%, 100% { transform: translateY(0) translateZ(0); }
-  50% { transform: translateY(-8px) translateZ(20px); }
-}
-
-@keyframes pulse-glow {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.6; }
-}
-
-.animate-float {
-  animation: float 6s ease-in-out infinite;
-}
-
-.animate-rotate3d {
-  animation: rotate3d 20s linear infinite;
-}
-
-.animate-pulse-glow {
-  animation: pulse-glow 2s ease-in-out infinite;
-}
-
-.card-3d {
-  transform-style: preserve-3d;
-  transition: transform 0.3s ease;
-}
-
-.card-3d:hover {
-  transform: translateY(-8px) rotateX(5deg) rotateY(-5deg);
-}
-
-/* Claude.ai subtle shadows for dark theme */
-.shadow-claude {
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-}
-
-.shadow-claude-md {
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
-}
-
-.shadow-claude-lg {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-}
-
-/* Legacy 3D shadows - updated for dark theme */
-.shadow-3d {
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-}
-
-.shadow-3d-lg {
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
-}
-
-.shadow-3d-hover {
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.shadow-3d-hover:hover {
-  transform: translateY(-12px) scale(1.02);
-  box-shadow: 
-    0 4px 8px rgba(0,0,0,0.04),
-    0 8px 16px rgba(0,0,0,0.04),
-    0 16px 32px rgba(0,0,0,0.06),
-    0 32px 64px rgba(0,0,0,0.08),
-    0 64px 128px rgba(0,0,0,0.1);
-}
-
-.perspective-1000 {
-  perspective: 1000px;
-}
-
-/* Removed heavy 3D text shadow - Claude.ai uses clean typography */
-.text-3d {
-  /* No text shadow for Claude.ai aesthetic */
-}
-
-body {
+::-webkit-scrollbar-track {
   background: var(--bg-primary);
-  color: var(--text-primary);
-  font-family: var(--font-sans);
-  line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
-::selection {
-  background: var(--accent);
-  color: var(--text-primary);
+::-webkit-scrollbar-thumb {
+  background: var(--border);
 }
 
-/* Typography utilities */
-.font-display {
-  font-family: var(--font-serif);
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-dim);
 }
 
-.font-body {
-  font-family: var(--font-sans);
-}
+/* ============================================
+   UTILITIES
+   ============================================ */
 
-.font-code {
-  font-family: var(--font-mono);
-}
+.text-accent { color: var(--accent); }
+.text-green { color: var(--green); }
+.text-amber { color: var(--amber); }
+.text-red { color: var(--red); }
 
-/* Claude.ai utility classes */
-.text-claude-accent {
-  color: var(--accent);
-}
+.border-accent { border-color: var(--accent); }
 
-.bg-claude-primary {
-  background-color: var(--bg-primary);
-}
-
-.bg-claude-secondary {
-  background-color: var(--bg-secondary);
-}
-
-.bg-claude-tertiary {
-  background-color: var(--bg-tertiary);
-}
-
-.border-claude {
-  border-color: var(--border);
-}
-
-.border-claude-subtle {
-  border-color: var(--border-subtle);
-}
-
-/* Model color utilities */
-.text-opus { color: var(--color-opus); }
-.text-gpt { color: var(--color-gpt); }
-.text-grok { color: var(--color-grok); }
-.text-gemini { color: var(--color-gemini); }
-
-.bg-opus { background-color: var(--color-opus); }
-.bg-gpt { background-color: var(--color-gpt); }
-.bg-grok { background-color: var(--color-grok); }
-.bg-gemini { background-color: var(--color-gemini); }
-
-.border-opus { border-color: var(--color-opus); }
-.border-gpt { border-color: var(--color-gpt); }
-.border-grok { border-color: var(--color-grok); }
-.border-gemini { border-color: var(--color-gemini); }
-
-/* Legacy support */
-.text-claude-orange {
-  color: var(--accent);
-}
-
-.bg-claude-cream {
-  background-color: var(--bg-primary);
-}
-
-.bg-claude-warm-white {
-  background-color: var(--bg-secondary);
-}
-
-.border-claude-orange {
-  border-color: var(--accent);
-}
-
-/* Isometric helpers */
-.isometric {
-  transform: rotateX(60deg) rotateZ(-45deg);
-}
-
-.preserve-3d {
-  transform-style: preserve-3d;
-}
-
-/* Neumorphic style - updated for dark theme */
-.neumorphic {
-  background: var(--bg-secondary);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-}
-
-.neumorphic-inset {
-  background: var(--bg-secondary);
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.4);
-}
-
-/* Layered paper effect */
-.paper-stack {
-  position: relative;
-}
-
-.paper-stack::before,
-.paper-stack::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: var(--bg-secondary);
-  border-radius: inherit;
-  z-index: -1;
-}
-
-.paper-stack::before {
-  transform: rotate(-2deg) translateY(4px);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-}
-
-.paper-stack::after {
-  transform: rotate(1deg) translateY(8px);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
-}
-
-/* Difficulty badges */
-.badge-standard {
-  background-color: var(--border);
-  color: var(--text-muted);
-}
-
-.badge-advanced {
-  background-color: rgba(163, 163, 158, 0.2);
-  color: var(--text-secondary);
-}
-
-.badge-expert {
-  background-color: rgba(194, 117, 81, 0.2);
-  color: var(--accent);
-}
-
-/* Leading indicator */
-.leading-indicator {
-  position: relative;
-}
-
-.leading-indicator::after {
-  content: '★ Leading';
-  position: absolute;
-  top: 0.75rem;
-  right: 0.75rem;
-  font-size: 0.75rem;
-  color: var(--accent);
-  font-weight: 500;
-}
-
-/* Live indicator */
-.live-indicator {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.live-indicator::before {
-  content: '';
-  width: 0.5rem;
-  height: 0.5rem;
-  background-color: #22c55e;
-  border-radius: 50%;
-  animation: pulse-glow 2s ease-in-out infinite;
-}
-
-/* Table styles */
-.claude-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.claude-table th,
-.claude-table td {
-  padding: 1rem;
-  text-align: left;
-}
-
-.claude-table th {
-  color: var(--text-muted);
-  font-size: 0.875rem;
-  font-weight: 500;
-  border-bottom: 1px solid var(--border);
-}
-
-.claude-table tbody tr {
-  border-bottom: 1px solid rgba(74, 74, 70, 0.5);
-  transition: background-color 0.15s ease;
-}
-
-.claude-table tbody tr:hover {
-  background-color: var(--bg-tertiary);
-}
-
-/* Button styles */
-.btn-primary {
-  background-color: var(--text-primary);
-  color: var(--bg-primary);
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.5rem;
-  font-weight: 500;
-  transition: all 0.15s ease;
-}
-
-.btn-primary:hover {
-  opacity: 0.9;
-}
-
-.btn-secondary {
-  background-color: transparent;
-  color: var(--text-primary);
-  border: 1px solid var(--border);
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.5rem;
-  font-weight: 500;
-  transition: all 0.15s ease;
-}
-
-.btn-secondary:hover {
-  background-color: var(--bg-hover);
-}
-
-.btn-accent {
-  background-color: var(--accent);
-  color: white;
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.5rem;
-  font-weight: 500;
-  transition: all 0.15s ease;
-}
-
-.btn-accent:hover {
-  background-color: var(--accent-hover);
-}
-
-/* Card styles */
-.claude-card {
-  background-color: var(--bg-secondary);
-  border: 1px solid var(--border);
-  border-radius: 0.75rem;
-  padding: 1.5rem;
-  transition: all 0.15s ease;
-}
-
-.claude-card:hover {
-  border-color: rgba(194, 117, 81, 0.5);
-}
-
-/* Input styles */
-.claude-input {
-  background-color: var(--bg-secondary);
-  border: 1px solid var(--border);
-  border-radius: 0.5rem;
-  padding: 0.75rem 1rem;
-  color: var(--text-primary);
-  width: 100%;
-  transition: all 0.15s ease;
-}
-
-.claude-input:focus {
-  outline: none;
-  border-color: var(--accent);
-}
-
-.claude-input::placeholder {
-  color: var(--text-muted);
-}
-
-/* Select styles */
-.claude-select {
-  background-color: var(--bg-secondary);
-  border: 1px solid var(--border);
-  border-radius: 0.5rem;
-  padding: 0.5rem 1rem;
-  color: var(--text-primary);
-  cursor: pointer;
-}
-
-.claude-select:focus {
-  outline: none;
-  border-color: var(--accent);
+.glow-text {
+  text-shadow: 0 0 10px var(--accent-glow);
 }

@@ -1,83 +1,139 @@
 'use client';
 
-import Accordion from '@/components/ui/Accordion';
-import { staggerContainer, staggerItem } from '@/lib/animations';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { FAQ_ITEMS } from '@/lib/constants';
-import { motion } from 'framer-motion';
-import React from 'react';
 
 const FAQ: React.FC = () => {
+  const [openIndex, setOpenIndex] = useState<number | null>(0);
+
   return (
-    <section className="py-24 bg-gray-950">
-      <div className="container mx-auto px-4">
+    <section 
+      className="py-12 md:py-20 relative overflow-hidden font-mono"
+      style={{ backgroundColor: 'var(--bg-primary)' }}
+    >
+      <div className="container mx-auto px-4 max-w-4xl">
+        
+        {/* Section Header */}
         <motion.div
-          variants={staggerContainer}
-          initial="initial"
-          whileInView="animate"
-          viewport={{ once: true, margin: "-100px" }}
-          className="text-center mb-16"
-        >
-          <motion.h2
-            variants={staggerItem}
-            className="text-4xl md:text-5xl font-display font-bold text-white mb-6"
-          >
-            Frequently Asked Questions
-          </motion.h2>
-          <motion.p
-            variants={staggerItem}
-            className="text-xl text-gray-400 max-w-3xl mx-auto"
-          >
-            Everything you need to know about ClaudeRL and how it works
-          </motion.p>
-        </motion.div>
-
-        <motion.div
-          variants={staggerContainer}
-          initial="initial"
-          whileInView="animate"
-          viewport={{ once: true, margin: "-100px" }}
-          className="max-w-4xl mx-auto"
-        >
-          <motion.div variants={staggerItem}>
-            <Accordion
-              items={FAQ_ITEMS}
-              className="space-y-4"
-            />
-          </motion.div>
-        </motion.div>
-
-        {/* Additional help section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.5, duration: 0.5 }}
-          className="text-center mt-16"
+          className="mb-8"
         >
-          <div className="bg-gray-900 border border-gray-800 rounded-xl p-8">
-            <h3 className="text-2xl font-display font-bold text-white mb-4">
-              Still have questions?
-            </h3>
-            <p className="text-gray-400 mb-6 max-w-2xl mx-auto">
-              Our documentation covers technical details, API references, and advanced usage patterns.
-              You can also join our community for discussions and support.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a
-                href="/docs"
-                className="inline-flex items-center justify-center px-6 py-3 bg-primary-600 hover:bg-primary-700 text-white font-semibold rounded-lg transition-colors"
-              >
-                Read Documentation
-              </a>
-              <a
-                href="https://x.com/i/communities/1971956497015009337"
-                className="inline-flex items-center justify-center px-6 py-3 border border-gray-700 hover:border-gray-600 text-gray-300 hover:text-white font-semibold rounded-lg transition-colors"
-              >
-                Join Community
-              </a>
+          <div className="hud-panel inline-block" style={{ border: '1px solid var(--border)' }}>
+            <div className="hud-panel-header">
+              <span className="hud-panel-title">DOCUMENTATION</span>
+            </div>
+            <div className="px-4 py-3">
+              <h2 className="text-xl md:text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>
+                <span style={{ color: 'var(--accent)' }}>{'>'}</span> FAQ
+              </h2>
             </div>
           </div>
         </motion.div>
+
+        {/* FAQ Items */}
+        <div className="space-y-2">
+          {FAQ_ITEMS.map((item, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, x: -10 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.05 }}
+              className="hud-panel"
+              style={{ 
+                border: `1px solid ${openIndex === index ? 'var(--accent)' : 'var(--border)'}`,
+              }}
+            >
+              {/* Question Header */}
+              <button
+                onClick={() => setOpenIndex(openIndex === index ? null : index)}
+                className="w-full text-left hud-panel-header transition-colors"
+                style={{ 
+                  background: openIndex === index ? 'rgba(0, 212, 170, 0.05)' : 'transparent' 
+                }}
+              >
+                <div className="flex items-center gap-3">
+                  <span 
+                    className="text-sm font-bold"
+                    style={{ color: 'var(--accent)' }}
+                  >
+                    {openIndex === index ? '[-]' : '[+]'}
+                  </span>
+                  <span 
+                    className="text-sm font-semibold"
+                    style={{ color: 'var(--text-primary)' }}
+                  >
+                    {item.question}
+                  </span>
+                </div>
+              </button>
+
+              {/* Answer */}
+              <AnimatePresence>
+                {openIndex === index && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: 'auto', opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                    className="overflow-hidden"
+                  >
+                    <div 
+                      className="hud-panel-content"
+                      style={{ borderTop: '1px solid var(--border)' }}
+                    >
+                      <div className="flex gap-3">
+                        <span style={{ color: 'var(--accent)' }}>{'>'}</span>
+                        <p 
+                          className="text-sm leading-relaxed"
+                          style={{ color: 'var(--text-secondary)' }}
+                        >
+                          {item.answer}
+                        </p>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Help Panel */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="mt-8"
+        >
+          <div className="hud-panel" style={{ border: '1px solid var(--border)' }}>
+            <div className="hud-panel-header">
+              <span className="hud-panel-title">ADDITIONAL RESOURCES</span>
+            </div>
+            <div className="hud-panel-content">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                {[
+                  { label: 'DOCS', path: '/docs' },
+                  { label: 'API', path: '/api' },
+                  { label: 'DISCORD', path: '/discord' },
+                  { label: 'TWITTER', path: 'https://twitter.com/claudearena' },
+                ].map((item) => (
+                  <a 
+                    key={item.label}
+                    href={item.path}
+                    className="hud-button text-center text-xs py-2"
+                  >
+                    {item.label}
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
       </div>
     </section>
   );

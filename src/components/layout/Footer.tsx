@@ -1,206 +1,148 @@
 'use client';
 
-import { LEGAL_LINKS, TAGLINES } from '@/lib/constants';
-import { Twitter, Github } from 'lucide-react';
+import { TAGLINES } from '@/lib/constants';
 import Link from 'next/link';
 import React from 'react';
 import { motion } from 'framer-motion';
 
 const Footer: React.FC = () => {
   return (
-    <footer className="border-t" style={{ backgroundColor: 'var(--bg-primary)', borderColor: 'var(--border)' }}>
+    <footer 
+      className="relative font-mono" 
+      style={{ 
+        backgroundColor: 'var(--bg-primary)', 
+        borderTop: '1px solid var(--border)',
+      }}
+    >
       <div className="container mx-auto px-4 py-10 md:py-16">
-        <div className="flex flex-col md:flex-row justify-between items-start gap-8">
-          {/* Brand */}
-          <div className="max-w-md">
-            <Link href="/">
-              <motion.div
-                className="text-xl md:text-2xl font-normal inline-block"
-                style={{ 
-                  fontFamily: 'var(--font-serif)',
-                  color: 'var(--text-accent)'
-                }}
-                whileHover={{ scale: 1.02 }}
-              >
-                Claude<span style={{ color: 'var(--accent)' }}>RL</span>
-              </motion.div>
-            </Link>
-            <p 
-              className="mt-3 md:mt-4 text-sm md:text-base"
-              style={{ 
-                fontFamily: 'var(--font-sans)',
-                color: 'var(--text-secondary)',
-                lineHeight: 1.625
-              }}
-            >
-              {TAGLINES.footer}
-            </p>
+        
+        {/* Main Footer Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+          
+          {/* Brand Panel */}
+          <div className="md:col-span-2">
+            <div className="hud-panel" style={{ border: '1px solid var(--border)' }}>
+              <div className="hud-panel-header">
+                <div className="flex items-center gap-2">
+                  <span className="status-dot" style={{ width: 6, height: 6 }} />
+                  <span className="hud-panel-title">CLAUDEARENA</span>
+                </div>
+                <span className="text-xs" style={{ color: 'var(--hud-green)' }}>ONLINE</span>
+              </div>
+              <div className="hud-panel-content">
+                <p 
+                  className="text-sm mb-3"
+                  style={{ color: 'var(--text-secondary)' }}
+                >
+                  {TAGLINES.footer}
+                </p>
+                <p 
+                  className="text-xs"
+                  style={{ color: 'var(--text-muted)' }}
+                >
+                  // {TAGLINES.built}
+                </p>
 
-            {/* Social Links */}
-            <div className="flex space-x-3 mt-5 md:mt-6">
-              <Link
-                href="https://x.com/i/communities/1971956497015009337"
-                aria-label="Twitter"
-              >
-                <motion.div 
-                  className="w-10 h-10 md:w-11 md:h-11 rounded-lg flex items-center justify-center border"
-                  style={{
-                    backgroundColor: 'var(--bg-secondary)',
-                    borderColor: 'var(--border)',
-                    color: 'var(--text-secondary)'
-                  }}
-                  whileHover={{ 
-                    color: 'var(--accent)',
-                    backgroundColor: 'var(--bg-hover)'
-                  }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <Twitter className="w-4 h-4 md:w-5 md:h-5" />
-                </motion.div>
-              </Link>
-              <Link
-                href="https://github.com/ClaudeRL"
-                aria-label="GitHub"
-              >
-                <motion.div 
-                  className="w-10 h-10 md:w-11 md:h-11 rounded-lg flex items-center justify-center border"
-                  style={{
-                    backgroundColor: 'var(--bg-secondary)',
-                    borderColor: 'var(--border)',
-                    color: 'var(--text-secondary)'
-                  }}
-                  whileHover={{ 
-                    color: 'var(--accent)',
-                    backgroundColor: 'var(--bg-hover)'
-                  }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <Github className="w-4 h-4 md:w-5 md:h-5" />
-                </motion.div>
-              </Link>
+                {/* Social Links */}
+                <div className="flex gap-3 mt-4">
+                  <Link href="https://x.com/i/communities/1971956497015009337">
+                    <span 
+                      className="hud-button text-xs px-3 py-1"
+                    >
+                      TWITTER
+                    </span>
+                  </Link>
+                  <Link href="https://github.com/ClaudeArena">
+                    <span 
+                      className="hud-button text-xs px-3 py-1"
+                    >
+                      GITHUB
+                    </span>
+                  </Link>
+                </div>
+              </div>
             </div>
           </div>
 
-          {/* Links */}
-          <div className="flex gap-12 md:gap-16">
-            {/* Platform Links */}
-            <div>
-              <h4 
-                className="font-medium mb-3 md:mb-4 text-sm"
-                style={{ 
-                  fontFamily: 'var(--font-sans)',
-                  color: 'var(--text-primary)'
-                }}
-              >
-                Platform
-              </h4>
-              <ul className="space-y-2 md:space-y-3">
+          {/* Platform Links */}
+          <div>
+            <div className="hud-panel h-full" style={{ border: '1px solid var(--border)' }}>
+              <div className="hud-panel-header">
+                <span className="hud-panel-title">PLATFORM</span>
+              </div>
+              <div className="hud-panel-content space-y-2">
                 {[
-                  { href: '/livesim', label: 'Live Arena' },
-                  { href: '/challenges', label: 'Challenges' },
-                  { href: '/rankings', label: 'Rankings' },
+                  { href: '/livesim', label: 'LIVE ARENA' },
+                  { href: '/challenges', label: 'CHALLENGES' },
+                  { href: '/rankings', label: 'RANKINGS' },
                 ].map((link) => (
-                  <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      className="transition-colors text-xs md:text-sm hover:underline"
-                      style={{ 
-                        fontFamily: 'var(--font-sans)',
-                        color: 'var(--text-secondary)'
-                      }}
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className="flex items-center gap-2 text-xs transition-colors"
+                    style={{ color: 'var(--text-secondary)' }}
+                  >
+                    <span style={{ color: 'var(--hud-cyan)' }}>{'>'}</span>
+                    <span className="hover:text-[var(--hud-cyan)]">{link.label}</span>
+                  </Link>
                 ))}
-              </ul>
+              </div>
             </div>
+          </div>
 
-            {/* Resources Links */}
-            <div>
-              <h4 
-                className="font-medium mb-3 md:mb-4 text-sm"
-                style={{ 
-                  fontFamily: 'var(--font-sans)',
-                  color: 'var(--text-primary)'
-                }}
-              >
-                Resources
-              </h4>
-              <ul className="space-y-2 md:space-y-3">
+          {/* Resources Links */}
+          <div>
+            <div className="hud-panel h-full" style={{ border: '1px solid var(--border)' }}>
+              <div className="hud-panel-header">
+                <span className="hud-panel-title">RESOURCES</span>
+              </div>
+              <div className="hud-panel-content space-y-2">
                 {[
-                  { href: '/research', label: 'Research' },
-                  { href: '/how-it-works', label: 'How It Works' },
+                  { href: '/research', label: 'RESEARCH' },
+                  { href: '/how-it-works', label: 'DOCUMENTATION' },
                   { href: '/api', label: 'API' },
                 ].map((link) => (
-                  <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      className="transition-colors text-xs md:text-sm hover:underline"
-                      style={{ 
-                        fontFamily: 'var(--font-sans)',
-                        color: 'var(--text-secondary)'
-                      }}
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className="flex items-center gap-2 text-xs transition-colors"
+                    style={{ color: 'var(--text-secondary)' }}
+                  >
+                    <span style={{ color: 'var(--hud-cyan)' }}>{'>'}</span>
+                    <span className="hover:text-[var(--hud-cyan)]">{link.label}</span>
+                  </Link>
                 ))}
-              </ul>
-            </div>
-
-            {/* Legal Links */}
-            <div className="hidden md:block">
-              <h4 
-                className="font-medium mb-3 md:mb-4 text-sm"
-                style={{ 
-                  fontFamily: 'var(--font-sans)',
-                  color: 'var(--text-primary)'
-                }}
-              >
-                Legal
-              </h4>
-              <ul className="space-y-2 md:space-y-3">
-                {LEGAL_LINKS.map((link) => (
-                  <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      className="transition-colors text-xs md:text-sm hover:underline"
-                      style={{ 
-                        fontFamily: 'var(--font-sans)',
-                        color: 'var(--text-secondary)'
-                      }}
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
+              </div>
             </div>
           </div>
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-8 md:mt-12 pt-6 md:pt-8 border-t" style={{ borderColor: 'var(--border)' }}>
-          <p 
-            className="text-xs md:text-sm text-center md:text-left"
-            style={{ 
-              fontFamily: 'var(--font-sans)',
-              color: 'var(--text-muted)'
-            }}
-          >
-            {TAGLINES.built}
-          </p>
-          <p 
-            className="text-xs md:text-sm text-center md:text-left mt-2 font-mono"
-            style={{ 
-              fontFamily: 'var(--font-mono)',
-              color: 'var(--text-muted)'
-            }}
-          >
-            ZFV14P2wf72AP9HNz4i8FK8KfDETFuM8Tgc3hGapump
-          </p>
+        <div 
+          className="pt-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4 text-xs"
+          style={{ borderTop: '1px solid var(--border)' }}
+        >
+          <div className="flex items-center gap-4">
+            <span style={{ color: 'var(--text-muted)' }}>
+              VERSION: <span style={{ color: 'var(--text-primary)' }}>1.0.0</span>
+            </span>
+            <span style={{ color: 'var(--text-muted)' }}>
+              STATUS: <span style={{ color: 'var(--hud-green)' }}>OPERATIONAL</span>
+            </span>
+            <span style={{ color: 'var(--text-muted)' }}>
+              UPTIME: <span style={{ color: 'var(--text-primary)' }}>99.97%</span>
+            </span>
+          </div>
+          
+          {/* Contract Address */}
+          <div className="flex items-center gap-2">
+            <span style={{ color: 'var(--hud-cyan)' }}>$CA:</span>
+            <code style={{ color: 'var(--text-secondary)' }}>
+              ZFV14P2wf72AP9HNz4i8FK8KfDETFuM8Tgc3hGapump
+            </code>
+          </div>
         </div>
+
       </div>
     </footer>
   );
