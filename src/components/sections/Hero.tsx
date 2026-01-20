@@ -40,9 +40,18 @@ const AsciiLogo: React.FC = () => {
   );
 };
 
+// Mock win rates for display
+const WIN_RATES: Record<string, number> = {
+  'opus': 78,
+  'gpt': 71,
+  'gemini': 68,
+  'grok': 62,
+};
+
 // HUD Model Card
 const HudModelCard: React.FC<{ model: Model; index: number }> = ({ model, index }) => {
   const [isHovered, setIsHovered] = useState(false);
+  const winRate = WIN_RATES[model.id] || 50;
   
   return (
     <motion.div
@@ -111,7 +120,7 @@ const HudModelCard: React.FC<{ model: Model; index: number }> = ({ model, index 
           <div className="flex justify-between text-xs">
             <span style={{ color: 'var(--text-muted)' }}>WIN RATE</span>
             <span style={{ color: model.isLeading ? 'var(--accent)' : 'var(--text-secondary)' }}>
-              {model.winRate}%
+              {winRate}%
             </span>
           </div>
           <div className="h-1.5" style={{ background: 'var(--border)' }}>
@@ -119,7 +128,7 @@ const HudModelCard: React.FC<{ model: Model; index: number }> = ({ model, index 
               className="h-full"
               style={{ background: model.isLeading ? 'var(--accent)' : model.color }}
               initial={{ width: 0 }}
-              animate={{ width: `${model.winRate}%` }}
+              animate={{ width: `${winRate}%` }}
               transition={{ delay: 0.5 + index * 0.1, duration: 0.8 }}
             />
           </div>
