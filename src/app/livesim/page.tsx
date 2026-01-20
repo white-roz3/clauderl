@@ -1576,7 +1576,7 @@ function LiveSimContent() {
           {/* Unified Simulation Viewport */}
           <div className="mb-8">
             <motion.div 
-              className="rounded-2xl p-4 md:p-6 overflow-hidden"
+              className="rounded-none sm:rounded-2xl p-2 sm:p-4 md:p-6 overflow-hidden"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
@@ -1586,23 +1586,23 @@ function LiveSimContent() {
               }}
             >
               {/* Current Course Title */}
-              <div className="mb-4 flex items-center justify-between">
+              <div className="mb-3 sm:mb-4 flex items-center justify-between px-1 sm:px-0">
                 <h2 
-                  className="text-xl md:text-2xl font-medium"
+                  className="text-lg sm:text-xl md:text-2xl font-medium"
                   style={{ color: 'var(--claude-text)' }}
                 >
                   {selectedCourse ? selectedCourse.name : 'Select a Simulation'}
                 </h2>
                 {selectedCourse && (
-                  <span className="px-3 py-1.5 text-xs font-medium rounded-full" style={{ backgroundColor: 'var(--claude-accent)', color: 'white' }}>
+                  <span className="px-2 sm:px-3 py-1 sm:py-1.5 text-[10px] sm:text-xs font-medium rounded-full" style={{ backgroundColor: 'var(--claude-accent)', color: 'white' }}>
                     Running
                   </span>
                 )}
               </div>
 
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 sm:gap-4">
                 {/* WebGL Simulation */}
-                <div className="lg:col-span-2">
+                <div className="lg:col-span-2 -mx-2 sm:mx-0">
                   {selectedCourse?.id === 'soccer' ? (
                     <WebGLIframe
                       src="/Scenes/soccer/index.html"

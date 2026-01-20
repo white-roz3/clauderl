@@ -112,22 +112,26 @@ const WebGLIframe: React.FC<WebGLIframeProps> = ({
 
       {/* WebGL Content */}
       {isReady && (
-        <div className="w-full flex justify-center">
+        <div className="w-full flex justify-center px-0 sm:px-0">
           {/* Responsive wrapper with aspect ratio */}
-          <div className="relative w-full max-w-[1200px] aspect-[16/9] bg-black rounded-lg overflow-hidden shadow-lg">
-  <iframe
-    key={iframeKey}
-    ref={iframeRef}
-    src={src}
-    title={title}
-    className="absolute inset-0 w-full h-full"
-    style={{ border: 'none', display: 'block' }}
-    allow="fullscreen; webgl; autoplay; cross-origin-isolated"
-    sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox allow-downloads"
-    loading="eager"
-  />
-</div>
-
+          <div className="relative w-full max-w-[1200px] aspect-[16/9] bg-black rounded-none sm:rounded-lg overflow-hidden shadow-lg">
+            <iframe
+              key={iframeKey}
+              ref={iframeRef}
+              src={src}
+              title={title}
+              className="absolute inset-0 w-full h-full"
+              style={{ 
+                border: 'none', 
+                display: 'block',
+                /* Ensure Unity content scales properly on mobile */
+                transformOrigin: 'center center',
+              }}
+              allow="fullscreen; webgl; autoplay; cross-origin-isolated"
+              sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-popups-to-escape-sandbox allow-downloads"
+              loading="eager"
+            />
+          </div>
         </div>
       )}
     </div>

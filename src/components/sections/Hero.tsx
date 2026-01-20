@@ -16,13 +16,6 @@ const AsciiLogo: React.FC = () => {
  ░██   ░██ ░██ ░██   ░██  ░██   ░███ ░██   ░███ ░██        ░██   ░██  ░██      ░██        ░██    ░██ ░██   ░██  
   ░██████  ░██  ░█████░██  ░█████░██  ░█████░██  ░███████   ░█████░██ ░██       ░███████  ░██    ░██  ░█████░██`;
 
-  // Simplified mobile logo
-  const mobileLogoArt = `░█████ ░██                   ░██                       
-░██     ░██  ░██████  ░██  ░██  ░████████  ░██████   
-░██     ░██       ░██ ░██  ░██ ░██    ░██ ░██   ░██  
-░██     ░██  ░███████ ░██  ░██ ░██    ░██ ░█████████ 
-░██████ ░██  ░█████░██ ░████░██ ░█████░██  ░███████`;
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -45,20 +38,25 @@ const AsciiLogo: React.FC = () => {
       >
         {logoArt}
       </pre>
-      {/* Mobile logo - simplified */}
-      <pre
-        className="select-none sm:hidden"
-        style={{ 
-          color: 'var(--accent)',
-          fontFamily: '"Fira Code", "JetBrains Mono", monospace',
-          fontSize: '6px',
-          lineHeight: '1.1',
-          whiteSpace: 'pre',
-          letterSpacing: '0',
-        }}
-      >
-        {mobileLogoArt}
-      </pre>
+      {/* Mobile logo - simple text version */}
+      <div className="sm:hidden text-center">
+        <h1 
+          className="text-2xl font-bold tracking-wider"
+          style={{ 
+            color: 'var(--accent)',
+            fontFamily: 'var(--font-mono)',
+            textShadow: '0 0 20px var(--accent-glow)',
+          }}
+        >
+          CLAUDEARENA
+        </h1>
+        <div 
+          className="text-xs mt-1 tracking-widest"
+          style={{ color: 'var(--text-muted)' }}
+        >
+          [ AI BATTLEGROUND ]
+        </div>
+      </div>
     </motion.div>
   );
 };
