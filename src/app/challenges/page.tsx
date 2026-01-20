@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { ENVIRONMENTS } from '@/lib/constants';
 import { staggerContainer, staggerItem } from '@/lib/animations';
 import { useRef } from 'react';
-import { FloatingOrb, FloatingParticles, Grid3D } from '@/components/ui/FloatingElements';
+import { FloatingBrackets, AsciiGrid, Scanlines } from '@/components/ui/FloatingElements';
 
 // Map environment slugs to thumbnail paths
 const getThumbnailForEnv = (slug: string): string | null => {
@@ -221,12 +221,10 @@ export default function ChallengesPage() {
 
   return (
     <div className="min-h-screen relative overflow-hidden" style={{ backgroundColor: 'var(--bg-primary)' }}>
-      {/* 3D Background Elements */}
-      <FloatingOrb color="var(--claude-accent)" size={300} x="5%" y="15%" delay={0} blur={80} />
-      <FloatingOrb color="#10A37F" size={200} x="90%" y="40%" delay={2} blur={60} />
-      <FloatingOrb color="#4285F4" size={150} x="80%" y="70%" delay={4} blur={50} />
-      <FloatingParticles count={12} color="var(--claude-accent)" />
-      <Grid3D opacity={0.03} />
+      {/* ASCII Background Elements */}
+      <FloatingBrackets count={20} />
+      <AsciiGrid opacity={0.05} />
+      <Scanlines opacity={0.02} />
 
       <div className="py-16 md:py-24 relative z-10">
         <div className="container mx-auto px-4">
