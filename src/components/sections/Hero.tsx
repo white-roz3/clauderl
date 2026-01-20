@@ -7,7 +7,6 @@ import { MODELS, TAGLINES, CTAS, Model } from '@/lib/constants';
 
 // ASCII Art Logo - Claudearena
 const AsciiLogo: React.FC = () => {
-  // Full ASCII logo for desktop
   const logoArt = `  ░██████  ░██                              ░██                                                                 
  ░██   ░██ ░██                              ░██                                                                 
 ░██        ░██  ░██████   ░██    ░██  ░████████  ░███████   ░██████   ░██░████  ░███████  ░████████   ░██████   
@@ -16,27 +15,19 @@ const AsciiLogo: React.FC = () => {
  ░██   ░██ ░██ ░██   ░██  ░██   ░███ ░██   ░███ ░██        ░██   ░██  ░██      ░██        ░██    ░██ ░██   ░██  
   ░██████  ░██  ░█████░██  ░█████░██  ░█████░██  ░███████   ░█████░██ ░██       ░███████  ░██    ░██  ░█████░██`;
 
-  // Compact mobile ASCII logo
-  const mobileLogoArt = `┌─────────────────────────────┐
-│     CLAUDE  ARENA          │
-│   ═══════════════════      │
-│    [ AI BATTLEGROUND ]     │
-└─────────────────────────────┘`;
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-      className="w-full px-2 sm:px-4 flex justify-center"
+      className="w-full flex justify-center overflow-x-auto"
     >
-      {/* Desktop logo */}
       <pre
-        className="select-none hidden sm:block"
+        className="select-none"
         style={{ 
           color: 'var(--accent)',
           fontFamily: '"Fira Code", "JetBrains Mono", "Cascadia Code", "SF Mono", Consolas, monospace',
-          fontSize: 'clamp(6px, 1.1vw, 14px)',
+          fontSize: 'clamp(4px, 1vw, 14px)',
           lineHeight: '1.0',
           whiteSpace: 'pre',
           letterSpacing: '0',
@@ -44,20 +35,6 @@ const AsciiLogo: React.FC = () => {
         }}
       >
         {logoArt}
-      </pre>
-      {/* Mobile ASCII logo */}
-      <pre
-        className="select-none sm:hidden text-center"
-        style={{ 
-          color: 'var(--accent)',
-          fontFamily: '"Fira Code", "JetBrains Mono", "SF Mono", monospace',
-          fontSize: '11px',
-          lineHeight: '1.3',
-          whiteSpace: 'pre',
-          letterSpacing: '0',
-        }}
-      >
-        {mobileLogoArt}
       </pre>
     </motion.div>
   );
