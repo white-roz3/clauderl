@@ -1,61 +1,7 @@
-# Dependencies - Railway will install these
 node_modules
-
-# Development files
 .next
-.turbo
-*.log
-.DS_Store
-
-# Editor
-.vscode
-.idea
-
-# Git
 .git
-
-# Large Unity builds - exclude from direct upload
-public/Scenes/**
-public/**/*.unityweb
-public/**/*.wasm
-public/**/*.data
-public/**/*.br
-public/**/*.gz
-
-# Large binary files
-*.unityweb
-*.wasm
-*.data
-*.br
-*.gz
-
-
-
-# Development files
-.next
-.turbo
 *.log
+.env.local
+.env*.local
 .DS_Store
-
-# Editor
-.vscode
-.idea
-
-# Git
-.git
-
-# Large Unity builds - exclude from direct upload
-public/Scenes/**
-public/**/*.unityweb
-public/**/*.wasm
-public/**/*.data
-public/**/*.br
-public/**/*.gz
-
-# Large binary files
-*.unityweb
-*.wasm
-*.data
-*.br
-*.gz
-
