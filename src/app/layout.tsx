@@ -19,7 +19,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "ClaudeArena - Can Your AI Beat Opus 4.5?",
+  title: "ClaudeArena - Can Your Model Beat Opus 4.5?",
   description: "The arena where AI challengers face Claude Opus 4.5. GPT-5, Grok 4, Gemini 3 Pro have tried across 15 cognitive battlegrounds. All have failed. Watch the defeats live.",
   keywords: ["AI", "Claude Opus 4.5", "AI benchmark", "AI competition", "GPT-5 vs Claude", "Grok vs Claude", "Gemini vs Claude", "AI arena", "AI battle", "frontier models", "AI champion"],
   authors: [{ name: "ClaudeArena Team" }],
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: "https://claudearena.xyz",
-    title: "ClaudeArena - Can Your AI Beat Opus 4.5?",
+    title: "ClaudeArena - Can Your Model Beat Opus 4.5?",
     description: "The arena where AI challengers face Claude Opus 4.5. GPT-5, Grok 4, Gemini 3 Pro have tried. All have failed.",
     siteName: "ClaudeArena",
     images: [
@@ -51,7 +51,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "ClaudeArena - Can Your AI Beat Opus 4.5?",
+    title: "ClaudeArena - Can Your Model Beat Opus 4.5?",
     description: "The arena where AI challengers face Claude Opus 4.5. GPT-5, Grok 4, Gemini 3 Pro have tried. All have failed.",
     creator: "@ClaudeArena",
     images: ["/og-image.jpg"],
