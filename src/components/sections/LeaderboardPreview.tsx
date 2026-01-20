@@ -34,25 +34,25 @@ const LeaderboardPreview: React.FC = () => {
 
   return (
     <section 
-      className="py-12 md:py-20 relative overflow-hidden font-mono"
+      className="py-8 sm:py-12 md:py-20 relative overflow-hidden font-mono"
       style={{ backgroundColor: 'var(--bg-primary)' }}
     >
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-3 sm:px-4">
         
         {/* HUD Grid Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 sm:gap-4">
           
           {/* LEFT: Model Schematic Display */}
           <div className="lg:col-span-2">
             <div 
-              className="hud-panel h-full min-h-[400px] relative"
+              className="hud-panel h-full min-h-[280px] sm:min-h-[400px] relative"
               style={{ border: '1px solid var(--border)' }}
             >
-              {/* Corner decorations */}
-              <div className="absolute top-0 left-0 w-4 h-4 border-t border-l" style={{ borderColor: 'var(--accent)' }} />
-              <div className="absolute top-0 right-0 w-4 h-4 border-t border-r" style={{ borderColor: 'var(--accent)' }} />
-              <div className="absolute bottom-0 left-0 w-4 h-4 border-b border-l" style={{ borderColor: 'var(--accent)' }} />
-              <div className="absolute bottom-0 right-0 w-4 h-4 border-b border-r" style={{ borderColor: 'var(--accent)' }} />
+              {/* Corner decorations - hidden on mobile */}
+              <div className="hidden sm:block absolute top-0 left-0 w-4 h-4 border-t border-l" style={{ borderColor: 'var(--accent)' }} />
+              <div className="hidden sm:block absolute top-0 right-0 w-4 h-4 border-t border-r" style={{ borderColor: 'var(--accent)' }} />
+              <div className="hidden sm:block absolute bottom-0 left-0 w-4 h-4 border-b border-l" style={{ borderColor: 'var(--accent)' }} />
+              <div className="hidden sm:block absolute bottom-0 right-0 w-4 h-4 border-b border-r" style={{ borderColor: 'var(--accent)' }} />
 
               {/* Scanning line effect */}
               <motion.div
@@ -65,30 +65,69 @@ const LeaderboardPreview: React.FC = () => {
 
               {/* Header */}
               <div className="hud-panel-header">
-                <div className="flex items-center gap-3">
-                  <div className="status-dot" />
-                  <span className="hud-panel-title">MODEL ANALYSIS</span>
+                <div className="flex items-center gap-2 sm:gap-3">
+                  <div className="status-dot" style={{ width: 5, height: 5 }} />
+                  <span className="hud-panel-title text-[10px] sm:text-xs">MODEL ANALYSIS</span>
                 </div>
-                <div className="flex items-center gap-2 text-xs" style={{ color: 'var(--text-muted)' }}>
-                  <span>SCANNING...</span>
+                <div className="flex items-center gap-2 text-[10px] sm:text-xs" style={{ color: 'var(--text-muted)' }}>
+                  <span className="hidden sm:inline">SCANNING...</span>
                   <span style={{ color: 'var(--accent)' }}>{scanProgress}%</span>
                 </div>
               </div>
 
               {/* Schematic Area */}
-              <div className="p-6 relative">
+              <div className="p-3 sm:p-6 relative">
                 {/* Grid background */}
                 <div 
-                  className="absolute inset-6 opacity-30"
+                  className="absolute inset-3 sm:inset-6 opacity-30"
                   style={{
                     backgroundImage: 'linear-gradient(var(--grid-color-strong) 1px, transparent 1px), linear-gradient(90deg, var(--grid-color-strong) 1px, transparent 1px)',
-                    backgroundSize: '30px 30px'
+                    backgroundSize: '20px 20px'
                   }}
                 />
 
-                {/* ASCII Art Model Visualization */}
+                {/* Mobile: Simplified Stats View */}
+                <div className="sm:hidden relative z-10 grid grid-cols-3 gap-2 py-4">
+                  {[
+                    { label: 'SPATIAL', value: '92%' },
+                    { label: 'TEMPORAL', value: '87%' },
+                    { label: 'ABSTRACT', value: '94%' },
+                  ].map((stat) => (
+                    <div 
+                      key={stat.label}
+                      className="text-center p-3"
+                      style={{ background: 'var(--bg-tertiary)', border: '1px solid var(--border)' }}
+                    >
+                      <div className="text-[9px] mb-1" style={{ color: 'var(--text-muted)' }}>
+                        {stat.label}
+                      </div>
+                      <div className="text-lg font-bold" style={{ color: 'var(--accent)' }}>
+                        {stat.value}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Mobile: Neural Network simplified */}
+                <div className="sm:hidden text-center py-4">
+                  <div 
+                    className="inline-block px-4 py-2 text-xs"
+                    style={{ border: '1px solid var(--accent)', color: 'var(--accent)' }}
+                  >
+                    NEURAL NETWORK
+                  </div>
+                  <div className="w-px h-6 mx-auto" style={{ background: 'var(--accent)' }} />
+                  <div 
+                    className="inline-block px-4 py-2 text-xs"
+                    style={{ border: '1px solid var(--accent)', color: 'var(--accent)' }}
+                  >
+                    CONFIDENCE: 96%
+                  </div>
+                </div>
+
+                {/* Desktop: ASCII Art Model Visualization */}
                 <pre 
-                  className="text-center relative z-10 text-xs leading-tight"
+                  className="hidden sm:block text-center relative z-10 text-[10px] md:text-xs leading-tight overflow-x-auto"
                   style={{ color: 'var(--accent)' }}
                 >
 {`
@@ -113,11 +152,11 @@ const LeaderboardPreview: React.FC = () => {
 `}
                 </pre>
 
-                {/* Floating Labels */}
+                {/* Floating Labels - Desktop only */}
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
-                  className="absolute top-8 left-8 px-3 py-1.5 text-xs"
+                  className="hidden md:block absolute top-8 left-8 px-3 py-1.5 text-xs"
                   style={{ 
                     background: 'var(--bg-panel)', 
                     border: '1px solid var(--accent)',
@@ -140,7 +179,7 @@ const LeaderboardPreview: React.FC = () => {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.2 }}
-                  className="absolute top-8 right-8 px-3 py-1.5 text-xs"
+                  className="hidden md:block absolute top-8 right-8 px-3 py-1.5 text-xs"
                   style={{ 
                     background: 'var(--bg-panel)', 
                     border: '1px solid var(--border)',
@@ -154,7 +193,7 @@ const LeaderboardPreview: React.FC = () => {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.4 }}
-                  className="absolute bottom-8 left-8 px-3 py-1.5 text-xs"
+                  className="hidden md:block absolute bottom-8 left-8 px-3 py-1.5 text-xs"
                   style={{ 
                     background: 'var(--bg-panel)', 
                     border: '1px solid var(--accent)',
@@ -167,18 +206,18 @@ const LeaderboardPreview: React.FC = () => {
 
               {/* Bottom Status Bar */}
               <div 
-                className="absolute bottom-0 left-0 right-0 px-4 py-2 flex items-center justify-between text-xs"
+                className="absolute bottom-0 left-0 right-0 px-3 sm:px-4 py-1.5 sm:py-2 flex items-center justify-between text-[10px] sm:text-xs"
                 style={{ 
                   background: 'rgba(0, 212, 170, 0.05)',
                   borderTop: '1px solid var(--border)'
                 }}
               >
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-2 sm:gap-4">
                   <span style={{ color: 'var(--text-muted)' }}>MODEL:</span>
                   <span style={{ color: 'var(--accent)' }}>OPUS-4.5</span>
                 </div>
-                <div className="flex items-center gap-4">
-                  <span style={{ color: 'var(--text-muted)' }}>STATUS:</span>
+                <div className="flex items-center gap-2 sm:gap-4">
+                  <span className="hidden sm:inline" style={{ color: 'var(--text-muted)' }}>STATUS:</span>
                   <span className="flex items-center gap-1">
                     <span className="status-dot" style={{ width: 4, height: 4 }} />
                     <span style={{ color: 'var(--green)' }}>ONLINE</span>
@@ -193,23 +232,23 @@ const LeaderboardPreview: React.FC = () => {
           </div>
 
           {/* RIGHT: Data Panels */}
-          <div className="space-y-4">
+          <div className="grid grid-cols-2 sm:grid-cols-1 gap-2 sm:gap-4 lg:grid-cols-1">
             
             {/* Win Rate Panel */}
             <div className="hud-panel" style={{ border: '1px solid var(--border)' }}>
               <div className="hud-panel-header">
-                <span className="hud-panel-title">WIN RATE</span>
-                <span className="hud-panel-icon">↗</span>
+                <span className="hud-panel-title text-[10px] sm:text-xs">WIN RATE</span>
+                <span className="text-[10px] sm:text-xs" style={{ color: 'var(--accent)' }}>↗</span>
               </div>
-              <div className="hud-panel-content">
-                <div className="flex items-end justify-between mb-3">
-                  <div className="hud-stat-value">78<span className="hud-stat-unit">%</span></div>
-                  <span className="text-xs" style={{ color: 'var(--green)' }}>+2.3%</span>
+              <div className="hud-panel-content p-2 sm:p-3">
+                <div className="flex items-end justify-between mb-2 sm:mb-3">
+                  <div className="hud-stat-value text-xl sm:text-2xl">78<span className="hud-stat-unit text-xs sm:text-sm">%</span></div>
+                  <span className="text-[10px] sm:text-xs" style={{ color: 'var(--green)' }}>+2.3%</span>
                 </div>
-                <div className="hud-progress">
+                <div className="hud-progress h-1 sm:h-1.5">
                   <div className="hud-progress-bar" style={{ width: '78%' }} />
                 </div>
-                <div className="flex justify-between mt-2 text-xs" style={{ color: 'var(--text-muted)' }}>
+                <div className="hidden sm:flex justify-between mt-2 text-xs" style={{ color: 'var(--text-muted)' }}>
                   <span>0%</span>
                   <span>100%</span>
                 </div>
@@ -219,16 +258,16 @@ const LeaderboardPreview: React.FC = () => {
             {/* Matches Panel */}
             <div className="hud-panel" style={{ border: '1px solid var(--border)' }}>
               <div className="hud-panel-header">
-                <span className="hud-panel-title">TOTAL MATCHES</span>
-                <span className="hud-panel-icon">↗</span>
+                <span className="hud-panel-title text-[10px] sm:text-xs">MATCHES</span>
+                <span className="text-[10px] sm:text-xs" style={{ color: 'var(--accent)' }}>↗</span>
               </div>
-              <div className="hud-panel-content">
-                <div className="hud-stat-value">24,847</div>
-                <div className="text-xs mt-2" style={{ color: 'var(--text-muted)' }}>
+              <div className="hud-panel-content p-2 sm:p-3">
+                <div className="hud-stat-value text-xl sm:text-2xl">24,847</div>
+                <div className="text-[10px] sm:text-xs mt-1 sm:mt-2" style={{ color: 'var(--text-muted)' }}>
                   +127 TODAY
                 </div>
                 {/* Mini graph */}
-                <div className="mt-3 h-12 flex items-end gap-1">
+                <div className="mt-2 sm:mt-3 h-8 sm:h-12 flex items-end gap-0.5 sm:gap-1">
                   {[40, 65, 45, 80, 60, 75, 90, 70, 85, 95].map((h, i) => (
                     <div 
                       key={i}
@@ -244,23 +283,23 @@ const LeaderboardPreview: React.FC = () => {
             </div>
 
             {/* Environments Panel */}
-            <div className="hud-panel" style={{ border: '1px solid var(--border)' }}>
+            <div className="hud-panel col-span-2 sm:col-span-1" style={{ border: '1px solid var(--border)' }}>
               <div className="hud-panel-header">
-                <span className="hud-panel-title">ENVIRONMENTS</span>
-                <span className="hud-panel-icon">↗</span>
+                <span className="hud-panel-title text-[10px] sm:text-xs">ENVIRONMENTS</span>
+                <span className="text-[10px] sm:text-xs" style={{ color: 'var(--accent)' }}>↗</span>
               </div>
-              <div className="hud-panel-content">
+              <div className="hud-panel-content p-2 sm:p-3">
                 <div className="flex items-baseline gap-2">
-                  <span className="hud-stat-value">12</span>
+                  <span className="hud-stat-value text-xl sm:text-2xl">12</span>
                   <span style={{ color: 'var(--text-muted)' }}>/</span>
-                  <span className="text-xl" style={{ color: 'var(--text-secondary)' }}>15</span>
+                  <span className="text-base sm:text-xl" style={{ color: 'var(--text-secondary)' }}>15</span>
                 </div>
-                <div className="text-xs mt-1" style={{ color: 'var(--text-muted)' }}>
+                <div className="text-[10px] sm:text-xs mt-1" style={{ color: 'var(--text-muted)' }}>
                   DOMINATED BY OPUS
                 </div>
-                <div className="hud-segments mt-3">
+                <div className="hud-segments mt-2 sm:mt-3">
                   {[...Array(15)].map((_, i) => (
-                    <div key={i} className={`hud-segment ${i < 12 ? 'active' : ''}`} />
+                    <div key={i} className={`hud-segment ${i < 12 ? 'active' : ''}`} style={{ height: '12px' }} />
                   ))}
                 </div>
               </div>
@@ -270,27 +309,27 @@ const LeaderboardPreview: React.FC = () => {
         </div>
 
         {/* Bottom Section: Rankings Table + Logs */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-4">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 sm:gap-4 mt-3 sm:mt-4">
           
           {/* Rankings Table */}
-          <div className="lg:col-span-2">
+          <div className="lg:col-span-2 order-2 lg:order-1">
             <div className="hud-panel" style={{ border: '1px solid var(--border)' }}>
               <div className="hud-panel-header">
-                <span className="hud-panel-title">LIVE RANKINGS</span>
-                <span className="status-badge">
+                <span className="hud-panel-title text-[10px] sm:text-xs">LIVE RANKINGS</span>
+                <span className="status-badge text-[9px] sm:text-[10px]">
                   <span className="status-dot" style={{ width: 4, height: 4 }} />
                   REAL-TIME
                 </span>
               </div>
-              <div className="overflow-x-auto">
-                <table className="hud-table">
+              <div className="overflow-x-auto mobile-scroll">
+                <table className="hud-table text-[10px] sm:text-xs">
                   <thead>
                     <tr>
-                      <th>RANK</th>
-                      <th>MODEL</th>
-                      <th>WIN RATE</th>
-                      <th>SCORE</th>
-                      <th>STATUS</th>
+                      <th className="whitespace-nowrap">#</th>
+                      <th className="whitespace-nowrap">MODEL</th>
+                      <th className="whitespace-nowrap">WIN%</th>
+                      <th className="whitespace-nowrap hidden sm:table-cell">SCORE</th>
+                      <th className="whitespace-nowrap hidden sm:table-cell">STATUS</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -307,15 +346,15 @@ const LeaderboardPreview: React.FC = () => {
                           }}
                         >
                           <td style={{ color: entry.rank === 1 ? 'var(--accent)' : 'var(--text-secondary)' }}>
-                            #{entry.rank}
+                            {entry.rank}
                           </td>
                           <td>
-                            <div className="flex items-center gap-2">
+                            <div className="flex items-center gap-1.5 sm:gap-2">
                               <div 
-                                className="w-2 h-2 rounded-full"
+                                className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full flex-shrink-0"
                                 style={{ backgroundColor: model.color }}
                               />
-                              {model.name}
+                              <span className="truncate max-w-[80px] sm:max-w-none">{model.name}</span>
                             </div>
                           </td>
                           <td>
@@ -323,16 +362,16 @@ const LeaderboardPreview: React.FC = () => {
                               {entry.winRate}%
                             </span>
                             <span 
-                              className="ml-2 text-xs"
+                              className="hidden sm:inline ml-2 text-[10px]"
                               style={{ color: entry.trend.startsWith('+') ? 'var(--green)' : 'var(--red)' }}
                             >
                               {entry.trend}
                             </span>
                           </td>
-                          <td>{entry.avgScore.toLocaleString()}</td>
-                          <td>
+                          <td className="hidden sm:table-cell">{entry.avgScore.toLocaleString()}</td>
+                          <td className="hidden sm:table-cell">
                             <span 
-                              className="status-badge"
+                              className="status-badge text-[9px]"
                               style={entry.status === 'CHAMPION' ? {
                                 borderColor: 'var(--accent)',
                                 color: 'var(--accent)'
@@ -351,9 +390,9 @@ const LeaderboardPreview: React.FC = () => {
                   </tbody>
                 </table>
               </div>
-              <div className="p-4 border-t" style={{ borderColor: 'var(--border)' }}>
+              <div className="p-3 sm:p-4 border-t" style={{ borderColor: 'var(--border)' }}>
                 <Link href="/rankings">
-                  <button className="hud-button w-full">
+                  <button className="hud-button w-full text-[10px] sm:text-xs py-2.5 sm:py-2">
                     VIEW FULL RANKINGS
                   </button>
                 </Link>
@@ -362,23 +401,23 @@ const LeaderboardPreview: React.FC = () => {
           </div>
 
           {/* Logs Panel */}
-          <div className="hud-panel" style={{ border: '1px solid var(--border)' }}>
+          <div className="hud-panel order-1 lg:order-2" style={{ border: '1px solid var(--border)' }}>
             <div className="hud-panel-header">
-              <span className="hud-panel-title">LOGS</span>
-              <span className="hud-panel-icon">↗</span>
+              <span className="hud-panel-title text-[10px] sm:text-xs">LOGS</span>
+              <span className="text-[10px] sm:text-xs" style={{ color: 'var(--accent)' }}>↗</span>
             </div>
-            <div className="hud-panel-content hud-log">
+            <div className="hud-panel-content hud-log p-2 sm:p-3">
               {logs.map((log, i) => (
-                <div key={i} className="hud-log-entry">
+                <div key={i} className="hud-log-entry text-[9px] sm:text-[10px]">
                   <span className="hud-log-time">{log.time}</span>
                   <span className="hud-log-type">{log.type}</span>
-                  <span className="hud-log-message">{log.message}</span>
+                  <span className="hud-log-message truncate">{log.message}</span>
                 </div>
               ))}
             </div>
-            <div className="px-4 pb-4">
+            <div className="px-3 pb-3 sm:px-4 sm:pb-4">
               <Link href="/livesim">
-                <button className="hud-button hud-button-primary w-full">
+                <button className="hud-button hud-button-primary w-full text-[10px] sm:text-xs py-2.5 sm:py-2">
                   WATCH LIVE
                 </button>
               </Link>

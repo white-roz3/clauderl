@@ -24,26 +24,27 @@ const Header: React.FC = () => {
 
   return (
     <motion.header 
-      className="fixed top-0 left-0 right-0 z-50 font-mono"
+      className="fixed top-0 left-0 right-0 z-50 font-mono safe-area-inset"
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.4 }}
       style={{
-        backgroundColor: isScrolled ? 'rgba(10, 15, 15, 0.95)' : 'rgba(10, 15, 15, 0.8)',
+        backgroundColor: isScrolled ? 'rgba(10, 15, 15, 0.98)' : 'rgba(10, 15, 15, 0.9)',
         borderBottom: `1px solid ${isScrolled ? 'var(--border)' : 'transparent'}`,
         backdropFilter: 'blur(10px)',
+        WebkitBackdropFilter: 'blur(10px)',
       }}
     >
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-14">
+      <div className="container mx-auto px-3 sm:px-4">
+        <div className="flex items-center justify-between h-12 sm:h-14">
           {/* Logo */}
           <Link href="/">
             <motion.div
-              className="flex items-center gap-2 text-sm font-bold tracking-wider"
+              className="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm font-bold tracking-wider"
               whileHover={{ x: 2 }}
             >
-              <span className="status-dot" style={{ width: 6, height: 6 }} />
-              <span style={{ color: 'var(--hud-cyan)' }}>CLAUDE</span>
+              <span className="status-dot" style={{ width: 5, height: 5 }} />
+              <span style={{ color: 'var(--accent)' }}>CLAUDE</span>
               <span style={{ color: 'var(--text-primary)' }}>ARENA</span>
             </motion.div>
           </Link>
@@ -62,7 +63,7 @@ const Header: React.FC = () => {
                   <motion.span
                     className="px-3 py-2 text-xs uppercase tracking-wider cursor-pointer transition-colors"
                     style={{ color: 'var(--text-secondary)' }}
-                    whileHover={{ color: 'var(--hud-cyan)' }}
+                    whileHover={{ color: 'var(--accent)' }}
                   >
                     {link.label}
                   </motion.span>
@@ -82,14 +83,14 @@ const Header: React.FC = () => {
 
           {/* Mobile Menu Button */}
           <motion.button
-            className="lg:hidden p-2"
+            className="lg:hidden p-2.5 sm:p-2 min-w-[40px] min-h-[40px] flex items-center justify-center"
             style={{
               color: 'var(--text-primary)',
               border: '1px solid var(--border)',
             }}
             onClick={toggleMenu}
             aria-label="Toggle menu"
-            whileHover={{ borderColor: 'var(--hud-cyan)' }}
+            whileHover={{ borderColor: 'var(--accent)' }}
             whileTap={{ scale: 0.95 }}
           >
             <AnimatePresence mode="wait">
@@ -120,7 +121,7 @@ const Header: React.FC = () => {
         <AnimatePresence>
           {isMenuOpen && (
             <motion.div 
-              className="lg:hidden py-4 overflow-hidden"
+              className="lg:hidden py-3 sm:py-4 overflow-hidden"
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: 'auto', opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
@@ -131,7 +132,7 @@ const Header: React.FC = () => {
                 style={{ border: '1px solid var(--border)' }}
               >
                 <div className="hud-panel-header">
-                  <span className="hud-panel-title">NAVIGATION</span>
+                  <span className="hud-panel-title text-[10px] sm:text-xs">NAVIGATION</span>
                 </div>
                 
                 {NAVIGATION_LINKS.map((link, index) => {
@@ -150,14 +151,14 @@ const Header: React.FC = () => {
                     >
                       <LinkComponent
                         {...linkProps}
-                        className="flex items-center px-4 py-3 text-sm uppercase tracking-wider transition-colors"
+                        className="flex items-center px-3 sm:px-4 py-3.5 sm:py-3 text-xs sm:text-sm uppercase tracking-wider transition-colors min-h-[48px]"
                         style={{ 
                           color: 'var(--text-primary)',
                           borderBottom: '1px solid var(--border-subtle)',
                         }}
                         onClick={() => setIsMenuOpen(false)}
                       >
-                        <span style={{ color: 'var(--hud-cyan)' }}>{'>'}</span>
+                        <span style={{ color: 'var(--accent)' }}>{'>'}</span>
                         <span className="ml-2">{link.label}</span>
                       </LinkComponent>
                     </motion.div>
@@ -172,7 +173,7 @@ const Header: React.FC = () => {
                   transition={{ delay: 0.2 }}
                 >
                   <Link href="/livesim" onClick={() => setIsMenuOpen(false)}>
-                    <button className="hud-button hud-button-primary w-full py-3 text-sm">
+                    <button className="hud-button hud-button-primary w-full py-3.5 sm:py-3 text-xs sm:text-sm min-h-[48px]">
                       {CTAS.live.toUpperCase()}
                     </button>
                   </Link>

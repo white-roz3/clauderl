@@ -68,28 +68,28 @@ const Courses: React.FC = () => {
 
   return (
     <section 
-      className="py-12 md:py-20 relative overflow-hidden font-mono"
+      className="py-8 sm:py-12 md:py-20 relative overflow-hidden font-mono"
       style={{ backgroundColor: 'var(--bg-primary)' }}
     >
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-3 sm:px-4">
         
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          className="mb-8"
+          className="mb-4 sm:mb-8"
         >
           <div className="hud-panel inline-block" style={{ border: '1px solid var(--border)' }}>
             <div className="hud-panel-header">
-              <span className="hud-panel-title">ARENA CHALLENGES</span>
-              <span className="status-badge">
+              <span className="hud-panel-title text-[10px] sm:text-xs">ARENA CHALLENGES</span>
+              <span className="status-badge text-[9px] sm:text-[10px]">
                 <span className="status-dot" style={{ width: 4, height: 4 }} />
                 15 ACTIVE
               </span>
             </div>
-            <div className="px-4 py-3">
-              <h2 className="text-xl md:text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>
+            <div className="px-3 py-2 sm:px-4 sm:py-3">
+              <h2 className="text-lg sm:text-xl md:text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>
                 <span style={{ color: 'var(--accent)' }}>{'>'}</span> COGNITIVE CHALLENGES
               </h2>
             </div>
@@ -97,27 +97,27 @@ const Courses: React.FC = () => {
         </motion.div>
 
         {/* HUD Grid Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 sm:gap-4">
           
           {/* Challenge List */}
-          <div className="lg:col-span-2">
+          <div className="lg:col-span-2 order-2 lg:order-1">
             <div className="hud-panel" style={{ border: '1px solid var(--border)' }}>
               <div className="hud-panel-header">
-                <span className="hud-panel-title">ENVIRONMENT SELECT</span>
-                <span className="text-xs" style={{ color: 'var(--text-muted)' }}>
-                  SHOWING 4 OF 15
+                <span className="hud-panel-title text-[10px] sm:text-xs">ENVIRONMENT SELECT</span>
+                <span className="text-[10px] sm:text-xs" style={{ color: 'var(--text-muted)' }}>
+                  4 OF 15
                 </span>
               </div>
               
-              <div className="overflow-x-auto">
-                <table className="hud-table">
+              <div className="overflow-x-auto mobile-scroll">
+                <table className="hud-table text-[10px] sm:text-xs">
                   <thead>
                     <tr>
-                      <th>ENV</th>
-                      <th>DIFFICULTY</th>
-                      <th>OPUS WIN%</th>
-                      <th>MATCHES</th>
-                      <th>STATUS</th>
+                      <th className="whitespace-nowrap">ENV</th>
+                      <th className="whitespace-nowrap hidden sm:table-cell">DIFF</th>
+                      <th className="whitespace-nowrap">WIN%</th>
+                      <th className="whitespace-nowrap hidden sm:table-cell">MATCHES</th>
+                      <th className="whitespace-nowrap">STATUS</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -131,21 +131,21 @@ const Courses: React.FC = () => {
                         }}
                       >
                         <td>
-                          <div className="flex items-center gap-2">
+                          <div className="flex items-center gap-1.5 sm:gap-2">
                             <span 
-                              className="w-1.5 h-6"
+                              className="w-1 sm:w-1.5 h-5 sm:h-6 flex-shrink-0"
                               style={{ 
                                 background: selectedChallenge === challenge.id ? 'var(--accent)' : 'var(--border)'
                               }}
                             />
-                            <span style={{ color: 'var(--text-primary)' }}>
+                            <span className="truncate max-w-[100px] sm:max-w-none" style={{ color: 'var(--text-primary)' }}>
                               {challenge.name}
                             </span>
                           </div>
                         </td>
-                        <td>
+                        <td className="hidden sm:table-cell">
                           <span 
-                            className="text-xs px-2 py-0.5"
+                            className="text-[9px] sm:text-xs px-1.5 sm:px-2 py-0.5"
                             style={{ 
                               border: `1px solid ${getDifficultyColor(challenge.difficulty)}`,
                               color: getDifficultyColor(challenge.difficulty)
@@ -155,11 +155,11 @@ const Courses: React.FC = () => {
                           </span>
                         </td>
                         <td>
-                          <div className="flex items-center gap-2">
+                          <div className="flex items-center gap-1 sm:gap-2">
                             <span style={{ color: challenge.opusWinRate > 75 ? 'var(--accent)' : 'var(--text-primary)' }}>
                               {challenge.opusWinRate}%
                             </span>
-                            <div className="w-16 h-1" style={{ background: 'var(--border)' }}>
+                            <div className="hidden sm:block w-16 h-1" style={{ background: 'var(--border)' }}>
                               <div 
                                 className="h-full"
                                 style={{ 
@@ -170,13 +170,13 @@ const Courses: React.FC = () => {
                             </div>
                           </div>
                         </td>
-                        <td style={{ color: 'var(--text-secondary)' }}>
+                        <td className="hidden sm:table-cell" style={{ color: 'var(--text-secondary)' }}>
                           {challenge.totalMatches.toLocaleString()}
                         </td>
                         <td>
                           <span className="flex items-center gap-1">
                             <span 
-                              className="status-dot" 
+                              className="status-dot flex-shrink-0" 
                               style={{ 
                                 width: 4, 
                                 height: 4,
@@ -185,7 +185,7 @@ const Courses: React.FC = () => {
                               }} 
                             />
                             <span 
-                              className="text-xs"
+                              className="text-[9px] sm:text-xs"
                               style={{ color: challenge.status === 'ACTIVE' ? 'var(--green)' : 'var(--amber)' }}
                             >
                               {challenge.status}
@@ -198,9 +198,9 @@ const Courses: React.FC = () => {
                 </table>
               </div>
 
-              <div className="p-4 border-t" style={{ borderColor: 'var(--border)' }}>
+              <div className="p-3 sm:p-4 border-t" style={{ borderColor: 'var(--border)' }}>
                 <Link href="/challenges">
-                  <button className="hud-button w-full">
+                  <button className="hud-button w-full text-[10px] sm:text-xs py-2.5 sm:py-2">
                     VIEW ALL 15 CHALLENGES
                   </button>
                 </Link>
@@ -209,50 +209,50 @@ const Courses: React.FC = () => {
           </div>
 
           {/* Selected Challenge Detail */}
-          <div className="space-y-4">
+          <div className="space-y-3 sm:space-y-4 order-1 lg:order-2">
             
             {/* Challenge Info */}
             {selected && (
               <div className="hud-panel" style={{ border: '1px solid var(--accent)' }}>
                 <div className="hud-panel-header" style={{ background: 'rgba(0, 212, 170, 0.1)' }}>
-                  <span className="hud-panel-title" style={{ color: 'var(--accent)' }}>
+                  <span className="hud-panel-title text-[10px] sm:text-xs" style={{ color: 'var(--accent)' }}>
                     SELECTED
                   </span>
                 </div>
-                <div className="hud-panel-content">
-                  <h3 className="text-lg font-bold mb-2" style={{ color: 'var(--text-primary)' }}>
+                <div className="hud-panel-content p-2 sm:p-3">
+                  <h3 className="text-sm sm:text-lg font-bold mb-1 sm:mb-2" style={{ color: 'var(--text-primary)' }}>
                     {selected.name}
                   </h3>
-                  <p className="text-xs mb-4" style={{ color: 'var(--text-secondary)' }}>
+                  <p className="text-[10px] sm:text-xs mb-3 sm:mb-4" style={{ color: 'var(--text-secondary)' }}>
                     {selected.description}
                   </p>
                   
-                  <div className="space-y-3">
+                  <div className="space-y-2 sm:space-y-3">
                     <div className="flex justify-between">
-                      <span className="text-xs" style={{ color: 'var(--text-muted)' }}>DIFFICULTY</span>
+                      <span className="text-[10px] sm:text-xs" style={{ color: 'var(--text-muted)' }}>DIFFICULTY</span>
                       <span 
-                        className="text-xs"
+                        className="text-[10px] sm:text-xs"
                         style={{ color: getDifficultyColor(selected.difficulty) }}
                       >
                         {selected.difficulty}
                       </span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-xs" style={{ color: 'var(--text-muted)' }}>OPUS WIN RATE</span>
-                      <span className="text-xs" style={{ color: 'var(--accent)' }}>
+                      <span className="text-[10px] sm:text-xs" style={{ color: 'var(--text-muted)' }}>OPUS WIN RATE</span>
+                      <span className="text-[10px] sm:text-xs" style={{ color: 'var(--accent)' }}>
                         {selected.opusWinRate}%
                       </span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-xs" style={{ color: 'var(--text-muted)' }}>TOTAL MATCHES</span>
-                      <span className="text-xs" style={{ color: 'var(--text-primary)' }}>
+                      <span className="text-[10px] sm:text-xs" style={{ color: 'var(--text-muted)' }}>TOTAL MATCHES</span>
+                      <span className="text-[10px] sm:text-xs" style={{ color: 'var(--text-primary)' }}>
                         {selected.totalMatches.toLocaleString()}
                       </span>
                     </div>
                   </div>
 
                   <Link href={`/challenges/${selected.id}`}>
-                    <button className="hud-button hud-button-primary w-full mt-4">
+                    <button className="hud-button hud-button-primary w-full mt-3 sm:mt-4 text-[10px] sm:text-xs py-2.5 sm:py-2">
                       ENTER CHALLENGE
                     </button>
                   </Link>
@@ -263,16 +263,16 @@ const Courses: React.FC = () => {
             {/* Opus Performance */}
             <div className="hud-panel" style={{ border: '1px solid var(--border)' }}>
               <div className="hud-panel-header">
-                <span className="hud-panel-title">OPUS PERFORMANCE</span>
+                <span className="hud-panel-title text-[10px] sm:text-xs">OPUS PERFORMANCE</span>
               </div>
-              <div className="hud-panel-content">
-                <div className="space-y-2">
+              <div className="hud-panel-content p-2 sm:p-3">
+                <div className="space-y-1.5 sm:space-y-2">
                   {challenges.map((c) => (
-                    <div key={c.id} className="flex items-center gap-2">
-                      <span className="text-xs w-20 truncate" style={{ color: 'var(--text-muted)' }}>
+                    <div key={c.id} className="flex items-center gap-1.5 sm:gap-2">
+                      <span className="text-[9px] sm:text-xs w-16 sm:w-20 truncate" style={{ color: 'var(--text-muted)' }}>
                         {c.name.split(' ')[0]}
                       </span>
-                      <div className="flex-1 h-2" style={{ background: 'var(--border)' }}>
+                      <div className="flex-1 h-1.5 sm:h-2" style={{ background: 'var(--border)' }}>
                         <motion.div 
                           className="h-full"
                           style={{ background: 'var(--accent)' }}
@@ -281,7 +281,7 @@ const Courses: React.FC = () => {
                           viewport={{ once: true }}
                         />
                       </div>
-                      <span className="text-xs w-10 text-right" style={{ color: 'var(--accent)' }}>
+                      <span className="text-[9px] sm:text-xs w-8 sm:w-10 text-right" style={{ color: 'var(--accent)' }}>
                         {c.opusWinRate}%
                       </span>
                     </div>
