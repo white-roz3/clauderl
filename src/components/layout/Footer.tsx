@@ -119,7 +119,7 @@ const Footer: React.FC = () => {
 
         {/* Bottom Bar */}
         <div 
-          className="pt-4 sm:pt-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-4 text-[10px] sm:text-xs"
+          className="pt-4 sm:pt-6 flex justify-center sm:justify-start text-[10px] sm:text-xs"
           style={{ borderTop: '1px solid var(--border)' }}
         >
           <div className="flex flex-wrap items-center gap-3 sm:gap-4">
@@ -135,15 +135,6 @@ const Footer: React.FC = () => {
             <span className="hidden sm:inline" style={{ color: 'var(--text-muted)' }}>
               UPTIME: <span style={{ color: 'var(--text-primary)' }}>99.97%</span>
             </span>
-          </div>
-          
-          {/* Contract Address */}
-          <div className="flex items-center gap-2 w-full sm:w-auto overflow-hidden">
-            <span style={{ color: 'var(--accent)' }}>$CA:</span>
-            <code className="truncate text-[9px] sm:text-xs" style={{ color: 'var(--text-secondary)' }}>
-              <span className="sm:hidden">ZFV14P2wf72AP...pump</span>
-              <span className="hidden sm:inline">ZFV14P2wf72AP9HNz4i8FK8KfDETFuM8Tgc3hGapump</span>
-            </code>
           </div>
         </div>
 

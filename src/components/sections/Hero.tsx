@@ -16,6 +16,13 @@ const AsciiLogo: React.FC = () => {
  ░██   ░██ ░██ ░██   ░██  ░██   ░███ ░██   ░███ ░██        ░██   ░██  ░██      ░██        ░██    ░██ ░██   ░██  
   ░██████  ░██  ░█████░██  ░█████░██  ░█████░██  ░███████   ░█████░██ ░██       ░███████  ░██    ░██  ░█████░██`;
 
+  // Compact mobile ASCII logo
+  const mobileLogoArt = `┌─────────────────────────────┐
+│     CLAUDE  ARENA          │
+│   ═══════════════════      │
+│    [ AI BATTLEGROUND ]     │
+└─────────────────────────────┘`;
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -38,25 +45,20 @@ const AsciiLogo: React.FC = () => {
       >
         {logoArt}
       </pre>
-      {/* Mobile logo - simple text version */}
-      <div className="sm:hidden text-center">
-        <h1 
-          className="text-2xl font-bold tracking-wider"
-          style={{ 
-            color: 'var(--accent)',
-            fontFamily: 'var(--font-mono)',
-            textShadow: '0 0 20px var(--accent-glow)',
-          }}
-        >
-          CLAUDEARENA
-        </h1>
-        <div 
-          className="text-xs mt-1 tracking-widest"
-          style={{ color: 'var(--text-muted)' }}
-        >
-          [ AI BATTLEGROUND ]
-        </div>
-      </div>
+      {/* Mobile ASCII logo */}
+      <pre
+        className="select-none sm:hidden text-center"
+        style={{ 
+          color: 'var(--accent)',
+          fontFamily: '"Fira Code", "JetBrains Mono", "SF Mono", monospace',
+          fontSize: '11px',
+          lineHeight: '1.3',
+          whiteSpace: 'pre',
+          letterSpacing: '0',
+        }}
+      >
+        {mobileLogoArt}
+      </pre>
     </motion.div>
   );
 };
@@ -310,7 +312,7 @@ const Hero: React.FC = () => {
           background: 'rgba(10, 10, 10, 0.95)'
         }}
       >
-        <div className="container mx-auto flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 sm:gap-4">
+        <div className="container mx-auto flex justify-center sm:justify-between items-center gap-4">
           <div className="flex items-center gap-3 sm:gap-6">
             <span style={{ color: 'var(--text-muted)' }}>
               <span className="hidden sm:inline">VERSION: </span>
@@ -320,21 +322,9 @@ const Hero: React.FC = () => {
             <span style={{ color: 'var(--text-muted)' }}>
               ENVS: <span style={{ color: 'var(--accent)' }}>15</span>
             </span>
-          </div>
-          <div className="flex items-center gap-2 w-full sm:w-auto overflow-hidden">
-            <span style={{ color: 'var(--accent)' }}>$CA:</span>
-            <code 
-              className="truncate text-[9px] sm:text-xs" 
-              style={{ color: 'var(--text-secondary)', maxWidth: '200px' }}
-            >
-              ZFV14P2wf72AP9HNz4i8FK8Kf...pump
-            </code>
-            <code 
-              className="hidden sm:inline" 
-              style={{ color: 'var(--text-secondary)' }}
-            >
-              ZFV14P2wf72AP9HNz4i8FK8KfDETFuM8Tgc3hGapump
-            </code>
+            <span className="hidden sm:inline" style={{ color: 'var(--text-muted)' }}>
+              STATUS: <span style={{ color: 'var(--green)' }}>ONLINE</span>
+            </span>
           </div>
         </div>
       </div>
