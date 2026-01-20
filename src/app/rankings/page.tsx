@@ -310,12 +310,12 @@ export default function RankingsPage() {
                   </div>
                   <div className="space-y-2">
                     <div className="flex justify-between text-xs">
-                      <span style={{ color: 'var(--text-muted)' }}>PARAMETERS</span>
-                      <span style={{ color: 'var(--text-secondary)' }}>{selected.parameters}</span>
+                      <span style={{ color: 'var(--text-muted)' }}>STATUS</span>
+                      <span style={{ color: 'var(--text-secondary)' }}>{selected.isLeading ? 'LEADING' : 'ACTIVE'}</span>
                     </div>
                     <div className="flex justify-between text-xs">
                       <span style={{ color: 'var(--text-muted)' }}>WIN RATE</span>
-                      <span style={{ color: 'var(--accent)' }}>{selected.winRate}%</span>
+                      <span style={{ color: 'var(--accent)' }}>{rankings.find(r => r.modelId === selected.id)?.winRate || 0}%</span>
                     </div>
                   </div>
                 </div>
