@@ -80,25 +80,3 @@ const Accordion: React.FC<AccordionProps> = ({ items, className }) => {
 };
 
 export default Accordion;
-
-            {openItems.has(index) && (
-              <motion.div
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: 'auto', opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                transition={{ duration: 0.2 }}
-                className="overflow-hidden"
-              >
-                <div className="px-6 pb-5">
-                  <p className="text-gray-600 leading-relaxed">{item.answer}</p>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </motion.div>
-      ))}
-    </div>
-  );
-};
-
-export default Accordion;
