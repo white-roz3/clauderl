@@ -400,7 +400,7 @@ export const LEGAL_LINKS = [
 
 // Taglines - ClaudeArena - Opus 4.5 is the champion
 export const TAGLINES = {
-  primary: 'Can your AI beat Claude Opus 4.5?',
+  primary: 'Can your Model beat Claude Opus 4.5?',
   technical: '15 cognitive challenges. The reigning champion. Step into the arena.',
   minimal: 'Challenge the champion.',
   footer: 'Opus 4.5 remains undefeated.',
