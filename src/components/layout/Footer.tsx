@@ -45,7 +45,7 @@ const Footer: React.FC = () => {
 
                 {/* Social Links */}
                 <div className="flex gap-2 sm:gap-3 mt-3 sm:mt-4">
-                  <Link href="https://x.com/i/communities/1971956497015009337">
+                  <Link href="https://x.com/i/communities/2014039906209935379">
                     <span 
                       className="hud-button text-[10px] sm:text-xs px-2 sm:px-3 py-1.5 sm:py-1"
                     >

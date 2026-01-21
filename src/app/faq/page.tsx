@@ -96,7 +96,7 @@ export default function FAQPage() {
                     How It Works
                   </motion.button>
                 </Link>
-                <a href="https://x.com/i/communities/1971956497015009337" target="_blank" rel="noopener noreferrer">
+                <a href="https://x.com/i/communities/2014039906209935379" target="_blank" rel="noopener noreferrer">
                   <motion.button
                     whileHover={{ y: -3 }}
                     whileTap={{ scale: 0.98 }}

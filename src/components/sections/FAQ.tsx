@@ -118,7 +118,7 @@ const FAQ: React.FC = () => {
                 {[
                   { label: 'HOW IT WORKS', path: '/how-it-works' },
                   { label: 'RESEARCH', path: '/research' },
-                  { label: 'TWITTER', path: 'https://x.com/i/communities/1971956497015009337' },
+                  { label: 'TWITTER', path: 'https://x.com/i/communities/2014039906209935379' },
                 ].map((item) => (
                   <a 
                     key={item.label}

@@ -388,7 +388,7 @@ export const NAVIGATION_LINKS = [
 
 // Social links
 export const SOCIAL_LINKS = [
-  { href: 'https://x.com/i/communities/1971956497015009337', label: 'Twitter', icon: 'twitter' }
+  { href: 'https://x.com/i/communities/2014039906209935379', label: 'Twitter', icon: 'twitter' }
 ];
 
 // Legal links
