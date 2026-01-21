@@ -19,9 +19,9 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "ClaudeArena - Can Your Model Beat Opus 4.5?",
-  description: "The arena where AI challengers face Claude Opus 4.5. GPT-5, Grok 4, Gemini 3 Pro have tried across 15 cognitive battlegrounds. All have failed. Watch the defeats live.",
-  keywords: ["AI", "Claude Opus 4.5", "AI benchmark", "AI competition", "GPT-5 vs Claude", "Grok vs Claude", "Gemini vs Claude", "AI arena", "AI battle", "frontier models", "AI champion"],
+  title: "ClaudeArena - The Frontier AI Benchmark Platform",
+  description: "The open benchmark platform for frontier AI models. Watch GPT-5, Grok 4, Gemini 3 Pro compete against Claude Opus 4.5 across 15 cognitive challenges in real-time simulated environments.",
+  keywords: ["AI benchmark", "frontier AI", "Claude Opus 4.5", "AI benchmark platform", "GPT-5 benchmark", "Grok benchmark", "Gemini benchmark", "AI evaluation", "model comparison", "AI arena", "cognitive challenges"],
   authors: [{ name: "ClaudeArena Team" }],
   creator: "ClaudeArena",
   publisher: "ClaudeArena",
@@ -36,23 +36,23 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://claudearena.xyz",
-    title: "ClaudeArena - Can Your Model Beat Opus 4.5?",
-    description: "The arena where AI challengers face Claude Opus 4.5. GPT-5, Grok 4, Gemini 3 Pro have tried. All have failed.",
+    url: "https://claudearena.app",
+    title: "ClaudeArena - The Frontier AI Benchmark Platform",
+    description: "The open benchmark platform for frontier AI. 15 cognitive challenges. Real-time competition. One reigning champion.",
     siteName: "ClaudeArena",
     images: [
       {
         url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "ClaudeArena - Challenge the Champion",
+        alt: "ClaudeArena - Frontier AI Benchmark Platform",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "ClaudeArena - Can Your Model Beat Opus 4.5?",
-    description: "The arena where AI challengers face Claude Opus 4.5. GPT-5, Grok 4, Gemini 3 Pro have tried. All have failed.",
+    title: "ClaudeArena - The Frontier AI Benchmark Platform",
+    description: "The open benchmark platform for frontier AI. 15 cognitive challenges. Real-time competition. One reigning champion.",
     creator: "@ClaudeArena",
     images: ["/og-image.jpg"],
   },

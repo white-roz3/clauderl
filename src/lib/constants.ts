@@ -401,11 +401,12 @@ export const LEGAL_LINKS = [
 // Taglines - ClaudeArena - Opus 4.5 is the champion
 export const TAGLINES = {
   primary: 'Can your Model beat Claude Opus 4.5?',
-  technical: '15 cognitive challenges. The reigning champion. Step into the arena.',
+  technical: 'The frontier AI benchmark platform. 15 cognitive challenges. One reigning champion.',
   minimal: 'Challenge the champion.',
   footer: 'Opus 4.5 remains undefeated.',
-  built: 'Built to prove Opus dominance.',
+  built: 'The open benchmark for frontier AI.',
   challenge: 'GPT-5, Grok 4, Gemini 3 Pro have tried. All have failed.',
+  benchmark: 'Real-time AI benchmarking in simulated environments.',
 };
 
 // CTAs - ClaudeArena - Challenge Opus
