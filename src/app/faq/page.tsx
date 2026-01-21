@@ -110,7 +110,7 @@ export default function FAQPage() {
 
               <div className="pt-6 border-t border-gray-100">
                 <p className="text-xs text-gray-400 font-mono">
-                  GXKC9BCWCiYVeEpQ8cFoFHpgAeXTzX3YCFX4BnaZpump
+                  noGZjiX75VvrqpYDJBCuKbB3Vm7yFbBE3rMoYY3pump
                 </p>
               </div>
             </div>
