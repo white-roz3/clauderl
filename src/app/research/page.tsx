@@ -1,293 +1,342 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { FileText, Code, Database, ExternalLink, BookOpen, Microscope, Terminal } from 'lucide-react';
-import { staggerContainer, staggerItem } from '@/lib/animations';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
 export default function ResearchPage() {
-  const sections = [
+  const [currentTime, setCurrentTime] = useState('');
+  const [selectedDoc, setSelectedDoc] = useState('methodology');
+
+  useEffect(() => {
+    const updateTime = () => {
+      const now = new Date();
+      setCurrentTime(now.toISOString().slice(11, 19));
+    };
+    updateTime();
+    const interval = setInterval(updateTime, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const documents = [
     {
       id: 'methodology',
-      icon: Microscope,
-      title: 'Methodology',
+      title: 'METHODOLOGY',
       description: 'How we measure intelligence fairly across different architectures',
-      status: 'Published',
+      status: 'PUBLISHED',
+      content: 'Every model receives identical inputs, time constraints, and environmental conditions. No prompt engineering advantages. No cherry-picked scenarios.',
     },
     {
       id: 'environments',
-      icon: BookOpen,
-      title: 'Environment Design',
+      title: 'ENVIRONMENT DESIGN',
       description: 'Why these 15 challenges cover the spectrum of cognitive abilities',
-      status: 'Published',
+      status: 'PUBLISHED',
+      content: 'From spatial reasoning to adversarial combat, each environment tests a distinct aspect of general intelligence.',
     },
     {
       id: 'scoring',
-      icon: Database,
-      title: 'Scoring System',
-      description: 'Transparent metrics and how they\'re calculated',
-      status: 'Published',
-    },
-    {
-      id: 'api',
-      icon: Terminal,
-      title: 'API Access',
-      description: 'Run your own benchmarks against our environments',
-      status: 'Coming Soon',
+      title: 'SCORING SYSTEM',
+      description: 'Transparent metrics and how they are calculated',
+      status: 'PUBLISHED',
+      content: 'Win rates, average scores, head-to-head records, environment-specific performance. All metrics are public and verifiable.',
     },
     {
       id: 'whitepaper',
-      icon: FileText,
-      title: 'Whitepaper',
+      title: 'WHITEPAPER',
       description: 'Technical deep-dive into ClaudeArena architecture',
-      status: 'In Progress',
+      status: 'IN PROGRESS',
+      content: 'Comprehensive documentation of system architecture, model integration, and evaluation protocols.',
     },
     {
-      id: 'code',
-      icon: Code,
-      title: 'Open Source',
-      description: 'Environment code and evaluation scripts',
-      status: 'Coming Soon',
+      id: 'api',
+      title: 'API ACCESS',
+      description: 'Run your own benchmarks against our environments',
+      status: 'COMING SOON',
+      content: 'Programmatic access to run custom evaluations with full reproducibility.',
     },
   ];
 
   const publications = [
     {
+      id: 'pub-001',
       title: 'Adversarial Benchmarking for Frontier Models',
-      authors: 'ClaudeArena Research Team',
-      date: 'January 2026',
-      abstract: 'We present a novel approach to evaluating large language models in adversarial 3D environments, demonstrating significant performance differences across reasoning-heavy tasks.',
+      authors: 'ClaudeArena Research',
+      date: 'JAN 2026',
+      status: 'PUBLISHED',
+      abstract: 'Novel approach to evaluating LLMs in adversarial 3D environments, demonstrating significant performance differences across reasoning tasks.',
     },
     {
+      id: 'pub-002',
       title: 'Extended Thinking in Real-Time Decision Making',
-      authors: 'ClaudeArena Research Team',
-      date: 'Coming Soon',
-      abstract: 'An analysis of how chain-of-thought reasoning impacts performance in time-constrained environments.',
+      authors: 'ClaudeArena Research',
+      date: 'Q2 2026',
+      status: 'PENDING',
+      abstract: 'Analysis of how chain-of-thought reasoning impacts performance in time-constrained environments.',
     },
   ];
 
+  const selectedDocument = documents.find(d => d.id === selectedDoc);
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'PUBLISHED': return 'var(--green)';
+      case 'IN PROGRESS': return 'var(--amber)';
+      default: return 'var(--text-muted)';
+    }
+  };
+
   return (
-    <div className="min-h-screen" style={{ backgroundColor: 'var(--bg-primary)' }}>
-      <div className="py-16 md:py-24">
-        <div className="container mx-auto px-4">
-          {/* Header */}
-          <motion.div
-            variants={staggerContainer}
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true, margin: "-100px" }}
-            className="text-center mb-16"
-          >
-            <motion.p 
-              variants={staggerItem} 
-              className="text-xs md:text-sm font-medium tracking-widest uppercase mb-3 md:mb-4"
-              style={{ color: 'var(--text-muted)' }}
-            >
-              Documentation
-            </motion.p>
-            <motion.h1
-              variants={staggerItem}
-              className="text-4xl md:text-6xl lg:text-7xl font-normal mb-6"
-              style={{ 
-                fontFamily: 'var(--font-serif)',
-                color: 'var(--text-accent)'
-              }}
-            >
-              Research
-            </motion.h1>
-            <motion.p
-              variants={staggerItem}
-              className="text-lg max-w-2xl mx-auto"
-              style={{ 
-                fontFamily: 'var(--font-sans)',
-                color: 'var(--text-secondary)' 
-              }}
-            >
-              Technical documentation, publications, and API access
-            </motion.p>
-          </motion.div>
-
-          {/* Documentation sections */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mb-16">
-            {sections.map((section, index) => (
-              <motion.div
-                key={section.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.05 }}
-              >
-                <motion.div
-                  className="rounded-xl p-6 h-full border cursor-pointer relative overflow-hidden"
-                  style={{ 
-                    backgroundColor: 'var(--bg-secondary)',
-                    borderColor: 'var(--border)',
-                    boxShadow: '0 1px 3px rgba(0, 0, 0, 0.3)'
-                  }}
-                  whileHover={{ 
-                    y: -4,
-                    borderColor: 'rgba(194, 117, 81, 0.5)',
-                    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.5)'
-                  }}
-                >
-                  <div className="flex items-start justify-between mb-4">
-                    <div 
-                      className="w-12 h-12 rounded-xl flex items-center justify-center"
-                      style={{ 
-                        backgroundColor: 'var(--bg-primary)',
-                        border: '1px solid var(--border)'
-                      }}
-                    >
-                      <section.icon className="w-6 h-6" style={{ color: 'var(--text-secondary)' }} />
-                    </div>
-                    <span 
-                      className="text-xs px-2 py-1 rounded"
-                      style={{
-                        backgroundColor: section.status === 'Published' 
-                          ? 'rgba(34, 197, 94, 0.2)' 
-                          : section.status === 'In Progress'
-                          ? 'rgba(194, 117, 81, 0.2)'
-                          : 'var(--border)',
-                        color: section.status === 'Published' 
-                          ? '#22c55e' 
-                          : section.status === 'In Progress'
-                          ? 'var(--accent)'
-                          : 'var(--text-muted)'
-                      }}
-                    >
-                      {section.status}
-                    </span>
-                  </div>
-                  
-                  <h3 
-                    className="text-lg font-semibold mb-2"
-                    style={{ color: 'var(--text-primary)' }}
-                  >
-                    {section.title}
-                  </h3>
-                  <p 
-                    className="text-sm"
-                    style={{ color: 'var(--text-muted)' }}
-                  >
-                    {section.description}
-                  </p>
-
-                  {section.status === 'Published' && (
-                    <div className="mt-4 flex items-center gap-1 text-sm" style={{ color: 'var(--accent)' }}>
-                      <span>Read more</span>
-                      <ExternalLink className="w-3 h-3" />
-                    </div>
-                  )}
-                </motion.div>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Publications */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="mb-16"
-          >
-            <h2 
-              className="text-2xl font-semibold mb-8"
-              style={{ color: 'var(--text-primary)' }}
-            >
-              Publications
-            </h2>
-            <div className="space-y-4">
-              {publications.map((pub, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                  className="rounded-xl p-6 border"
-                  style={{ 
-                    backgroundColor: 'var(--bg-secondary)',
-                    borderColor: 'var(--border)',
-                    boxShadow: '0 1px 3px rgba(0, 0, 0, 0.3)'
-                  }}
-                >
-                  <div className="flex flex-col md:flex-row md:items-start gap-4">
-                    <div 
-                      className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0"
-                      style={{ 
-                        backgroundColor: 'var(--accent)',
-                        boxShadow: '0 2px 6px rgba(0, 0, 0, 0.4)'
-                      }}
-                    >
-                      <FileText className="w-6 h-6 text-white" />
-                    </div>
-                    <div className="flex-1">
-                      <h3 
-                        className="text-lg font-semibold mb-1"
-                        style={{ color: 'var(--text-primary)' }}
-                      >
-                        {pub.title}
-                      </h3>
-                      <p className="text-sm mb-2" style={{ color: 'var(--text-muted)' }}>
-                        {pub.authors} • {pub.date}
-                      </p>
-                      <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
-                        {pub.abstract}
-                      </p>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-
-          {/* API Teaser */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="max-w-3xl mx-auto text-center p-8 rounded-2xl border"
-            style={{ 
-              backgroundColor: 'var(--bg-secondary)',
-              borderColor: 'var(--border)',
-              boxShadow: '0 1px 3px rgba(0, 0, 0, 0.3)'
-            }}
-          >
-            <div 
-              className="w-16 h-16 rounded-xl flex items-center justify-center mx-auto mb-6"
-              style={{ 
-                backgroundColor: 'var(--bg-primary)',
-                border: '1px solid var(--border)'
-              }}
-            >
-              <Terminal className="w-8 h-8" style={{ color: 'var(--accent)' }} />
-            </div>
-            <h3 
-              className="text-2xl font-semibold mb-3"
-              style={{ color: 'var(--text-primary)' }}
-            >
-              API Access Coming Soon
-            </h3>
-            <p 
-              className="mb-6"
-              style={{ color: 'var(--text-secondary)' }}
-            >
-              Run your own benchmarks against our standardized environments. Full reproducibility, transparent scoring.
-            </p>
-            <div 
-              className="inline-block px-4 py-2 rounded-lg text-sm"
-              style={{ 
-                backgroundColor: 'var(--bg-primary)',
-                color: 'var(--text-muted)',
-                border: '1px solid var(--border)'
-              }}
-            >
-              Join the waitlist →
-            </div>
-          </motion.div>
+    <main 
+      className="min-h-screen pt-16 font-mono"
+      style={{ backgroundColor: 'var(--bg-primary)' }}
+    >
+      {/* Top Status Bar */}
+      <div 
+        className="border-b px-4 py-2 flex justify-between text-xs"
+        style={{ borderColor: 'var(--border)' }}
+      >
+        <div className="flex items-center gap-4">
+          <span style={{ color: 'var(--text-muted)' }}>PATH:</span>
+          <code style={{ color: 'var(--accent)' }}>/research/docs</code>
+        </div>
+        <div className="flex items-center gap-6">
+          <span style={{ color: 'var(--text-muted)' }}>
+            UTC: <span style={{ color: 'var(--accent)' }}>{currentTime}</span>
+          </span>
         </div>
       </div>
-    </div>
+
+      <div className="container mx-auto px-4 py-8">
+        
+        {/* Page Header */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="mb-8"
+        >
+          <div className="hud-panel inline-block" style={{ border: '1px solid var(--border)' }}>
+            <div className="hud-panel-header">
+              <span className="hud-panel-title">RESEARCH DATABASE</span>
+              <span className="status-badge">
+                <span className="status-dot" style={{ width: 4, height: 4 }} />
+                ACCESSIBLE
+              </span>
+            </div>
+            <div className="px-4 py-3">
+              <h1 className="text-2xl md:text-3xl font-bold" style={{ color: 'var(--text-primary)' }}>
+                <span style={{ color: 'var(--accent)' }}>{'>'}</span> RESEARCH
+              </h1>
+              <p className="text-sm mt-2" style={{ color: 'var(--text-secondary)' }}>
+                Technical documentation and publications
+              </p>
+            </div>
+          </div>
+        </motion.div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          
+          {/* Documents List - Left column */}
+          <div className="lg:col-span-1">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className="hud-panel"
+              style={{ border: '1px solid var(--border)' }}
+            >
+              <div className="hud-panel-header">
+                <span className="hud-panel-title">DOCUMENTS</span>
+                <span className="text-xs" style={{ color: 'var(--text-muted)' }}>{documents.length}</span>
+              </div>
+              <div className="hud-panel-content p-0">
+                {documents.map((doc) => (
+                  <button
+                    key={doc.id}
+                    onClick={() => setSelectedDoc(doc.id)}
+                    className="w-full text-left p-3 border-b transition-colors"
+                    style={{ 
+                      borderColor: 'var(--border)',
+                      background: selectedDoc === doc.id ? 'rgba(194, 117, 81, 0.1)' : 'transparent'
+                    }}
+                  >
+                    <div className="flex items-center justify-between mb-1">
+                      <span 
+                        className="text-xs font-bold"
+                        style={{ color: selectedDoc === doc.id ? 'var(--accent)' : 'var(--text-primary)' }}
+                      >
+                        {doc.title}
+                      </span>
+                      <span 
+                        className="text-[10px] px-1.5"
+                        style={{ 
+                          border: `1px solid ${getStatusColor(doc.status)}`,
+                          color: getStatusColor(doc.status)
+                        }}
+                      >
+                        {doc.status}
+                      </span>
+                    </div>
+                    <p className="text-[10px] line-clamp-1" style={{ color: 'var(--text-muted)' }}>
+                      {doc.description}
+                    </p>
+                  </button>
+                ))}
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Main Content - Right 2 columns */}
+          <div className="lg:col-span-2 space-y-4">
+            
+            {/* Selected Document Detail */}
+            {selectedDocument && (
+              <motion.div
+                key={selectedDoc}
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                className="hud-panel"
+                style={{ border: '1px solid var(--border)' }}
+              >
+                <div className="hud-panel-header">
+                  <span className="hud-panel-title">{selectedDocument.title}</span>
+                  <span 
+                    className="text-xs px-2"
+                    style={{ 
+                      border: `1px solid ${getStatusColor(selectedDocument.status)}`,
+                      color: getStatusColor(selectedDocument.status)
+                    }}
+                  >
+                    {selectedDocument.status}
+                  </span>
+                </div>
+                <div className="hud-panel-content">
+                  <p className="text-sm mb-4" style={{ color: 'var(--text-secondary)' }}>
+                    {selectedDocument.description}
+                  </p>
+                  <div 
+                    className="p-4 text-xs"
+                    style={{ 
+                      border: '1px solid var(--border)',
+                      background: 'var(--bg-panel)'
+                    }}
+                  >
+                    <pre className="whitespace-pre-wrap" style={{ color: 'var(--text-muted)' }}>
+                      <span style={{ color: 'var(--accent)' }}>// SUMMARY</span>{'\n\n'}
+                      {selectedDocument.content}
+                    </pre>
+                  </div>
+                  {selectedDocument.status === 'PUBLISHED' && (
+                    <button 
+                      className="hud-button hud-button-primary mt-4 text-xs"
+                    >
+                      READ FULL DOCUMENT
+                    </button>
+                  )}
+                </div>
+              </motion.div>
+            )}
+
+            {/* Publications Panel */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="hud-panel"
+              style={{ border: '1px solid var(--border)' }}
+            >
+              <div className="hud-panel-header">
+                <span className="hud-panel-title">PUBLICATIONS</span>
+                <span className="text-xs" style={{ color: 'var(--text-muted)' }}>{publications.length}</span>
+              </div>
+              <div className="hud-panel-content">
+                <div className="overflow-x-auto">
+                  <table className="hud-table text-xs w-full">
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>TITLE</th>
+                        <th>DATE</th>
+                        <th>STATUS</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {publications.map((pub) => (
+                        <tr key={pub.id}>
+                          <td style={{ color: 'var(--text-muted)' }}>{pub.id}</td>
+                          <td>
+                            <div>
+                              <span style={{ color: 'var(--text-primary)' }}>{pub.title}</span>
+                              <p className="text-[10px] mt-0.5" style={{ color: 'var(--text-muted)' }}>
+                                {pub.authors}
+                              </p>
+                            </div>
+                          </td>
+                          <td style={{ color: 'var(--text-secondary)' }}>{pub.date}</td>
+                          <td>
+                            <span 
+                              className="text-[10px] px-1.5"
+                              style={{ 
+                                border: `1px solid ${getStatusColor(pub.status)}`,
+                                color: getStatusColor(pub.status)
+                              }}
+                            >
+                              {pub.status}
+                            </span>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* API Access Panel */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="hud-panel"
+              style={{ border: '1px solid var(--accent)' }}
+            >
+              <div className="hud-panel-header">
+                <span className="hud-panel-title">API ACCESS</span>
+                <span className="text-xs" style={{ color: 'var(--amber)' }}>COMING SOON</span>
+              </div>
+              <div className="hud-panel-content">
+                <pre 
+                  className="text-xs mb-4"
+                  style={{ 
+                    color: 'var(--text-muted)',
+                    fontFamily: 'var(--font-mono)'
+                  }}
+                >
+{`// Run your own benchmarks
+const arena = new ClaudeArena({
+  apiKey: process.env.ARENA_KEY,
+  environment: 'spatial-reasoning'
+});
+
+const result = await arena.evaluate({
+  model: 'your-model-endpoint',
+  iterations: 100
+});
+
+console.log(result.winRate);`}
+                </pre>
+                <div className="flex items-center gap-4">
+                  <button className="hud-button text-xs">
+                    JOIN WAITLIST
+                  </button>
+                  <span className="text-xs" style={{ color: 'var(--text-muted)' }}>
+                    ETA: Q2 2026
+                  </span>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </div>
+    </main>
   );
 }
-
