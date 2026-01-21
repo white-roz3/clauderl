@@ -176,11 +176,12 @@ INSTRUCTIONS:
     try {
       const completion = await this.anthropic.messages.create({
         model: "claude-sonnet-4-20250514",
+        system: systemPrompt,
         messages: [
           { role: "user", content: userPrompt }
         ],
-        max_tokens: 30,
-        temperature: 0.8,
+        max_tokens: 50,
+        temperature: 0.9,
       });
 
       const message = completion.content[0]?.type === 'text' ? completion.content[0].text : ''?.trim();
