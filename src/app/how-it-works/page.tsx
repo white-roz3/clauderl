@@ -212,7 +212,7 @@ export default function HowItWorksPage() {
               &ldquo;The goal isn&apos;t to crown a winner. It&apos;s to understand how different architectures approach intelligence.&rdquo;
             </p>
             <p style={{ color: 'var(--text-muted)' }}>
-              — ClaudeRL Research Team
+              — ClaudeArena Research Team
             </p>
           </motion.div>
         </div>

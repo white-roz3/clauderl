@@ -52,13 +52,6 @@ const Footer: React.FC = () => {
                       TWITTER
                     </span>
                   </Link>
-                  <Link href="https://github.com/ClaudeArena">
-                    <span 
-                      className="hud-button text-[10px] sm:text-xs px-2 sm:px-3 py-1.5 sm:py-1"
-                    >
-                      GITHUB
-                    </span>
-                  </Link>
                 </div>
               </div>
             </div>
@@ -99,7 +92,7 @@ const Footer: React.FC = () => {
               <div className="hud-panel-content p-2 sm:p-3 space-y-1.5 sm:space-y-2">
                 {[
                   { href: '/research', label: 'RESEARCH' },
-                  { href: '/how-it-works', label: 'DOCS' },
+                  { href: '/how-it-works', label: 'HOW IT WORKS' },
                   { href: '/api', label: 'API' },
                 ].map((link) => (
                   <Link

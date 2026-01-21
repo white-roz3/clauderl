@@ -10,7 +10,6 @@ interface Challenge {
   description: string;
   difficulty: 'STANDARD' | 'ADVANCED' | 'EXPERT';
   opusWinRate: number;
-  totalMatches: number;
   status: 'ACTIVE' | 'STANDBY';
 }
 
@@ -21,7 +20,6 @@ const challenges: Challenge[] = [
     description: 'Navigate procedural labyrinths with working memory',
     difficulty: 'STANDARD',
     opusWinRate: 82,
-    totalMatches: 3421,
     status: 'ACTIVE',
   },
   {
@@ -30,7 +28,6 @@ const challenges: Challenge[] = [
     description: 'Manage scarce resources under time pressure',
     difficulty: 'STANDARD',
     opusWinRate: 76,
-    totalMatches: 2987,
     status: 'ACTIVE',
   },
   {
@@ -39,7 +36,6 @@ const challenges: Challenge[] = [
     description: 'Survive against intelligent pursuers',
     difficulty: 'ADVANCED',
     opusWinRate: 71,
-    totalMatches: 2654,
     status: 'ACTIVE',
   },
   {
@@ -48,7 +44,6 @@ const challenges: Challenge[] = [
     description: 'Defend against waves through resource allocation',
     difficulty: 'EXPERT',
     opusWinRate: 85,
-    totalMatches: 1892,
     status: 'STANDBY',
   },
 ];

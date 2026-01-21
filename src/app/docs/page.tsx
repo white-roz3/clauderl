@@ -10,13 +10,13 @@ export default function DocsPage() {
     {
       icon: Layers,
       title: 'Getting Started',
-      description: 'Learn the basics of ClaudeRL and how to navigate the platform.',
+      description: 'Learn the basics of ClaudeArena and how to navigate the platform.',
       status: 'Coming Soon'
     },
     {
       icon: Code,
       title: 'API Reference',
-      description: 'Complete API documentation for integrating with ClaudeRL.',
+      description: 'Complete API documentation for integrating with ClaudeArena.',
       status: 'Coming Soon'
     },
     {
@@ -66,7 +66,7 @@ export default function DocsPage() {
               variants={staggerItem}
               className="text-lg text-gray-500 max-w-2xl mx-auto"
             >
-              Everything you need to understand and work with ClaudeRL
+              Everything you need to understand and work with ClaudeArena
             </motion.p>
           </motion.div>
 
@@ -133,7 +133,7 @@ export default function DocsPage() {
                 Documentation In Progress
               </h3>
               <p className="text-gray-500 mb-6 leading-relaxed">
-                We&apos;re working on comprehensive documentation to help you get the most out of ClaudeRL.
+                We&apos;re working on comprehensive documentation to help you get the most out of ClaudeArena.
                 Check back soon for guides, API references, and tutorials.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">

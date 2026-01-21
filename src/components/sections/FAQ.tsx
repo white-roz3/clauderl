@@ -114,12 +114,11 @@ const FAQ: React.FC = () => {
               <span className="hud-panel-title">ADDITIONAL RESOURCES</span>
             </div>
             <div className="hud-panel-content">
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                 {[
-                  { label: 'DOCS', path: '/docs' },
-                  { label: 'API', path: '/api' },
-                  { label: 'DISCORD', path: '/discord' },
-                  { label: 'TWITTER', path: 'https://twitter.com/claudearena' },
+                  { label: 'HOW IT WORKS', path: '/how-it-works' },
+                  { label: 'RESEARCH', path: '/research' },
+                  { label: 'TWITTER', path: 'https://x.com/i/communities/1971956497015009337' },
                 ].map((item) => (
                   <a 
                     key={item.label}

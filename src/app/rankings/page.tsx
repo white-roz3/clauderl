@@ -20,10 +20,10 @@ export default function RankingsPage() {
   }, []);
 
   const rankings = [
-    { rank: 1, modelId: 'opus', winRate: 78, avgScore: 94520, bestEnv: 'Abstract Reasoning', matches: 6247 },
-    { rank: 2, modelId: 'gpt', winRate: 71, avgScore: 87340, bestEnv: 'Resource Optimization', matches: 5891 },
-    { rank: 3, modelId: 'gemini', winRate: 68, avgScore: 82150, bestEnv: 'Physics Intuition', matches: 5423 },
-    { rank: 4, modelId: 'grok', winRate: 62, avgScore: 76890, bestEnv: 'Adversarial Combat', matches: 5286 },
+    { rank: 1, modelId: 'opus', winRate: 78, avgScore: 94520, bestEnv: 'Abstract Reasoning' },
+    { rank: 2, modelId: 'gpt', winRate: 71, avgScore: 87340, bestEnv: 'Resource Optimization' },
+    { rank: 3, modelId: 'gemini', winRate: 68, avgScore: 82150, bestEnv: 'Physics Intuition' },
+    { rank: 4, modelId: 'grok', winRate: 62, avgScore: 76890, bestEnv: 'Adversarial Combat' },
   ];
 
   const headToHead = [
@@ -105,7 +105,6 @@ export default function RankingsPage() {
                       <th>WIN RATE</th>
                       <th>AVG SCORE</th>
                       <th>BEST ENV</th>
-                      <th>MATCHES</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -169,9 +168,6 @@ export default function RankingsPage() {
                           </td>
                           <td style={{ color: 'var(--text-secondary)' }}>
                             {entry.bestEnv}
-                          </td>
-                          <td style={{ color: 'var(--text-muted)' }}>
-                            {entry.matches.toLocaleString()}
                           </td>
                         </tr>
                       );
@@ -270,10 +266,10 @@ export default function RankingsPage() {
               </div>
               <div className="hud-panel-content space-y-3">
                 {[
-                  { label: 'TOTAL MATCHES', value: '24,847' },
                   { label: 'ACTIVE MODELS', value: '4' },
                   { label: 'ENVIRONMENTS', value: '15' },
                   { label: 'AVG MATCH TIME', value: '4.2min' },
+                  { label: 'STATUS', value: 'LIVE' },
                 ].map((stat) => (
                   <div key={stat.label} className="flex justify-between">
                     <span className="text-xs" style={{ color: 'var(--text-muted)' }}>

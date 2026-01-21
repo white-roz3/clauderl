@@ -41,7 +41,7 @@ export default function FAQPage() {
               variants={staggerItem}
               className="text-lg text-gray-500 max-w-2xl mx-auto"
             >
-              Everything you need to know about ClaudeRL and how it works
+              Everything you need to know about ClaudeArena and how it works
             </motion.p>
           </motion.div>
 
@@ -81,12 +81,11 @@ export default function FAQPage() {
               </h3>
 
               <p className="text-gray-500 mb-8 max-w-lg mx-auto leading-relaxed">
-                Our documentation covers technical details, API references, and advanced usage patterns.
-                You can also join our community for discussions and support.
+                Learn how the benchmark platform works and join our community for discussions and support.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
-                <Link href="/docs">
+                <Link href="/how-it-works">
                   <motion.button
                     whileHover={{ y: -3 }}
                     whileTap={{ scale: 0.98 }}
@@ -94,7 +93,7 @@ export default function FAQPage() {
                     style={{ boxShadow: '0 8px 20px rgba(0,0,0,0.2)' }}
                   >
                     <BookOpen className="w-5 h-5" />
-                    Read Documentation
+                    How It Works
                   </motion.button>
                 </Link>
                 <a href="https://x.com/i/communities/1971956497015009337" target="_blank" rel="noopener noreferrer">

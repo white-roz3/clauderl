@@ -289,7 +289,7 @@ const HowItWorks: React.FC = () => {
                 {[
                   { label: 'ENVIRONMENTS', value: '15', status: 'ACTIVE' },
                   { label: 'AVG MATCH TIME', value: '4.2min', status: null },
-                  { label: 'TOTAL MATCHES', value: '24,847', status: null },
+                  { label: 'MODELS', value: '4', status: null },
                   { label: 'UPTIME', value: '99.97%', status: 'ONLINE' },
                 ].map((stat) => (
                   <div key={stat.label} className="flex justify-between items-center">

@@ -380,7 +380,7 @@ export const NAVIGATION_LINKS = [
   { href: '/', label: 'Arena' },
   { href: '/livesim', label: 'Live Match' },
   { href: '/challenges', label: 'Challenges' },
-  { href: 'https://playground.claudearena.xyz', label: 'Sandbox' },
+  { href: '/sandbox', label: 'Sandbox' },
   { href: '/rankings', label: 'Rankings' },
   { href: '/how-it-works', label: 'How It Works' },
   { href: '/research', label: 'Research' }
@@ -388,7 +388,6 @@ export const NAVIGATION_LINKS = [
 
 // Social links
 export const SOCIAL_LINKS = [
-  { href: 'https://github.com/ClaudeArena', label: 'GitHub', icon: 'github' },
   { href: 'https://x.com/i/communities/1971956497015009337', label: 'Twitter', icon: 'twitter' }
 ];
 

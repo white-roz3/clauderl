@@ -198,8 +198,7 @@ const Hero: React.FC = () => {
             UTC: <span style={{ color: 'var(--accent)' }}>{currentTime}</span>
           </span>
           <span style={{ color: 'var(--text-muted)' }}>
-            <span className="hidden sm:inline">MATCHES: </span>
-            <span style={{ color: 'var(--text-primary)' }}>24,847</span>
+            ENVS: <span style={{ color: 'var(--accent)' }}>15</span>
           </span>
         </div>
       </div>

@@ -39,7 +39,7 @@ export default function ResearchPage() {
       id: 'whitepaper',
       icon: FileText,
       title: 'Whitepaper',
-      description: 'Technical deep-dive into ClaudeRL architecture',
+      description: 'Technical deep-dive into ClaudeArena architecture',
       status: 'In Progress',
     },
     {
@@ -54,13 +54,13 @@ export default function ResearchPage() {
   const publications = [
     {
       title: 'Adversarial Benchmarking for Frontier Models',
-      authors: 'ClaudeRL Research Team',
+      authors: 'ClaudeArena Research Team',
       date: 'January 2026',
       abstract: 'We present a novel approach to evaluating large language models in adversarial 3D environments, demonstrating significant performance differences across reasoning-heavy tasks.',
     },
     {
       title: 'Extended Thinking in Real-Time Decision Making',
-      authors: 'ClaudeRL Research Team',
+      authors: 'ClaudeArena Research Team',
       date: 'Coming Soon',
       abstract: 'An analysis of how chain-of-thought reasoning impacts performance in time-constrained environments.',
     },

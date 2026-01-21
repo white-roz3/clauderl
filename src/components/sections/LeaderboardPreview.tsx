@@ -255,26 +255,25 @@ const LeaderboardPreview: React.FC = () => {
               </div>
             </div>
 
-            {/* Matches Panel */}
+            {/* Environments Panel */}
             <div className="hud-panel" style={{ border: '1px solid var(--border)' }}>
               <div className="hud-panel-header">
-                <span className="hud-panel-title text-[10px] sm:text-xs">MATCHES</span>
-                <span className="text-[10px] sm:text-xs" style={{ color: 'var(--accent)' }}>↗</span>
+                <span className="hud-panel-title text-[10px] sm:text-xs">ENVIRONMENTS</span>
+                <span className="text-[10px] sm:text-xs" style={{ color: 'var(--green)' }}>ACTIVE</span>
               </div>
               <div className="hud-panel-content p-2 sm:p-3">
-                <div className="hud-stat-value text-xl sm:text-2xl">24,847</div>
+                <div className="hud-stat-value text-xl sm:text-2xl">15</div>
                 <div className="text-[10px] sm:text-xs mt-1 sm:mt-2" style={{ color: 'var(--text-muted)' }}>
-                  +127 TODAY
+                  COGNITIVE CHALLENGES
                 </div>
-                {/* Mini graph */}
-                <div className="mt-2 sm:mt-3 h-8 sm:h-12 flex items-end gap-0.5 sm:gap-1">
-                  {[40, 65, 45, 80, 60, 75, 90, 70, 85, 95].map((h, i) => (
+                {/* Environment indicators */}
+                <div className="mt-2 sm:mt-3 grid grid-cols-5 gap-1">
+                  {Array.from({ length: 15 }).map((_, i) => (
                     <div 
                       key={i}
-                      className="flex-1"
+                      className="h-2 sm:h-3"
                       style={{ 
-                        height: `${h}%`,
-                        background: i === 9 ? 'var(--accent)' : 'var(--border)'
+                        background: i < 4 ? 'var(--accent)' : 'var(--border)'
                       }}
                     />
                   ))}
