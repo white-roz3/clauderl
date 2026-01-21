@@ -86,7 +86,7 @@ export class Ball3DAIService {
     session.agentLogs = agentLogs;
     session.lastActivity = new Date();
 
-    if (!this.isInitialized || !this.openai) {
+    if (!this.isInitialized || !this.anthropic) {
       throw new Error('Anthropic service not initialized. Please check your API key.');
     }
 
@@ -260,7 +260,7 @@ INSTRUCTIONS:
 
   // Check if OpenAI is available
   isOpenAIAvailable(): boolean {
-    return this.isInitialized && this.openai !== null;
+    return this.isInitialized && this.anthropic !== null;
   }
 }
 

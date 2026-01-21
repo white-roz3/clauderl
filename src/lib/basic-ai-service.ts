@@ -63,7 +63,7 @@ export class BasicAIService {
     session.lastActivity = new Date();
 
     // If OpenAI is not initialized, return a simple canned message to keep UI responsive
-    if (!this.isInitialized || !this.openai) {
+    if (!this.isInitialized || !this.anthropic) {
       const fallbackText = 'Calculating required agent trajectory: move right 2 steps.';
       const fallback: BasicChatMessage = this.createMessage('agent1', fallbackText, 'instructor', agentLogs.slice(-5).join('\n'));
       session.messages.push(fallback);
@@ -174,7 +174,7 @@ export class BasicAIService {
 
   // Check if OpenAI is available
   isOpenAIAvailable(): boolean {
-    return this.isInitialized && this.openai !== null;
+    return this.isInitialized && this.anthropic !== null;
   }
 }
 
