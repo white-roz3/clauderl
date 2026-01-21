@@ -1,223 +1,334 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Brain, Eye, BarChart3, Shield, Cpu, Zap, Target, GitBranch } from 'lucide-react';
-import { staggerContainer, staggerItem } from '@/lib/animations';
+import { useState, useEffect } from 'react';
 
 export default function HowItWorksPage() {
+  const [currentTime, setCurrentTime] = useState('');
+
+  useEffect(() => {
+    const updateTime = () => {
+      const now = new Date();
+      setCurrentTime(now.toISOString().slice(11, 19));
+    };
+    updateTime();
+    const interval = setInterval(updateTime, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
   const sections = [
     {
-      icon: Shield,
-      title: 'Fair Comparison',
-      content: 'Every model receives identical inputs, time constraints, and environmental conditions. No prompt engineering advantages. No cherry-picked scenarios. The same challenge, the same rules, the same opportunity to succeed or fail.',
+      id: '01',
+      title: 'FAIR COMPARISON',
+      content: 'Every model receives identical inputs, time constraints, and environmental conditions. No prompt engineering advantages. No cherry-picked scenarios. The same challenge, the same rules.',
+      status: 'VERIFIED',
     },
     {
-      icon: Eye,
-      title: 'Real-Time Reasoning',
+      id: '02',
+      title: 'REAL-TIME REASONING',
       content: 'Watch each model\'s decision process as it happens. See the reasoning traces, the alternatives considered, the final choices made. Full transparency into how frontier models think.',
+      status: 'LIVE',
     },
     {
-      icon: Target,
-      title: '15 Cognitive Challenges',
-      content: 'From spatial reasoning to social intelligence, each environment tests a different aspect of general intelligence. Together, they form a comprehensive picture of model capabilities.',
+      id: '03',
+      title: '15 COGNITIVE CHALLENGES',
+      content: 'From spatial reasoning to social intelligence, each environment tests a different aspect of general intelligence. Together, they form a comprehensive benchmark of model capabilities.',
+      status: 'ACTIVE',
     },
     {
-      icon: BarChart3,
-      title: 'Transparent Scoring',
+      id: '04',
+      title: 'TRANSPARENT SCORING',
       content: 'Every metric is public. Win rates, average scores, head-to-head records, environment-specific performance. The data speaks for itself.',
+      status: 'PUBLIC',
     },
   ];
 
   const methodology = [
     {
-      icon: Cpu,
-      title: 'Identical Prompts',
-      description: 'Each model receives the exact same system prompt and environmental context. No model-specific optimizations.',
+      label: 'IDENTICAL PROMPTS',
+      value: 'Each model receives the exact same system prompt and environmental context.',
     },
     {
-      icon: Zap,
-      title: 'Same Compute Budget',
-      description: 'All models get equal time to respond. No advantages from faster inference.',
+      label: 'SAME COMPUTE BUDGET',
+      value: 'All models get equal time to respond. No advantages from faster inference.',
     },
     {
-      icon: GitBranch,
-      title: 'Reproducible Results',
-      description: 'Every run is logged with seeds and parameters. Anyone can verify our results.',
+      label: 'REPRODUCIBLE RESULTS',
+      value: 'Every run is logged with seeds and parameters. Anyone can verify our results.',
     },
     {
-      icon: Brain,
-      title: 'No Training on Test Data',
-      description: 'Environments are procedurally generated. No model has seen these specific challenges before.',
+      label: 'NO TRAINING LEAKAGE',
+      value: 'Environments are procedurally generated. No model has seen these specific challenges.',
     },
   ];
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: 'var(--bg-primary)' }}>
-      <div className="py-16 md:py-24">
-        <div className="container mx-auto px-4">
-          {/* Header */}
-          <motion.div
-            variants={staggerContainer}
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true, margin: "-100px" }}
-            className="text-center mb-16"
-          >
-            <motion.p 
-              variants={staggerItem} 
-              className="text-xs md:text-sm font-medium tracking-widest uppercase mb-3 md:mb-4"
-              style={{ color: 'var(--text-muted)' }}
-            >
-              Methodology
-            </motion.p>
-            <motion.h1
-              variants={staggerItem}
-              className="text-4xl md:text-6xl lg:text-7xl font-normal mb-6"
-              style={{ 
-                fontFamily: 'var(--font-serif)',
-                color: 'var(--text-accent)'
-              }}
-            >
-              How It Works
-            </motion.h1>
-            <motion.p
-              variants={staggerItem}
-              className="text-lg max-w-2xl mx-auto"
-              style={{ 
-                fontFamily: 'var(--font-sans)',
-                color: 'var(--text-secondary)' 
-              }}
-            >
-              The benchmark that benchmarks can&apos;t game
-            </motion.p>
-          </motion.div>
-
-          {/* Main sections */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
-            {sections.map((section, index) => (
-              <motion.div
-                key={section.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-              >
-                <motion.div
-                  className="rounded-2xl p-8 h-full border"
-                  style={{ 
-                    backgroundColor: 'var(--bg-secondary)',
-                    borderColor: 'var(--border)',
-                    boxShadow: '0 1px 3px rgba(0, 0, 0, 0.3)'
-                  }}
-                  whileHover={{ y: -4, boxShadow: '0 4px 12px rgba(0, 0, 0, 0.5)' }}
-                >
-                  <div 
-                    className="w-14 h-14 rounded-xl flex items-center justify-center mb-6"
-                    style={{ 
-                      backgroundColor: 'var(--accent)',
-                      boxShadow: '0 2px 6px rgba(0, 0, 0, 0.4)'
-                    }}
-                  >
-                    <section.icon className="w-7 h-7 text-white" strokeWidth={1.5} />
-                  </div>
-                  <h3 
-                    className="text-xl font-semibold mb-3"
-                    style={{ color: 'var(--text-primary)' }}
-                  >
-                    {section.title}
-                  </h3>
-                  <p 
-                    className="leading-relaxed"
-                    style={{ color: 'var(--text-secondary)' }}
-                  >
-                    {section.content}
-                  </p>
-                </motion.div>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Methodology details */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="mb-16"
-          >
-            <h2 
-              className="text-2xl font-semibold mb-8 text-center"
-              style={{ color: 'var(--text-primary)' }}
-            >
-              Our Methodology
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              {methodology.map((item, index) => (
-                <motion.div
-                  key={item.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                  className="rounded-xl p-6 border text-center"
-                  style={{ 
-                    backgroundColor: 'var(--bg-secondary)',
-                    borderColor: 'var(--border)',
-                    boxShadow: '0 1px 3px rgba(0, 0, 0, 0.3)'
-                  }}
-                >
-                  <div 
-                    className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4"
-                    style={{ 
-                      backgroundColor: 'var(--bg-primary)',
-                      border: '1px solid var(--border)'
-                    }}
-                  >
-                    <item.icon className="w-6 h-6" style={{ color: 'var(--text-secondary)' }} />
-                  </div>
-                  <h4 
-                    className="font-semibold mb-2"
-                    style={{ color: 'var(--text-primary)' }}
-                  >
-                    {item.title}
-                  </h4>
-                  <p 
-                    className="text-sm"
-                    style={{ color: 'var(--text-muted)' }}
-                  >
-                    {item.description}
-                  </p>
-                </motion.div>
-              ))}
-            </div>
-          </motion.div>
-
-          {/* Quote */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="max-w-3xl mx-auto text-center p-8 rounded-2xl border"
-            style={{ 
-              backgroundColor: 'rgba(194, 117, 81, 0.1)',
-              borderColor: 'rgba(194, 117, 81, 0.3)'
-            }}
-          >
-            <p 
-              className="text-lg md:text-xl italic mb-4"
-              style={{ 
-                fontFamily: 'var(--font-serif)',
-                color: 'var(--text-primary)'
-              }}
-            >
-              &ldquo;The goal isn&apos;t to crown a winner. It&apos;s to understand how different architectures approach intelligence.&rdquo;
-            </p>
-            <p style={{ color: 'var(--text-muted)' }}>
-              — ClaudeArena Research Team
-            </p>
-          </motion.div>
+    <main 
+      className="min-h-screen pt-16 font-mono"
+      style={{ backgroundColor: 'var(--bg-primary)' }}
+    >
+      {/* Top Status Bar */}
+      <div 
+        className="border-b px-4 py-2 flex justify-between text-xs"
+        style={{ borderColor: 'var(--border)' }}
+      >
+        <div className="flex items-center gap-4">
+          <span style={{ color: 'var(--text-muted)' }}>PATH:</span>
+          <code style={{ color: 'var(--accent)' }}>/system/methodology</code>
+        </div>
+        <div className="flex items-center gap-6">
+          <span style={{ color: 'var(--text-muted)' }}>
+            UTC: <span style={{ color: 'var(--accent)' }}>{currentTime}</span>
+          </span>
         </div>
       </div>
-    </div>
+
+      <div className="container mx-auto px-4 py-8">
+        
+        {/* Page Header */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="mb-8"
+        >
+          <div className="hud-panel inline-block" style={{ border: '1px solid var(--border)' }}>
+            <div className="hud-panel-header">
+              <span className="hud-panel-title">METHODOLOGY</span>
+              <span className="status-badge">
+                <span className="status-dot" style={{ width: 4, height: 4 }} />
+                DOCUMENTED
+              </span>
+            </div>
+            <div className="px-4 py-3">
+              <h1 className="text-2xl md:text-3xl font-bold" style={{ color: 'var(--text-primary)' }}>
+                <span style={{ color: 'var(--accent)' }}>{'>'}</span> HOW IT WORKS
+              </h1>
+              <p className="text-sm mt-2" style={{ color: 'var(--text-secondary)' }}>
+                The benchmark that benchmarks can't game
+              </p>
+            </div>
+          </div>
+        </motion.div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          
+          {/* Main Content - Left 2 columns */}
+          <div className="lg:col-span-2 space-y-4">
+            
+            {/* Principles Panel */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className="hud-panel"
+              style={{ border: '1px solid var(--border)' }}
+            >
+              <div className="hud-panel-header">
+                <span className="hud-panel-title">CORE PRINCIPLES</span>
+                <span className="text-xs" style={{ color: 'var(--green)' }}>4 ACTIVE</span>
+              </div>
+              <div className="hud-panel-content">
+                <div className="space-y-4">
+                  {sections.map((section, index) => (
+                    <motion.div
+                      key={section.id}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.2 + index * 0.1 }}
+                      className="p-4"
+                      style={{ 
+                        border: '1px solid var(--border)',
+                        background: 'var(--bg-panel)'
+                      }}
+                    >
+                      <div className="flex items-start justify-between mb-2">
+                        <div className="flex items-center gap-3">
+                          <span 
+                            className="text-xs font-bold px-2 py-1"
+                            style={{ 
+                              background: 'var(--accent)',
+                              color: 'var(--bg-primary)'
+                            }}
+                          >
+                            {section.id}
+                          </span>
+                          <h3 className="font-bold text-sm" style={{ color: 'var(--text-primary)' }}>
+                            {section.title}
+                          </h3>
+                        </div>
+                        <span 
+                          className="text-xs px-2 py-0.5"
+                          style={{ 
+                            border: '1px solid var(--green)',
+                            color: 'var(--green)'
+                          }}
+                        >
+                          {section.status}
+                        </span>
+                      </div>
+                      <p className="text-xs leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                        {section.content}
+                      </p>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Methodology Panel */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="hud-panel"
+              style={{ border: '1px solid var(--border)' }}
+            >
+              <div className="hud-panel-header">
+                <span className="hud-panel-title">METHODOLOGY SPECS</span>
+              </div>
+              <div className="hud-panel-content">
+                <div className="overflow-x-auto">
+                  <table className="hud-table text-xs w-full">
+                    <thead>
+                      <tr>
+                        <th>PARAMETER</th>
+                        <th>SPECIFICATION</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {methodology.map((item) => (
+                        <tr key={item.label}>
+                          <td>
+                            <span style={{ color: 'var(--accent)' }}>{item.label}</span>
+                          </td>
+                          <td style={{ color: 'var(--text-secondary)' }}>
+                            {item.value}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Sidebar - Right column */}
+          <div className="space-y-4">
+            
+            {/* System Status */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="hud-panel"
+              style={{ border: '1px solid var(--border)' }}
+            >
+              <div className="hud-panel-header">
+                <span className="hud-panel-title">SYSTEM STATUS</span>
+              </div>
+              <div className="hud-panel-content space-y-3">
+                {[
+                  { label: 'ENVIRONMENTS', value: '15', status: 'ACTIVE' },
+                  { label: 'MODELS', value: '4', status: 'ONLINE' },
+                  { label: 'UPTIME', value: '99.97%', status: null },
+                  { label: 'AVG LATENCY', value: '42ms', status: null },
+                ].map((stat) => (
+                  <div key={stat.label} className="flex justify-between items-center">
+                    <span className="text-xs" style={{ color: 'var(--text-muted)' }}>{stat.label}</span>
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs" style={{ color: 'var(--text-primary)' }}>{stat.value}</span>
+                      {stat.status && (
+                        <span 
+                          className="text-xs px-1.5"
+                          style={{ 
+                            color: 'var(--green)',
+                            border: '1px solid var(--green)'
+                          }}
+                        >
+                          {stat.status}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+
+            {/* Quote Panel */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="hud-panel"
+              style={{ border: '1px solid var(--accent)' }}
+            >
+              <div className="hud-panel-header">
+                <span className="hud-panel-title">// MISSION</span>
+              </div>
+              <div className="hud-panel-content">
+                <pre 
+                  className="text-xs leading-relaxed whitespace-pre-wrap"
+                  style={{ color: 'var(--text-secondary)' }}
+                >
+{`> "The goal isn't to crown 
+>  a winner. It's to 
+>  understand how different
+>  architectures approach
+>  intelligence."
+
+// ClaudeArena Research`}
+                </pre>
+              </div>
+            </motion.div>
+
+            {/* ASCII Art Panel */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+              className="hud-panel"
+              style={{ border: '1px solid var(--border)' }}
+            >
+              <div className="hud-panel-header">
+                <span className="hud-panel-title">BENCHMARK FLOW</span>
+              </div>
+              <div className="hud-panel-content">
+                <pre 
+                  className="text-xs"
+                  style={{ 
+                    color: 'var(--accent)',
+                    fontFamily: 'var(--font-mono)'
+                  }}
+                >
+{`┌─────────────┐
+│   INPUT     │
+│  [PROMPT]   │
+└──────┬──────┘
+       │
+       v
+┌─────────────┐
+│   MODEL     │
+│  [PROCESS]  │
+└──────┬──────┘
+       │
+       v
+┌─────────────┐
+│   OUTPUT    │
+│  [ACTION]   │
+└──────┬──────┘
+       │
+       v
+┌─────────────┐
+│   SCORE     │
+│  [EVAL]     │
+└─────────────┘`}
+                </pre>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </div>
+    </main>
   );
 }
-
