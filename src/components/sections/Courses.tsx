@@ -111,7 +111,6 @@ const Courses: React.FC = () => {
                       <th className="whitespace-nowrap">ENV</th>
                       <th className="whitespace-nowrap hidden sm:table-cell">DIFF</th>
                       <th className="whitespace-nowrap">WIN%</th>
-                      <th className="whitespace-nowrap hidden sm:table-cell">MATCHES</th>
                       <th className="whitespace-nowrap">STATUS</th>
                     </tr>
                   </thead>
@@ -164,9 +163,6 @@ const Courses: React.FC = () => {
                               />
                             </div>
                           </div>
-                        </td>
-                        <td className="hidden sm:table-cell" style={{ color: 'var(--text-secondary)' }}>
-                          {challenge.totalMatches.toLocaleString()}
                         </td>
                         <td>
                           <span className="flex items-center gap-1">
@@ -239,9 +235,12 @@ const Courses: React.FC = () => {
                       </span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-[10px] sm:text-xs" style={{ color: 'var(--text-muted)' }}>TOTAL MATCHES</span>
-                      <span className="text-[10px] sm:text-xs" style={{ color: 'var(--text-primary)' }}>
-                        {selected.totalMatches.toLocaleString()}
+                      <span className="text-[10px] sm:text-xs" style={{ color: 'var(--text-muted)' }}>STATUS</span>
+                      <span 
+                        className="text-[10px] sm:text-xs"
+                        style={{ color: selected.status === 'ACTIVE' ? 'var(--green)' : 'var(--amber)' }}
+                      >
+                        {selected.status}
                       </span>
                     </div>
                   </div>
