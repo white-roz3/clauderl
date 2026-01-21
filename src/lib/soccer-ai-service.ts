@@ -1,7 +1,7 @@
-// Soccer AI Service - Dual Personality System with OpenAI Integration
-// This service simulates two AI agents chatting about soccer strategy using OpenAI
+// Soccer AI Service - Dual Personality System with Claude/Anthropic Integration
+// This service simulates two AI agents chatting about soccer strategy using Claude
 
-import OpenAI from 'openai';
+import Anthropic from '@anthropic-ai/sdk';
 
 export interface SoccerChatMessage {
   id: string;
@@ -22,7 +22,7 @@ export interface SoccerChatSession {
 // Soccer-specific personality definitions
 const SOCCER_PERSONALITIES = {
   analytical: {
-    name: 'ChatGPT',
+    name: 'Opus 4.5',
     role: 'Blue Team Captain',
     team: 'Blue',
     traits: [
@@ -38,7 +38,7 @@ const SOCCER_PERSONALITIES = {
     expertise: ['player positioning', 'pass completion rates', 'defensive formations', 'tactical efficiency', 'ball possession stats', 'heat maps', 'expected goals (xG)']
   },
   creative: {
-    name: 'GROK',
+    name: 'GPT-5',
     role: 'Purple Team Captain',
     team: 'Purple',
     traits: [
@@ -58,23 +58,23 @@ const SOCCER_PERSONALITIES = {
 export class SoccerAIService {
   private sessions: Map<string, SoccerChatSession> = new Map();
   private messageCounter = 0;
-  private openai: OpenAI | null = null;
+  private anthropic: Anthropic | null = null;
   private isInitialized = false;
 
   constructor() {
-    this.initializeOpenAI();
+    this.initializeAnthropic();
   }
 
-  private async initializeOpenAI() {
+  private async initializeAnthropic() {
     try {
-      if (typeof window === 'undefined' && process.env.OPENAI_API_KEY) {
-        this.openai = new OpenAI({
-          apiKey: process.env.OPENAI_API_KEY,
+      if (typeof window === 'undefined' && process.env.ANTHROPIC_API_KEY) {
+        this.anthropic = new Anthropic({
+          apiKey: process.env.ANTHROPIC_API_KEY,
         });
         this.isInitialized = true;
       }
     } catch (error) {
-      console.error('Failed to initialize OpenAI:', error);
+      console.error('Failed to initialize Anthropic:', error);
     }
   }
 
@@ -86,8 +86,8 @@ export class SoccerAIService {
     session.agentLogs = agentLogs;
     session.lastActivity = new Date();
 
-    if (!this.isInitialized || !this.openai) {
-      throw new Error('OpenAI service not initialized. Please check your API key.');
+    if (!this.isInitialized || !this.anthropic) {
+      throw new Error('Anthropic service not initialized. Please check your API key.');
     }
 
     try {
@@ -95,13 +95,13 @@ export class SoccerAIService {
       session.messages = [...session.messages, ...conversation];
       return conversation;
     } catch (error) {
-      console.error('OpenAI conversation generation failed:', error);
+      console.error('Anthropic conversation generation failed:', error);
       throw new Error(`Failed to generate AI conversation: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   }
 
   private async generateAIConversation(session: SoccerChatSession): Promise<SoccerChatMessage[]> {
-    if (!this.openai) throw new Error('OpenAI not initialized');
+    if (!this.anthropic) throw new Error('Anthropic not initialized');
 
     const messages: SoccerChatMessage[] = [];
     const conversationLength = Math.floor(Math.random() * 3) + 2; // 2-4 exchanges
@@ -137,7 +137,7 @@ export class SoccerAIService {
     session: SoccerChatSession, 
     previousMessage: string
   ): Promise<SoccerChatMessage> {
-    if (!this.openai) throw new Error('OpenAI not initialized');
+    if (!this.anthropic) throw new Error('Anthropic not initialized');
 
     const personalityInfo = SOCCER_PERSONALITIES[personality];
     const agentLogsContext = session.agentLogs.slice(-5).join('\n'); // Last 5 log entries
@@ -181,25 +181,24 @@ INSTRUCTIONS:
       : `Start with a detailed coordinate-based movement command including system status updates (8-15 words max).`;
 
     try {
-      const completion = await this.openai.chat.completions.create({
-        model: "gpt-3.5-turbo",
+      const completion = await this.anthropic.messages.create({
+        model: "claude-3-5-sonnet-20241022",
+        max_tokens: 100,
+        system: systemPrompt,
         messages: [
-          { role: "system", content: systemPrompt },
           { role: "user", content: userPrompt }
         ],
-        max_tokens: 100,
-        temperature: 0.8,
       });
 
-      const message = completion.choices[0]?.message?.content?.trim();
+      const message = completion.content[0]?.type === 'text' ? completion.content[0].text.trim() : '';
       
       if (!message) {
-        throw new Error('OpenAI returned empty response');
+        throw new Error('Anthropic returned empty response');
       }
       
       return this.createMessage(agent, message, personality, agentLogsContext);
     } catch (error) {
-      console.error('OpenAI API error:', error);
+      console.error('Anthropic API error:', error);
       throw new Error(`Failed to generate message: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   }
@@ -266,9 +265,9 @@ INSTRUCTIONS:
     };
   }
 
-  // Check if OpenAI is available
+  // Check if Anthropic is available
   isOpenAIAvailable(): boolean {
-    return this.isInitialized && this.openai !== null;
+    return this.isInitialized && this.anthropic !== null;
   }
 }
 

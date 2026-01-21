@@ -1,7 +1,7 @@
 // Basic AI Service - Simple helper agent for the BASIC simulation
 // Provides short, actionable messages to guide or narrate the basic simulation
 
-import OpenAI from 'openai';
+import Anthropic from '@anthropic-ai/sdk';
 
 export interface BasicChatMessage {
   id: string;
@@ -38,21 +38,21 @@ const BASIC_PERSONALITY = {
 export class BasicAIService {
   private sessions: Map<string, BasicChatSession> = new Map();
   private messageCounter = 0;
-  private openai: OpenAI | null = null;
+  private anthropic: Anthropic | null = null;
   private isInitialized = false;
 
   constructor() {
-    this.initializeOpenAI();
+    this.initializeAnthropic();
   }
 
-  private async initializeOpenAI() {
+  private async initializeAnthropic() {
     try {
-      if (typeof window === 'undefined' && process.env.OPENAI_API_KEY) {
-        this.openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+      if (typeof window === 'undefined' && process.env.ANTHROPIC_API_KEY) {
+        this.anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
         this.isInitialized = true;
       }
     } catch (error) {
-      console.error('Failed to initialize OpenAI for BasicAIService:', error);
+      console.error('Failed to initialize Anthropic for BasicAIService:', error);
     }
   }
 
@@ -81,7 +81,7 @@ export class BasicAIService {
   }
 
   private async generateAIConversation(session: BasicChatSession): Promise<BasicChatMessage[]> {
-    if (!this.openai) throw new Error('OpenAI not initialized');
+    if (!this.anthropic) throw new Error('Anthropic not initialized');
 
   const messages: BasicChatMessage[] = [];
 
@@ -101,7 +101,7 @@ export class BasicAIService {
     session: BasicChatSession,
     _previousMessage: string
   ): Promise<BasicChatMessage> {
-    if (!this.openai) throw new Error('OpenAI not initialized');
+    if (!this.anthropic) throw new Error('Anthropic not initialized');
 
     const personalityInfo = BASIC_PERSONALITY[personality];
     const agentLogsContext = session.agentLogs.slice(-5).join('\n');
@@ -113,22 +113,22 @@ export class BasicAIService {
       : `No recent logs. Ask one concise, concrete clarifying question with explicit options (yes/no or short choices). Single line, 6-20 words.`;
 
     try {
-      const completion = await this.openai.chat.completions.create({
-        model: 'gpt-3.5-turbo',
+      const completion = await this.anthropic.messages.create({
+        model: 'claude-3-5-sonnet-20241022',
+        system: systemPrompt,
         messages: [
-          { role: 'system', content: systemPrompt },
           { role: 'user', content: userPrompt }
         ],
         max_tokens: 40,
         temperature: 0.2,
       });
 
-      const text = completion.choices[0]?.message?.content?.trim();
-      if (!text) throw new Error('OpenAI returned empty response');
+      const text = completion.content[0]?.type === 'text' ? completion.content[0].text : ''?.trim();
+      if (!text) throw new Error('Anthropic returned empty response');
 
       return this.createMessage(agent, text, personality, agentLogsContext);
     } catch (error) {
-      console.error('OpenAI API error in BasicAIService:', error);
+      console.error('Anthropic API error in BasicAIService:', error);
       throw new Error(`Failed to generate message: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }
   }
